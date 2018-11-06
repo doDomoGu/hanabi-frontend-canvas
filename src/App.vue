@@ -1,5 +1,12 @@
 <template>
-  <canvas id="canvas"></canvas>
+    <div>
+        <form id="login-form">
+            <input class="login-username">
+            <input class="login-password" type="password">
+        </form>
+        <canvas id="canvas"></canvas>
+    </div>
+
 </template>
 
 <script>
@@ -33,8 +40,8 @@ export default {
     //this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height)
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height )
 
-    console.log(window.innerWidth)
-    console.log(window.innerHeight)
+//    console.log(window.innerWidth)
+//    console.log(window.innerHeight)
 
     this.ctx.fillStyle = '#008800'
     let rect = {
@@ -56,4 +63,20 @@ export default {
         padding:0;
         font-size: 0;
     }
+
+    #login-form {
+        margin:-100px;
+        width:200px;
+        position: absolute;
+        left:50%;
+        top:100px;
+        line-height:30px;
+    }
+
+    #login-form > .login-username,
+    #login-form > .login-password {
+        width:200px;
+
+    }
+
 </style>
