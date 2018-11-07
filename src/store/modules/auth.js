@@ -1,4 +1,4 @@
-import axios from '../../axios'
+import axios from '../axios'
 
 const state = {
   isLogin: null,
@@ -8,14 +8,11 @@ const state = {
 }
 
 const actions = {
-  Login ({ commit }, [username, password]) {
+  Login ({ commit }, param) {
     return new Promise((resolve, reject) => {
       axios.post(
         '/auth',
-        {
-          username: username,
-          password: password
-        }
+        param
       )
         .then((res) => {
           if (res.data && res.data.success) {

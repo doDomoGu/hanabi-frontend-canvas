@@ -1,26 +1,19 @@
 <template>
     <div>
-        <form id="login-form">
-            <input class="login-username">
-            <input class="login-password" type="password">
-        </form>
         <canvas id="canvas"></canvas>
+        <Login></Login>
     </div>
-
 </template>
 
 <script>
 import MyCanvas from './assets/MyCanvas'
+import Login    from './components/Login'
 
 export default {
   name: 'app',
+  components: { Login },
   data () {
     return {
-      form: {
-        username: 'admin',
-        password: '123123'
-      },
-      errormsg: ''
     }
   },
   mounted: function () {
@@ -50,7 +43,7 @@ export default {
       h:100,
       w:100
     }
-    MyCanvas.drawRoundedRect(rect, 2, this.ctx)
+    //MyCanvas.drawRoundedRect(rect, 2, this.ctx)
 
 
     //this.$store.dispatch('common/SetTitle2', '登录')
@@ -62,21 +55,9 @@ export default {
         margin:0;
         padding:0;
         font-size: 0;
+        line-height:0;
     }
-
-    #login-form {
-        margin:-100px;
-        width:200px;
-        position: absolute;
-        left:50%;
-        top:100px;
-        line-height:30px;
-    }
-
-    #login-form > .login-username,
-    #login-form > .login-password {
-        width:200px;
+    #canvas {
 
     }
-
 </style>
