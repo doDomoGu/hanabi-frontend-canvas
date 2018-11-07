@@ -1,7 +1,7 @@
 <template>
     <div>
         <canvas id="canvas"></canvas>
-        <Login></Login>
+        <Login v-if="!isLogin"></Login>
     </div>
 </template>
 
@@ -16,7 +16,16 @@ export default {
     return {
     }
   },
+  computed:{
+    isLogin(){
+      return this.$store.getters['auth/isLogin']
+    }
+  },
   mounted: function () {
+    this.auth()
+
+
+
 
     this.canvas = document.querySelector('canvas')
     this.ctx = this.canvas.getContext('2d')
@@ -48,6 +57,11 @@ export default {
 
     //this.$store.dispatch('common/SetTitle2', '登录')
   },
+  methods:{
+    auth(){
+        this.$store.dispatch('auth/CheckToken', window.localStorage.__HANABI_AUTH_TOKEN__)
+    }
+  }
 }
 </script>
 <style>
