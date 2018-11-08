@@ -4,8 +4,8 @@ import Vuex from 'vuex'
 // import common from './common'
 //
 import auth from './modules/auth'
-//
-// import room from './modules/room'
+
+import room from './modules/room'
 //
 // import myRoom from './modules/myRoom'
 // import myGame from './modules/myGame'
@@ -16,7 +16,7 @@ export default new Vuex.Store({
   modules: {
     // common,
     auth,
-    // room,
+    room,
     // myRoom,
     // myGame
   }
