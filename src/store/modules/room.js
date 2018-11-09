@@ -1,7 +1,6 @@
 import axios from '../axios'
 
 const state = {
-  count: -1,
   list: []
 }
 
@@ -12,7 +11,7 @@ const actions = {
         '/room',
         {
           params: {
-            accessToken: this.getters['auth/token']
+            accessToken: this.getters['user/token']
           }
         }
       )
@@ -33,7 +32,6 @@ const actions = {
 
 const getters = {
   list: state => state.list,
-  count: state => state.count
 }
 
 const mutations = {

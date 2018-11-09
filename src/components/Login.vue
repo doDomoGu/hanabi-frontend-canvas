@@ -27,7 +27,7 @@ export default {
   },
   methods: {
     login(){
-        this.$store.dispatch('auth/Login',{username:this.form.username,password:this.form.password})/*.then(res=>{
+        this.$store.dispatch('user/Login',{username:this.form.username,password:this.form.password})/*.then(res=>{
           if(res.success){
 
           }

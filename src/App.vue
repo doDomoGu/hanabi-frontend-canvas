@@ -22,8 +22,24 @@ export default {
     },
     computed: {
         isLogin(){
-            return this.$store.getters['auth/isLogin']
+            return this.$store.getters['user/isLogin']
         }
+    },
+    watch: {
+        isLogin: {
+          handler: function (val, oldVal) {
+//            console.log(val)
+//            console.log(oldVal)
+
+            //登录后读取房间列表
+            if(!this.isLoginLoading && val){
+                this.drawRoomList()
+            }
+            /*if (val.name !== oldVal.name) {
+              this.drawPlayerInfo(val, true)
+            }*/
+          }
+        },
     },
     mounted() {
         let that = this
@@ -38,7 +54,7 @@ export default {
 
         this.drawBottom('#d9f1f8')
 
-        this.auth().then(()=>{
+        this.checkToken().then(()=>{
             that.drawRoomList()
           }
         ).catch(()=>{
@@ -83,19 +99,24 @@ export default {
             this.ctx_bottom.fillStyle = bgColor // 屏幕背景色
             this.ctx_bottom.fillRect(0, 0, this.c_bottom.width, this.c_bottom.height )
         },
-        auth() {
+        checkToken() {
             let that = this
             this.isLoginLoading = true
             return new Promise (function(resolve, reject) {
-                that.$store.dispatch('auth/CheckToken', window.localStorage.__HANABI_AUTH_TOKEN__).then(_=>{
+                let token = localStorage.getItem('__HANABI_AUTH_TOKEN__') || null
+                if(token!== null ){
+                    that.$store.dispatch('user/CheckToken', token).then(_=>{
+                        that.isLoginLoading = false
+                        if(that.$store.getters['user/isLogin']){
+                            resolve()
+                        }else{
+                            reject()
+                        }
+                    })
+                } else {
                     that.isLoginLoading = false
-                    if(that.$store.getters['auth/isLogin']){
-                        resolve()
-                    }else{
-                        reject()
-                    }
-
-                })
+                    reject()
+                }
             })
         },
         drawRoomList(){
