@@ -4,6 +4,7 @@
         <canvas id="c_middle"></canvas>
         <canvas id="c_top"></canvas>
         <Login v-if="!isLoginLoading && !isLogin"></Login>
+        <button v-if="isLogin" style="position:absolute;bottom:0;right:0;" @click="logout">退出</button>
     </div>
 </template>
 
@@ -23,6 +24,9 @@ export default {
     computed: {
         isLogin(){
             return this.$store.getters['user/isLogin']
+        },
+        isInRoom(){
+            return this.$store.getters['myRoom/roomId'] > 0
         }
     },
     watch: {
@@ -31,10 +35,16 @@ export default {
 //            console.log(val)
 //            console.log(oldVal)
 
-            //登录后读取房间列表
-            if(!this.isLoginLoading && val){
-                this.drawRoomList()
+
+            if(val){
+
+                //登录后,非刷新页面，进入初始化流程
+                if(!this.isLoginLoading){
+                    this.init()
+                }
             }
+
+
             /*if (val.name !== oldVal.name) {
               this.drawPlayerInfo(val, true)
             }*/
@@ -42,7 +52,7 @@ export default {
         },
     },
     mounted() {
-        let that = this
+        //let that = this
 
         this.c_bottom = document.querySelector('#c_bottom')
         this.ctx_bottom = this.c_bottom.getContext('2d')
@@ -52,10 +62,12 @@ export default {
 
         //this.ratio = window.devicePixelRatio //MyCanvas.getPixelRatio(this.ctx)
 
+
+        this.clearCanvas()
         this.drawBottom('#d9f1f8')
 
         this.checkToken().then(()=>{
-            that.drawRoomList()
+            this.init()
           }
         ).catch(()=>{
             console.log('not login')
@@ -93,9 +105,23 @@ export default {
 
     },
     methods: {
-        drawBottom(bgColor) {
+        init(){
+
+            if(this.isLogin){
+                if(this.isInRoom){
+                    console.log('is in room')
+                }else{
+                    this.drawRoomList()
+                }
+            }
+        },
+        clearCanvas(){
             this.c_bottom.width = window.innerWidth
             this.c_bottom.height = window.innerHeight
+            this.c_m.width = window.innerWidth
+            this.c_m.height = window.innerHeight
+        },
+        drawBottom(bgColor) {
             this.ctx_bottom.fillStyle = bgColor // 屏幕背景色
             this.ctx_bottom.fillRect(0, 0, this.c_bottom.width, this.c_bottom.height )
         },
@@ -146,6 +172,12 @@ export default {
 
                     y += h + 20
                 })
+            })
+        },
+        logout(){
+            this.$store.dispatch('user/Logout').then(()=>{
+                this.clearCanvas()
+                this.drawBottom('#d9f1f8')
             })
         }
     }

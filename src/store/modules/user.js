@@ -28,6 +28,29 @@ const actions = {
         })
     })
   },
+  Logout ({ dispatch, commit }) {
+    return new Promise((resolve, reject) => {
+      //dispatch('myRoom/Exit', null, { root: true }).then(() => {
+        axios.delete(
+          '/auth',
+          {
+            params: {
+              accessToken: this.getters['user/token']
+            }
+          }
+        )
+          .then((res) => {
+            if (res.data && res.data.success) {
+              commit('clearLoginState')
+            }
+            resolve(res)
+          })
+          .catch(error => {
+            reject(error)
+          })
+      // })
+    })
+  },
   CheckToken ({ commit }, token) {
     return new Promise((resolve, reject) => {
       axios.get(
