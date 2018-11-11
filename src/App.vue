@@ -16,7 +16,7 @@
 
 <script>
     import moment from 'moment'
-    import MyCanvas from './assets/js/MyCanvas'
+    // import MyCanvas from './assets/js/MyCanvas'
     import Login    from './components/Login.vue'
     import RoomList    from './components/RoomList.vue'
 
