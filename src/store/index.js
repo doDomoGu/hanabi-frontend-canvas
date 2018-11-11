@@ -6,7 +6,7 @@ import Vuex from 'vuex'
 import user   from './modules/user'
 import room   from './modules/room'
 import myRoom from './modules/myRoom'
-// import myGame from './modules/myGame'
+import myGame from './modules/myGame'
 
 Vue.use(Vuex)
 
@@ -16,7 +16,7 @@ export default new Vuex.Store({
     user,
     room,
     myRoom,
-    // myGame
+    myGame
   }
 })
 
