@@ -38,10 +38,14 @@ export default {
 
             if(val){
 
-                //登录后,非刷新页面，进入初始化流程
+                //登录后，非刷新页面，进入初始化流程
                 if(!this.isLoginLoading){
                     this.init()
                 }
+            }else {
+
+                //登出，进入初始化流程
+                this.init()
             }
 
 
@@ -113,6 +117,9 @@ export default {
                 }else{
                     this.drawRoomList()
                 }
+            }else{
+                this.clearCanvas()
+                this.drawBottom('#d9f1f8')
             }
         },
         clearCanvas(){
@@ -175,10 +182,7 @@ export default {
             })
         },
         logout(){
-            this.$store.dispatch('user/Logout').then(()=>{
-                this.clearCanvas()
-                this.drawBottom('#d9f1f8')
-            })
+            this.$store.dispatch('user/Logout')
         }
     }
 }
