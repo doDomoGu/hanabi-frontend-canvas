@@ -1,7 +1,8 @@
 import axios from '../axios'
 
 const state = {
-  list: []
+  list: [],
+  count: 0
 }
 
 const actions = {
@@ -32,14 +33,17 @@ const actions = {
 
 const getters = {
   list: state => state.list,
+  count: state => state.count
 }
 
 const mutations = {
   SetRoomList (state, data) {
     state.list = data
+    state.count = data.length
   },
   ClearRoomList (state) {
     state.list = []
+    state.count = 0
   }
 }
 

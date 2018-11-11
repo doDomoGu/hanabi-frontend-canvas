@@ -16,7 +16,7 @@
 
 <script>
     import moment from 'moment'
-    import MyCanvas from './assets/js/MyCanvas.js'
+    import MyCanvas from './assets/js/MyCanvas'
     import Login    from './components/Login.vue'
     import RoomList    from './components/RoomList.vue'
 
@@ -57,18 +57,11 @@
             }*/
         },
         mounted() {
-            //let that = this
-
             this.c_bottom = document.querySelector('#c_bottom')
             this.ctx_bottom = this.c_bottom.getContext('2d')
 
-            /*this.c_m = document.querySelector('#c_middle')
-            this.ctx_m = this.c_m.getContext('2d')*/
-
             //this.ratio = window.devicePixelRatio //MyCanvas.getPixelRatio(this.ctx)
 
-
-            this.clearCanvas()
             this.drawBottom('#d9f1f8')
 
             this.checkToken().then(()=>{
@@ -94,7 +87,6 @@
                 console.log(moment().format("YYYY-MM-DD HH:mm:ss SSS"))
                 console.log('app init')
 
-                this.clearCanvas()  //初始化 画板
                 this.drawBottom('#d9f1f8')  //绘制背景图
 
                 if(this.isLogin){
@@ -108,20 +100,19 @@
                         }
                     }else{
                         console.log('is not in room')
-                        //this.drawRoomList()
                         //this.$store.dispatch('room/List')
                     }
                 }else{
                   console.log('not login')
                 }
             },
-            clearCanvas(){
-                this.c_bottom.width = window.innerWidth
-                this.c_bottom.height = window.innerHeight
-    //            this.c_m.width = window.innerWidth
-    //            this.c_m.height = window.innerHeight
+            clearCanvas(ctx){
+                ctx.canvas.width = window.innerWidth
+                ctx.canvas.height = window.innerHeight
             },
             drawBottom(bgColor) {
+                this.clearCanvas(this.ctx_bottom)
+
                 this.ctx_bottom.fillStyle = bgColor // 屏幕背景色
                 this.ctx_bottom.fillRect(0, 0, this.c_bottom.width, this.c_bottom.height )
             },

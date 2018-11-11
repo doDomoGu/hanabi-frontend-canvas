@@ -2,10 +2,9 @@
     <canvas id="canvas_room_list"></canvas>
 </template>
 <script>
-
     import moment   from 'moment'
-
     import MyCanvas from '../assets/js/MyCanvas.js'
+    import RLCParam from '../assets/js/MyCanvasParam/roomList.js'
 
     export default {
         name: 'room_list',
@@ -47,6 +46,28 @@
             this.intervalId = setInterval(()=>{
                 this.getList()
             },1000)
+
+            /* 点击事件 */
+            this.canvas.addEventListener('click', (event) => {
+              // console.log(evt); return true;
+              // evt = evt.changedTouches[0]; //touchend
+              // evt = evt.touches[0];   //touchstart
+                const mousePos = MyCanvas.getMousePos(this.canvas, event, 1)
+                console.log("鼠标指针坐标：" + mousePos.x + "," + mousePos.y);
+
+                //getListItemIndex(mousePos)
+
+
+
+              /*if (that.isExitBtnPath(mousePos)) {
+
+                setTimeout(function () {
+                  that.exit()
+                }, 200)
+
+              }*/
+            }, false)
+
         },
         methods: {
             getList(){
@@ -71,15 +92,16 @@
 
                 this.clearCanvas(ctx.canvas)
 
-                let x = 30
-                let y = 30
-                let w = ctx.canvas.width - x * 2
-                let h = 40
+                let x = RLCParam.listX
+                let y = RLCParam.listY
+                let w = RLCParam.listItemW
+                let h = RLCParam.listItemH
+                let yOffset = RLCParam.listItemYOffset
 
-                roomList.forEach((r,i)=>{
-                    let y2 = y + ( h + 20 ) * i
+
+                roomList.forEach((r)=>{
                     ctx.fillStyle = '#fffefd'
-                    ctx.fillRect(x, y2, w, h)
+                    ctx.fillRect(x, y, w, h)
 
                     ctx.font = MyCanvas.px2Rem(30) + 'px Microsoft JhengHei'
                     ctx.fillStyle = '#8a8a8a'
@@ -87,9 +109,10 @@
                     ctx.textBaseline = 'middle'
 
                     let str = r.id + '. ' + r.title
-                    ctx.fillText(str, x + 10, y2 + h  / 2)
-                })
+                    ctx.fillText(str, x + 10, y + h  / 2)
 
+                    y += yOffset
+                })
             },
         },
         destroyed(){
