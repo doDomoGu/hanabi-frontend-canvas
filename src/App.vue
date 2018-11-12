@@ -8,7 +8,7 @@
         <!--<canvas id="c_my_room"></canvas>
         <canvas id="c_my_game"></canvas>-->
 
-        <canvas id="c_top"></canvas>
+        <!--<canvas id="c_top"></canvas>-->
         <Login v-if="!isLoginLoading && !isLogin"></Login>
         <button v-if="isLogin" style="position:absolute;bottom:0;right:0;" @click="logout">退出</button>
     </div>
