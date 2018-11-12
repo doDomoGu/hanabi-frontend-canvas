@@ -7,7 +7,7 @@ _.listY = 30
 
 _.listItemW = width - _.listX * 2
 _.listItemH = 30
-_.listItemPadding = 20
+_.listItemPad = 20
 
 
 

@@ -4,7 +4,7 @@
 <script>
     import moment   from 'moment'
     import MyCanvas from '../assets/js/MyCanvas.js'
-//    import RLCParam from '../assets/js/MyCanvasParam/roomList.js'
+    import RLCParam from '../assets/js/MyCanvasParam/myRoom.js'
 
     export default {
         name: 'my_room',
@@ -14,6 +14,12 @@
             }
         },
         computed:{
+            hostInfo(){
+
+            },
+            guestInfo(){
+
+            }
         },
         watch: {
             list(newVal, oldVal) {
@@ -45,6 +51,9 @@
                     this.getList()
                 },1000)
             })*/
+
+
+
         },
         methods: {
 

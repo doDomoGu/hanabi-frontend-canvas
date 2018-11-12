@@ -1,34 +1,34 @@
 import axios from '../axios'
 
 const state = {
-  list: [],
-  count: 0
+    list: [],
+    count: 0
 }
 
 const actions = {
-  List ({ commit }) {
-    return new Promise((resolve, reject) => {
-      axios.get(
-        '/room',
-        {
-          params: {
-            accessToken: this.getters['user/token']
-          }
-        }
-      )
-        .then((res) => {
-          if (res.data) {
-            commit('SetRoomList', res.data)
-          } else {
-            commit('ClearRoomList')
-          }
-          resolve(res.data)
+    GetList ({ commit }) {
+        return new Promise((resolve, reject) => {
+            axios.get(
+                '/room',
+                {
+                    params: {
+                        accessToken: this.getters['user/token']
+                    }
+                }
+            )
+            .then((res) => {
+                if (res.data) {
+                    commit('SetList', res.data)
+                } else {
+                    commit('ClearList')
+                }
+                resolve()
+            })
+            .catch(error => {
+                reject(error)
+            })
         })
-        .catch(error => {
-          reject(error)
-        })
-    })
-  }
+    }
 }
 
 const getters = {
@@ -37,11 +37,11 @@ const getters = {
 }
 
 const mutations = {
-  SetRoomList (state, data) {
+  SetList (state, data) {
     state.list = data
     state.count = data.length
   },
-  ClearRoomList (state) {
+  ClearList (state) {
     state.list = []
     state.count = 0
   }

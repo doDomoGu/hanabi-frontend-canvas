@@ -55,7 +55,7 @@
             getList(){
                 return new Promise((resolve, reject) => {
                     if(this.$store.getters['user/isLogin']){
-                        this.$store.dispatch('room/List').then(()=>{
+                        this.$store.dispatch('room/GetList').then(()=>{
                           resolve()
                         })
                     }else{
@@ -84,7 +84,7 @@
                 let y = RLCParam.listY
                 let w = RLCParam.listItemW
                 let h = RLCParam.listItemH
-                let pad = RLCParam.listItemPadding
+                let pad = RLCParam.listItemPad
 
 
                 list.forEach((r)=>{
@@ -154,7 +154,7 @@
                                 break
                             }
 
-                            y1 = y1 + RLCParam.listItemH + RLCParam.listItemPadding
+                            y1 = y1 + RLCParam.listItemH + RLCParam.listItemPad
 
                             y2 = y1 + RLCParam.listItemH
 
@@ -171,9 +171,7 @@
                       return this.$store.dispatch('myRoom/GetInfo',{force:true})
                     })
                 }
-
-                this.drawTest(this.ctx, mousePos, itemIndex)
-
+//                this.drawTest(this.ctx, mousePos, itemIndex)
             }
         },
         destroyed(){
