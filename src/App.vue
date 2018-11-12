@@ -1,8 +1,11 @@
 <template>
     <div>
         <canvas id="c_bottom"></canvas>
-        <canvas id="c_middle"></canvas>
+        <!--<canvas id="c_middle"></canvas>-->
         <room-list v-if="isLogin && !isInRoom"></room-list>
+
+        <my-room v-if="isLogin && isInRoom && !isInGame"></my-room>
+        <my-game v-if="isLogin && isInRoom && isInGame"></my-game>
 
         <!--<canvas id="c_game_list"></canvas>-->
         <!--<canvas id="c_my_room"></canvas>
@@ -15,14 +18,16 @@
 </template>
 
 <script>
-    import moment from 'moment'
-    // import MyCanvas from './assets/js/MyCanvas'
-    import Login    from './components/Login.vue'
-    import RoomList    from './components/RoomList.vue'
+    import moment       from 'moment'
+//    import MyCanvas     from './assets/js/MyCanvas'
+    import Login        from './components/Login.vue'
+    import RoomList     from './components/RoomList.vue'
+    import MyRoom       from './components/MyRoom.vue'
+    import MyGame       from './components/MyGame.vue'
 
     export default {
         name: 'app',
-        components: { Login, RoomList },
+        components: { Login, RoomList, MyRoom, MyGame },
         data() {
             return {
                 isLoginLoading : false

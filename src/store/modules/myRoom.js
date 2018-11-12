@@ -17,7 +17,7 @@ const state = {
 }
 
 const actions = {
-  Enter ({ commit }, roomId) {
+  Enter ( {} ,roomId) {
     return new Promise((resolve, reject) => {
       axios.post(
         '/my-room/enter' + '?accessToken=' + this.getters['user/token'],
@@ -36,7 +36,7 @@ const actions = {
         })
     })
   },
-  Exit ({ commit }) {
+  Exit () {
     return new Promise((resolve, reject) => {
       axios.post(
         '/my-room/exit' + '?accessToken=' + this.getters['user/token']
@@ -80,6 +80,7 @@ const actions = {
             commit('ClearIsHost')
             commit('ClearRoomPlayer')
           }
+          resolve()
           resolve(res.data)
         })
         .catch(error => {
@@ -87,7 +88,7 @@ const actions = {
         })
     })
   },
-  DoReady ({ commit }) {
+  DoReady () {
     return new Promise((resolve, reject) => {
       axios.post(
         '/my-room/do-ready' + '?accessToken=' + this.getters['user/token']

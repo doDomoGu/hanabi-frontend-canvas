@@ -20,7 +20,7 @@ const actions = {
   /*Start ({ commit }) {
     return new Promise((resolve, reject) => {
       axios.post(
-        '/my-game/start' + '?accessToken=' + this.getters['auth/token']
+        '/my-game/start' + '?accessToken=' + this.getters['user/token']
       )
         .then((res) => {
           if (res.data.success) {
@@ -40,7 +40,7 @@ const actions = {
   End ({ commit }) {
     return new Promise((resolve, reject) => {
       axios.post(
-        '/my-game/end' + '?accessToken=' + this.getters['auth/token']
+        '/my-game/end' + '?accessToken=' + this.getters['user/token']
       )
         .then((res) => {
           if (res.data.success) {
@@ -62,7 +62,7 @@ const actions = {
     if (!param.hasOwnProperty('mode')) { param.mode = 'all' }
     return new Promise((resolve, reject) => {
       axios.post(
-        '/my-game/get-info' + '?accessToken=' + this.getters['auth/token'],
+        '/my-game/get-info' + '?accessToken=' + this.getters['user/token'],
         param
       )
         .then((res) => {
@@ -90,7 +90,7 @@ const actions = {
   DoDiscard ({ commit }, cardSelectOrd) {
     return new Promise((resolve, reject) => {
       axios.post(
-        '/my-game/do-discard' + '?accessToken=' + this.getters['auth/token'],
+        '/my-game/do-discard' + '?accessToken=' + this.getters['user/token'],
         {
           cardSelectOrd: cardSelectOrd
         }
@@ -112,7 +112,7 @@ const actions = {
   DoPlay ({ commit }, cardSelectOrd) {
     return new Promise((resolve, reject) => {
       axios.post(
-        '/my-game/do-play' + '?accessToken=' + this.getters['auth/token'],
+        '/my-game/do-play' + '?accessToken=' + this.getters['user/token'],
         {
           cardSelectOrd: cardSelectOrd
         }
@@ -134,7 +134,7 @@ const actions = {
   DoCue ({ commit }, [cardSelectOrd, cueType]) {
     return new Promise((resolve, reject) => {
       axios.post(
-        '/my-game/do-cue' + '?accessToken=' + this.getters['auth/token'],
+        '/my-game/do-cue' + '?accessToken=' + this.getters['user/token'],
         {
           cardSelectOrd: cardSelectOrd,
           cueType: cueType
@@ -157,7 +157,7 @@ const actions = {
   AutoPlay ({ commit }, cardSelectOrd) {
     return new Promise((resolve, reject) => {
       axios.post(
-        '/my-game/auto-play' + '?accessToken=' + this.getters['auth/token']
+        '/my-game/auto-play' + '?accessToken=' + this.getters['user/token']
       )
         .then((res) => {
           if (res.data.success) {

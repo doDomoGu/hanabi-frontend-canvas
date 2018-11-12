@@ -14,12 +14,15 @@
             }
         },
         computed:{
-            roomList(){
+            list(){
                 return this.$store.getters['room/list']
+            },
+            count(){
+                return this.$store.getters['room/count']
             }
         },
         watch: {
-            roomList(newVal, oldVal) {
+            list(newVal, oldVal) {
     //            console.log(newVal)
     //            console.log(oldVal)
     //            console.log(newVal != oldVal)
@@ -47,9 +50,6 @@
                     this.getList()
                 },1000)
             })
-
-
-
         },
         methods: {
             getList(){
@@ -73,7 +73,7 @@
                 canvas.height = window.innerHeight
             },
             //绘制列表
-            draw(ctx, roomList){
+            draw(ctx, list){
                 this.clearCanvas(ctx.canvas)
 
 //                console.log(' ')
@@ -87,7 +87,7 @@
                 let pad = RLCParam.listItemPadding
 
 
-                roomList.forEach((r)=>{
+                list.forEach((r)=>{
                     ctx.fillStyle = '#fefefe'
                     ctx.fillRect(x, y, w, h)
 
@@ -146,7 +146,7 @@
                         let y1 = RLCParam.listY
                         let y2 = y1 + RLCParam.listItemH
 
-                        for(let i = 0 ; i < listCount ; i++ ){
+                        for(let i = 1 ; i <= listCount ; i++ ){
 //                            console.log(pos.y + ':' + y1 + '~' + y2)
 
                             if( pos.y >= y1 && pos.y <= y2){
@@ -164,7 +164,13 @@
                     return index
                 }
 
-                let itemIndex = getListItemIndex(mousePos,10)
+                let itemIndex = getListItemIndex(mousePos,this.count)
+
+                if(itemIndex > 0 && itemIndex <= this.count) {
+                    this.$store.dispatch('myRoom/Enter',itemIndex).then(()=>{
+                      return this.$store.dispatch('myRoom/GetInfo',{force:true})
+                    })
+                }
 
                 this.drawTest(this.ctx, mousePos, itemIndex)
 
