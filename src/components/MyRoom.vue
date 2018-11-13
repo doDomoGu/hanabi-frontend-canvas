@@ -73,7 +73,7 @@
         methods: {
             getPlayerInfo(){
                 return new Promise((resolve, reject) => {
-                    this.$store.dispatch('myRoom/GetInfo').then(()=>{
+                    this.$store.dispatch('myRoom/GetInfo',{force:true}).then(()=>{
                         resolve()
                     })
                 })

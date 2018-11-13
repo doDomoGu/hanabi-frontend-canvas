@@ -38,9 +38,9 @@
             }
         },
         mounted() {
-            // console.log(' ')
-            // console.log(moment().format("YYYY-MM-DD HH:mm:ss SSS"))
-            // console.log('mounted')
+             console.log(' ')
+             console.log(moment().format("YYYY-MM-DD HH:mm:ss SSS"))
+             console.log('mounted')
 
             this.canvas = document.querySelector('#canvas_room_list')
             this.ctx = this.canvas.getContext('2d')
@@ -175,9 +175,9 @@
             }
         },
         destroyed(){
-            // console.log(' ')
-            // console.log(moment().format("YYYY-MM-DD HH:mm:ss SSS"))
-            // console.log('destroyed')
+             console.log(' ')
+             console.log(moment().format("YYYY-MM-DD HH:mm:ss SSS"))
+             console.log('destroyed')
 
             clearInterval(this.intervalId)
         }

@@ -2,10 +2,10 @@
     <div>
         <canvas id="c_bottom"></canvas>
         <!--<canvas id="c_middle"></canvas>-->
-        <room-list v-if="isLogin && !isInRoom"></room-list>
+        <room-list v-if="!isLoginLoading && isLogin && !isInRoom"></room-list>
 
-        <my-room v-if="isLogin && isInRoom && !isInGame"></my-room>
-        <my-game v-if="isLogin && isInRoom && isInGame"></my-game>
+        <my-room v-if="!isLoginLoading && isLogin && isInRoom && !isInGame"></my-room>
+        <my-game v-if="!isLoginLoading && isLogin && isInRoom && isInGame"></my-game>
 
         <!--<canvas id="c_game_list"></canvas>-->
         <!--<canvas id="c_my_room"></canvas>
@@ -13,7 +13,7 @@
 
         <!--<canvas id="c_top"></canvas>-->
         <Login v-if="!isLoginLoading && !isLogin"></Login>
-        <button v-if="isLogin" style="position:absolute;bottom:0;right:0;" @click="logout">退出</button>
+        <button v-if="!isLoginLoading && isLogin" style="position:absolute;bottom:0;right:0;" @click="logout">退出</button>
     </div>
 </template>
 
