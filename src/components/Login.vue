@@ -15,26 +15,33 @@
     </form>
 </template>
 <script>
-export default {
-  name: 'login_form',
-  data() {
-    return {
-      form: {
-        username: 'admin',
-        password: '123123'
-      },
-    }
-  },
-  methods: {
-    login(){
-        this.$store.dispatch('user/Login',{username:this.form.username,password:this.form.password})/*.then(res=>{
-          if(res.success){
+    export default {
+        name: 'login_form',
+        data() {
+            return {
+                form: {
+                    username: 'admin',
+                    password: '123123'
+                },
+            }
+        },
+        methods: {
+            login(){
+                this.$store.dispatch('user/Login',{username:this.form.username,password:this.form.password}).then(()=>{
 
-          }
-        })*/
+                    this.$store.dispatch('myRoom/GetInfo',{mode:'simple',force:true}).then(()=>{
+
+                        if(this.$store.getters['myRoom/roomId'] > 0) {
+
+                            this.$store.dispatch('myGame/GetInfo',{mode:'simple',force:true})
+
+                        }
+
+                    })
+                })
+            }
+        }
     }
-  }
-}
 </script>
 <style scoped>
     #login-form {

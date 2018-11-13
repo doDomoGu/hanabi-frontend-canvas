@@ -4,7 +4,7 @@
 <script>
     import moment   from 'moment'
     import MyCanvas from '../assets/js/MyCanvas.js'
-    import RLCParam from '../assets/js/MyCanvasParam/myRoom.js'
+    import MRCParam from '../assets/js/MyCanvasParam/myRoom.js'
 
     export default {
         name: 'my_room',
@@ -34,8 +34,12 @@
 
                 if(newVal != oldVal){ //TODO object 永不相等
 
+
+                    console.log(' ')
+                    console.log(moment().format("YYYY-MM-DD HH:mm:ss SSS"))
                     console.log('hostPlayer watch')
-//                    this.draw(this.ctx, newVal)
+
+                    this.drawPlayer(this.ctx, true, newVal)
 
                 }
             },
@@ -44,8 +48,12 @@
     //            console.log(oldVal)
 
                 if(newVal != oldVal){ //TODO object 永不相等
+
+                    console.log(' ')
+                    console.log(moment().format("YYYY-MM-DD HH:mm:ss SSS"))
                     console.log('guestPlayer watch')
-//                    this.draw(this.ctx, newVal)
+
+                    this.drawPlayer(this.ctx, false, newVal)
 
                 }
             }
@@ -58,6 +66,7 @@
             this.canvas = document.querySelector('#canvas_my_room')
             this.ctx = this.canvas.getContext('2d')
 
+            this.clearCanvas(this.canvas)
 
             this.getPlayerInfo()
 
@@ -74,9 +83,41 @@
             getPlayerInfo(){
                 return new Promise((resolve, reject) => {
                     this.$store.dispatch('myRoom/GetInfo',{force:true}).then(()=>{
+
+                        console.log(' ')
+                        console.log(moment().format("YYYY-MM-DD HH:mm:ss SSS"))
+                        console.log('get info in my room')
+
                         resolve()
                     })
                 })
+            },
+            clearCanvas(canvas) {
+                canvas.width = window.innerWidth
+                canvas.height = window.innerHeight
+            },
+            drawPlayer(ctx, isHost, info){
+
+                let area = {}
+
+                if(isHost){
+                    area.x = MRCParam.host.area.x
+                    area.y = MRCParam.host.area.y
+                    area.w = MRCParam.host.area.w
+                    area.h = MRCParam.host.area.h
+                }else{
+                    area.x = MRCParam.guest.area.x
+                    area.y = MRCParam.guest.area.y
+                    area.w = MRCParam.guest.area.w
+                    area.h = MRCParam.guest.area.h
+                }
+
+                ctx.clearRect(area.x,area.y,area.w,area.h)
+
+
+                ctx.fillStyle = '#fefefe'
+                ctx.fillRect(area.x,area.y,area.w,area.h)
+
             }
         },
         destroyed(){
@@ -89,7 +130,7 @@
     }
 </script>
 <style scoped>
-    #canvas_room_list {
+    #canvas_my_room {
         position: absolute;
     }
 </style>
