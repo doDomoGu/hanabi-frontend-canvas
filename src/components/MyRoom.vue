@@ -68,15 +68,11 @@
 
             this.clearCanvas(this.canvas)
 
-            this.getPlayerInfo()
-
-            /*this.getList().then(()=>{
+            this.getPlayerInfo().then(()=>{
                 this.intervalId = setInterval(()=>{
-                    this.getList()
+                    this.getPlayerInfo()
                 },1000)
-            })*/
-
-
+            })
 
         },
         methods: {
@@ -102,6 +98,8 @@
 
                 let infoArea = {}
 
+                let button = {}
+
                 if(isHost){
                     area.x = MRCParam.host.area.x
                     area.y = MRCParam.host.area.y
@@ -112,6 +110,13 @@
                     infoArea.y = MRCParam.host.info.area.y
                     infoArea.w = MRCParam.host.info.area.w
                     infoArea.h = MRCParam.host.info.area.h
+
+                    button.x = MRCParam.host.button.x
+                    button.y = MRCParam.host.button.y
+                    button.w = MRCParam.host.button.w
+                    button.h = MRCParam.host.button.h
+
+                    button.txt = '开始游戏'
                 }else{
                     area.x = MRCParam.guest.area.x
                     area.y = MRCParam.guest.area.y
@@ -122,31 +127,53 @@
                     infoArea.y = MRCParam.guest.info.area.y
                     infoArea.w = MRCParam.guest.info.area.w
                     infoArea.h = MRCParam.guest.info.area.h
+
+                    button.x = MRCParam.guest.button.x
+                    button.y = MRCParam.guest.button.y
+                    button.w = MRCParam.guest.button.w
+                    button.h = MRCParam.guest.button.h
+
+                    button.txt = '准备'
                 }
 
-                ctx.clearRect(area.x,area.y,area.w,area.h)
+                ctx.clearRect(area.x, area.y, area.w, area.h)
 
 
                 ctx.fillStyle = '#fefefe'
-                ctx.fillRect(area.x,area.y,area.w,area.h)
+                ctx.fillRect(area.x, area.y, area.w, area.h)
 
                 ctx.fillStyle = '#fee9d6'
-                ctx.fillRect(infoArea.x,infoArea.y,infoArea.w,infoArea.h)
+                ctx.fillRect(infoArea.x, infoArea.y, infoArea.w, infoArea.h)
 
                 if(info.id > -1){
                     ctx.font = MyCanvas.px2Rem(24) + 'px Microsoft JhengHei'
                     ctx.fillStyle = '#4b4b4b'
                     ctx.textAlign = 'left'
                     ctx.textBaseline = 'middle'
-                    let str = info.name
+                    let str = info.name + (isHost == this.isHost ? '(你)':'')
                     ctx.fillText(str, infoArea.x + 10, infoArea.y + infoArea.h  / 2)
                 }
 
+                if(isHost == this.isHost){
+                    if(this.isHost == this.isReady){
+                       button.bgcolor   = MRCParam.player.button.enable.bgcolor
+                        button.txtcolor  = MRCParam.player.button.enable.txtcolor
+                    }else{
+                        button.bgcolor   = MRCParam.player.button.disable.bgcolor
+                        button.txtcolor  = MRCParam.player.button.disable.txtcolor
+                    }
 
+                    ctx.fillStyle = button.bgcolor
+                    ctx.fillRect(button.x, button.y, button.w, button.h)
 
+                    ctx.font = MyCanvas.px2Rem(16) + 'px Microsoft JhengHei'
+                    ctx.fillStyle = button.txtcolor
+                    ctx.textAlign = 'left'
+                    ctx.textBaseline = 'middle'
+                    ctx.fillText(button.txt, button.x + 10, button.y + button.h  / 2)
 
-
-
+                } 
+                
             }
         },
         destroyed(){
@@ -154,7 +181,7 @@
              console.log(moment().format("YYYY-MM-DD HH:mm:ss SSS"))
              console.log('my-room destroyed')
 
-            //clearInterval(this.intervalId)
+            clearInterval(this.intervalId)
         }
     }
 </script>
