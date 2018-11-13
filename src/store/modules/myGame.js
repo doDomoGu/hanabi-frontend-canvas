@@ -1,4 +1,4 @@
-// import axios from '../axios'
+ import axios from '../axios'
 
 const state = {
   isPlaying: null,
@@ -17,7 +17,7 @@ const state = {
 }
 
 const actions = {
-  /*Start ({ commit }) {
+  Start ({ commit }) {
     return new Promise((resolve, reject) => {
       axios.post(
         '/my-game/start' + '?accessToken=' + this.getters['user/token']
@@ -172,7 +172,7 @@ const actions = {
           reject(error)
         })
     })
-  },*/
+  },
 
 }
 

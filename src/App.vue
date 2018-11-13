@@ -122,17 +122,37 @@
                 this.ctx_bottom.fillRect(0, 0, this.c_bottom.width, this.c_bottom.height )
             },
             checkToken() {
-                let that = this
                 this.isLoginLoading = true
-                return new Promise (function(resolve, reject) {
+
+                return new Promise ((resolve, reject) => {
+
                     let token = localStorage.getItem('__HANABI_AUTH_TOKEN__') || null
+
                     if(token!== null ){
-                        that.$store.dispatch('user/CheckToken', token).then( ()=>{
-                            that.isLoginLoading = false
-                            resolve()
+
+                        this.$store.dispatch('user/CheckToken', token).then(()=>{
+
+                            this.$store.dispatch('myRoom/GetInfo',{mode:'simple',force:true}).then(()=>{
+
+                                if(this.$store.getters['myRoom/roomId'] > 0) {
+
+                                    this.$store.dispatch('myGame/GetInfo',{mode:'simple',force:true}).then(()=>{
+
+                                        this.isLoginLoading = false
+                                        resolve()
+                                    })
+                                }else{
+
+                                    this.isLoginLoading = false
+                                    resolve()
+
+                                }
+
+                            })
+
                         })
                     } else {
-                        that.isLoginLoading = false
+                        this.isLoginLoading = false
                         reject()
                     }
                 })

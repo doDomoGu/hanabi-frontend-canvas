@@ -14,37 +14,52 @@
             }
         },
         computed:{
-            hostInfo(){
-
+            isHost(){
+                return this.$store.getters['myRoom/isHost']
             },
-            guestInfo(){
-
+            hostPlayer(){
+                return this.$store.getters['myRoom/hostPlayer']
+            },
+            guestPlayer(){
+                return this.$store.getters['myRoom/guestPlayer']
+            },
+            isReady(){
+                return this.$store.getters['myRoom/isReady']
             }
         },
         watch: {
-            list(newVal, oldVal) {
+            hostPlayer(newVal, oldVal) {
     //            console.log(newVal)
     //            console.log(oldVal)
-    //            console.log(newVal != oldVal)
-    //            console.log(Object.is(newVal, oldVal))
 
                 if(newVal != oldVal){ //TODO object 永不相等
-    //                console.log(this.canvas)
-    //                console.log(this.ctx)
 
-                    this.draw(this.ctx, newVal)
+                    console.log('hostPlayer watch')
+//                    this.draw(this.ctx, newVal)
+
+                }
+            },
+            guestPlayer(newVal, oldVal) {
+    //            console.log(newVal)
+    //            console.log(oldVal)
+
+                if(newVal != oldVal){ //TODO object 永不相等
+                    console.log('guestPlayer watch')
+//                    this.draw(this.ctx, newVal)
 
                 }
             }
         },
         mounted() {
-
              console.log(' ')
              console.log(moment().format("YYYY-MM-DD HH:mm:ss SSS"))
              console.log('my-room mounted')
 
             this.canvas = document.querySelector('#canvas_my_room')
             this.ctx = this.canvas.getContext('2d')
+
+
+            this.getPlayerInfo()
 
             /*this.getList().then(()=>{
                 this.intervalId = setInterval(()=>{
@@ -56,7 +71,13 @@
 
         },
         methods: {
-
+            getPlayerInfo(){
+                return new Promise((resolve, reject) => {
+                    this.$store.dispatch('myRoom/GetInfo').then(()=>{
+                        resolve()
+                    })
+                })
+            }
         },
         destroyed(){
              console.log(' ')
