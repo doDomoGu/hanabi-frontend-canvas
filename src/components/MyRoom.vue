@@ -100,16 +100,28 @@
 
                 let area = {}
 
+                let infoArea = {}
+
                 if(isHost){
                     area.x = MRCParam.host.area.x
                     area.y = MRCParam.host.area.y
                     area.w = MRCParam.host.area.w
                     area.h = MRCParam.host.area.h
+
+                    infoArea.x = MRCParam.host.info.area.x
+                    infoArea.y = MRCParam.host.info.area.y
+                    infoArea.w = MRCParam.host.info.area.w
+                    infoArea.h = MRCParam.host.info.area.h
                 }else{
                     area.x = MRCParam.guest.area.x
                     area.y = MRCParam.guest.area.y
                     area.w = MRCParam.guest.area.w
                     area.h = MRCParam.guest.area.h
+
+                    infoArea.x = MRCParam.guest.info.area.x
+                    infoArea.y = MRCParam.guest.info.area.y
+                    infoArea.w = MRCParam.guest.info.area.w
+                    infoArea.h = MRCParam.guest.info.area.h
                 }
 
                 ctx.clearRect(area.x,area.y,area.w,area.h)
@@ -117,6 +129,23 @@
 
                 ctx.fillStyle = '#fefefe'
                 ctx.fillRect(area.x,area.y,area.w,area.h)
+
+                ctx.fillStyle = '#fee9d6'
+                ctx.fillRect(infoArea.x,infoArea.y,infoArea.w,infoArea.h)
+
+                if(info.id > -1){
+                    ctx.font = MyCanvas.px2Rem(24) + 'px Microsoft JhengHei'
+                    ctx.fillStyle = '#4b4b4b'
+                    ctx.textAlign = 'left'
+                    ctx.textBaseline = 'middle'
+                    let str = info.name
+                    ctx.fillText(str, infoArea.x + 10, infoArea.y + infoArea.h  / 2)
+                }
+
+
+
+
+
 
             }
         },
