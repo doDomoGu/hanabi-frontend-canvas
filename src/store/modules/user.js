@@ -16,10 +16,10 @@ const actions = {
             )
                 .then((res) => {
                     if (res.data && res.data.success) {
-                        commit('setTokenForced', res.data.token)
+                        commit('setToken', res.data.token)
                         commit('setLoginState')
-                        commit('setId', { userId: res.data.userId })
-                        commit('setInfo', { userInfo: res.data.userInfo })
+                        commit('setId', res.data.userId)
+                        commit('setInfo', res.data.userInfo)
                     }
                     resolve(res)
                 })

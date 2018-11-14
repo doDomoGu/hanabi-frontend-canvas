@@ -35,13 +35,13 @@ export default {
     },
     computed: {
         isLogin(){
-            return this.$store.getters['user/isLogin']
+            return Boolean(this.$store.getters['user/isLogin'])
         },
         isInRoom(){
             return this.$store.getters['myRoom/roomId'] > 0
         },
         isInGame(){
-            return this.$store.getters['myGame/isPlaying']
+            return Boolean(this.$store.getters['myGame/isPlaying'])
         },
     },
     watch: {
@@ -55,11 +55,7 @@ export default {
                 //登出，进入初始化流程
                 this.init()
             }
-        }/*,
-            roomList(newVal, oldVal) {
-                console.log(newVal)
-                console.log(oldVal)
-            }*/
+        }
     },
     mounted() {
         this.c_bottom = document.querySelector('#c_bottom')
@@ -75,16 +71,6 @@ export default {
         ).catch(()=>{
             //
         })
-
-        /*this.ctx.fillStyle = '#008800'
-            let rect = {
-                x:100,
-                y:100,
-                h:100,
-                w:100
-            }
-            MyCanvas.drawRoundedRect(rect, 2, this.ctx)*/
-
     },
     methods: {
         init(){
