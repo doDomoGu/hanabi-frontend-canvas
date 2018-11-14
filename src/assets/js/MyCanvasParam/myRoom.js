@@ -21,13 +21,18 @@ _.player.button = {}
 _.player.button.w = 100
 _.player.button.h = 30
 
-_.player.button.enable = {}
-_.player.button.enable.bgcolor = '#ff4400'
-_.player.button.enable.txtcolor = '#ffffff'
+_.player.button.enabled = {}
+_.player.button.enabled.ok = {}
+_.player.button.enabled.ok.bgcolor = '#ff4400'
+_.player.button.enabled.ok.txtcolor = '#ffffff'
+_.player.button.enabled.cancel = {}
+_.player.button.enabled.cancel.bgcolor = '#0044ff'
+_.player.button.enabled.cancel.txtcolor = '#ffffff'
+_.player.button.disabled = {}
+_.player.button.disabled.bgcolor = '#cccccc'
+_.player.button.disabled.txtcolor = '#ffffff'
 
-_.player.button.disable = {}
-_.player.button.disable.bgcolor = '#cccccc'
-_.player.button.disable.txtcolor = '#ffffff'
+
 
 _.host  = {}
 _.guest = {}
@@ -69,6 +74,14 @@ _.guest.button.w = _.player.button.w
 _.guest.button.h = _.player.button.h
 _.guest.button.x = _.guest.area.x + _.player.area.padding
 _.guest.button.y = _.guest.area.y + _.player.area.h - _.player.area.padding - _.player.button.h
+
+_.guest.readyArea = {}
+_.guest.readyArea.w = _.player.button.w
+_.guest.readyArea.h = _.player.button.h
+_.guest.readyArea.x = _.guest.area.x + _.player.area.padding
+_.guest.readyArea.y = _.guest.area.y + _.player.area.h - _.player.area.padding - _.player.button.h
+_.guest.readyArea.bgcolor = '#dddddd'
+_.guest.readyArea.txtcolor = '#ff6352'
 
 
 export default _

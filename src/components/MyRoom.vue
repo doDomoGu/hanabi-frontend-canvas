@@ -115,8 +115,6 @@
                     button.y = MRCParam.host.button.y
                     button.w = MRCParam.host.button.w
                     button.h = MRCParam.host.button.h
-
-                    button.txt = '开始游戏'
                 }else{
                     area.x = MRCParam.guest.area.x
                     area.y = MRCParam.guest.area.y
@@ -132,8 +130,6 @@
                     button.y = MRCParam.guest.button.y
                     button.w = MRCParam.guest.button.w
                     button.h = MRCParam.guest.button.h
-
-                    button.txt = '准备'
                 }
 
                 ctx.clearRect(area.x, area.y, area.w, area.h)
@@ -150,17 +146,34 @@
                     ctx.fillStyle = '#4b4b4b'
                     ctx.textAlign = 'left'
                     ctx.textBaseline = 'middle'
-                    let str = info.name + (isHost == this.isHost ? '(你)':'')
+                    let str = info.name + (isHost === this.isHost ? '*':'')
                     ctx.fillText(str, infoArea.x + 10, infoArea.y + infoArea.h  / 2)
                 }
 
-                if(isHost == this.isHost){
-                    if(this.isHost == this.isReady){
-                       button.bgcolor   = MRCParam.player.button.enable.bgcolor
-                        button.txtcolor  = MRCParam.player.button.enable.txtcolor
-                    }else{
-                        button.bgcolor   = MRCParam.player.button.disable.bgcolor
-                        button.txtcolor  = MRCParam.player.button.disable.txtcolor
+
+                if(isHost === this.isHost){ //渲染当前玩家的按钮
+
+                    if(this.isHost){ //当前玩家是主机
+                        if(this.isReady){ //客机玩家已准备 按钮enabled_ok
+                            button.bgcolor   = MRCParam.player.button.enabled.ok.bgcolor
+                            button.txtcolor  = MRCParam.player.button.enabled.ok.txtcolor
+                        }else{ //客机玩家未准备 按钮disabled
+                            button.bgcolor   = MRCParam.player.button.disabled.bgcolor
+                            button.txtcolor  = MRCParam.player.button.disabled.txtcolor
+                        }
+
+                        button.txt = '开始游戏'
+
+                    }else{ //当前玩家是客机
+                        if(this.isReady){ //已准备  按钮enabled_cancel
+                            button.bgcolor   = MRCParam.player.button.enabled.cancel.bgcolor
+                            button.txtcolor  = MRCParam.player.button.enabled.cancel.txtcolor
+                            button.txt = '取消准备'
+                        }else{ //未准备  按钮enabled_ok
+                            button.bgcolor   = MRCParam.player.button.enabled.ok.bgcolor
+                            button.txtcolor  = MRCParam.player.button.enabled.ok.txtcolor
+                            button.txt = '准备'
+                        }
                     }
 
                     ctx.fillStyle = button.bgcolor
@@ -168,11 +181,32 @@
 
                     ctx.font = MyCanvas.px2Rem(16) + 'px Microsoft JhengHei'
                     ctx.fillStyle = button.txtcolor
-                    ctx.textAlign = 'left'
+                    ctx.textAlign = 'center'
                     ctx.textBaseline = 'middle'
-                    ctx.fillText(button.txt, button.x + 10, button.y + button.h  / 2)
+                    ctx.fillText(button.txt, button.x + button.w / 2, button.y + button.h  / 2)
 
-                } 
+                }else{
+                    if(!isHost){ //当前玩家是主机 渲染客机玩家状态
+                        let readyTxt
+                        if(this.isReady){
+                            readyTxt = '已准备'
+                        }else{
+                            readyTxt = '准备中'
+                        }
+
+
+                        let readyArea = MRCParam.guest.readyArea
+
+                        ctx.fillStyle = MRCParam.guest.readyArea.bgcolor
+                        ctx.fillRect(readyArea.x, readyArea.y, readyArea.w, readyArea.h)
+
+                        ctx.font = MyCanvas.px2Rem(16) + 'px Microsoft JhengHei'
+                        ctx.fillStyle = MRCParam.guest.readyArea.txtcolor
+                        ctx.textAlign = 'left'
+                        ctx.textBaseline = 'middle'
+                        ctx.fillText(readyTxt, readyArea.x + 20, readyArea.y + readyArea.h  / 2)
+                    }
+                }
                 
             }
         },
