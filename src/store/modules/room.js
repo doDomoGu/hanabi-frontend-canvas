@@ -16,41 +16,41 @@ const actions = {
                     }
                 }
             )
-            .then((res) => {
-                if (res.data) {
-                    commit('SetList', res.data)
-                } else {
-                    commit('ClearList')
-                }
-                resolve()
-            })
-            .catch(error => {
-                reject(error)
-            })
+                .then((res) => {
+                    if (res.data) {
+                        commit('SetList', res.data)
+                    } else {
+                        commit('ClearList')
+                    }
+                    resolve()
+                })
+                .catch(error => {
+                    reject(error)
+                })
         })
     }
 }
 
 const getters = {
-  list: state => state.list,
-  count: state => state.count
+    list: state => state.list,
+    count: state => state.count
 }
 
 const mutations = {
-  SetList (state, data) {
-    state.list = data
-    state.count = data.length
-  },
-  ClearList (state) {
-    state.list = []
-    state.count = 0
-  }
+    SetList (state, data) {
+        state.list = data
+        state.count = data.length
+    },
+    ClearList (state) {
+        state.list = []
+        state.count = 0
+    }
 }
 
 export default {
-  namespaced: true,
-  state,
-  actions,
-  getters,
-  mutations
+    namespaced: true,
+    state,
+    actions,
+    getters,
+    mutations
 }

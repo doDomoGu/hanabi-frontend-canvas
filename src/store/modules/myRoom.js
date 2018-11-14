@@ -1,160 +1,160 @@
 import axios from '../axios'
 
 const state = {
-  roomId: -1,
-  isHost: null,
-  hostPlayer: {
-    id: -1,
-    username: null,
-    name: null
-  },
-  guestPlayer: {
-    id: -1,
-    username: null,
-    name: null
-  },
-  isReady: null
+    roomId: -1,
+    isHost: null,
+    hostPlayer: {
+        id: -1,
+        username: null,
+        name: null
+    },
+    guestPlayer: {
+        id: -1,
+        username: null,
+        name: null
+    },
+    isReady: null
 }
 
 const actions = {
-  Enter ( {} ,roomId) {
-    return new Promise((resolve, reject) => {
-      axios.post(
-        '/my-room/enter' + '?accessToken=' + this.getters['user/token'],
-        {
-          roomId: roomId
-        }
-      )
-        .then((res) => {
-        /* if(res.data.success){
+    Enter ( {} ,roomId) {
+        return new Promise((resolve, reject) => {
+            axios.post(
+                '/my-room/enter' + '?accessToken=' + this.getters['user/token'],
+                {
+                    roomId: roomId
+                }
+            )
+                .then((res) => {
+                    /* if(res.data.success){
           commit('SetRoomId',roomId);
         }*/
-          resolve(res.data)
+                    resolve(res.data)
+                })
+                .catch(error => {
+                    reject(error)
+                })
         })
-        .catch(error => {
-          reject(error)
-        })
-    })
-  },
-  Exit () {
-    return new Promise((resolve, reject) => {
-      axios.post(
-        '/my-room/exit' + '?accessToken=' + this.getters['user/token']
-      )
-        .then((res) => {
-        /* if(res.data.success){
+    },
+    Exit () {
+        return new Promise((resolve, reject) => {
+            axios.post(
+                '/my-room/exit' + '?accessToken=' + this.getters['user/token']
+            )
+                .then((res) => {
+                    /* if(res.data.success){
         }*/
-          resolve(res.data)
+                    resolve(res.data)
+                })
+                .catch(error => {
+                    reject(error)
+                })
         })
-        .catch(error => {
-          reject(error)
-        })
-    })
-  },
-  /*
+    },
+    /*
     获取玩家的房间信息
     mode(string)  :   all    : 完整数据
                       simple : 只有isInRoom数据
     force(boolean): 是否强制更新数据
    */
-  GetInfo ({ commit }, param = {}) {
-    if (!param.hasOwnProperty('mode')) { param.mode = 'all' }
+    GetInfo ({ commit }, param = {}) {
+        if (!param.hasOwnProperty('mode')) { param.mode = 'all' }
 
-    return new Promise((resolve, reject) => {
-      axios.post(
-        '/my-room/get-info' + '?accessToken=' + this.getters['user/token'],
-        param
-      )
-        .then((res) => {
-          const _res = res.data
-          if (_res.success) {
-            if (!_res.data.noUpdate) {
-              commit('SetRoomId', _res.data.roomId)
-              if (param.mode === 'all') {
-                commit('SetIsHost', _res.data.isHost)
-                commit('SetRoomPlayer', _res.data)
-              }
-            }
-          } else {
-            commit('ClearRoomId')
-            commit('ClearIsHost')
-            commit('ClearRoomPlayer')
-          }
-          resolve()
-          resolve(res.data)
+        return new Promise((resolve, reject) => {
+            axios.post(
+                '/my-room/get-info' + '?accessToken=' + this.getters['user/token'],
+                param
+            )
+                .then((res) => {
+                    const _res = res.data
+                    if (_res.success) {
+                        if (!_res.data.noUpdate) {
+                            commit('SetRoomId', _res.data.roomId)
+                            if (param.mode === 'all') {
+                                commit('SetIsHost', _res.data.isHost)
+                                commit('SetRoomPlayer', _res.data)
+                            }
+                        }
+                    } else {
+                        commit('ClearRoomId')
+                        commit('ClearIsHost')
+                        commit('ClearRoomPlayer')
+                    }
+                    resolve()
+                    resolve(res.data)
+                })
+                .catch(error => {
+                    reject(error)
+                })
         })
-        .catch(error => {
-          reject(error)
-        })
-    })
-  },
-  DoReady () {
-    return new Promise((resolve, reject) => {
-      axios.post(
-        '/my-room/do-ready' + '?accessToken=' + this.getters['user/token']
-      )
-        .then((res) => {
-          if (res.data.success) {
-            // commit('SetRoomUser',res.data.data);
-          } else {
-            // commit('ClearRoomUser');
-          }
+    },
+    DoReady () {
+        return new Promise((resolve, reject) => {
+            axios.post(
+                '/my-room/do-ready' + '?accessToken=' + this.getters['user/token']
+            )
+                .then((res) => {
+                    if (res.data.success) {
+                        // commit('SetRoomUser',res.data.data);
+                    } else {
+                        // commit('ClearRoomUser');
+                    }
 
-          resolve(res.data)
+                    resolve(res.data)
+                })
+                .catch(error => {
+                    reject(error)
+                })
         })
-        .catch(error => {
-          reject(error)
-        })
-    })
-  }
+    }
 }
 
 const getters = {
-  roomId: state => state.roomId,
-  isHost: state => state.isHost,
-  hostPlayer: state => state.hostPlayer,
-  guestPlayer: state => state.guestPlayer,
-  isReady: state => state.isReady
+    roomId: state => state.roomId,
+    isHost: state => state.isHost,
+    hostPlayer: state => state.hostPlayer,
+    guestPlayer: state => state.guestPlayer,
+    isReady: state => state.isReady
 }
 
 const mutations = {
-  SetRoomId (state, roomId) {
-    state.roomId = roomId
-  },
-  SetIsHost (state, isHost) {
-    state.isHost = isHost
-  },
-  SetRoomPlayer (state, data) {
-    state.hostPlayer = data.hostPlayer
-    state.guestPlayer = data.guestPlayer
-    state.isReady = data.isReady
-  },
+    SetRoomId (state, roomId) {
+        state.roomId = roomId
+    },
+    SetIsHost (state, isHost) {
+        state.isHost = isHost
+    },
+    SetRoomPlayer (state, data) {
+        state.hostPlayer = data.hostPlayer
+        state.guestPlayer = data.guestPlayer
+        state.isReady = data.isReady
+    },
 
-  ClearIsHost (state) {
-    state.isHost = false
-  },
-  ClearRoomId (state) {
-    state.roomId = -1
-  },
-  ClearRoomPlayer (state) {
-    state.hostPlayer = {
-      id: -1,
-      username: null,
-      name: null
+    ClearIsHost (state) {
+        state.isHost = false
+    },
+    ClearRoomId (state) {
+        state.roomId = -1
+    },
+    ClearRoomPlayer (state) {
+        state.hostPlayer = {
+            id: -1,
+            username: null,
+            name: null
+        }
+        state.guestPlayer = {
+            id: -1,
+            username: null,
+            name: null
+        }
+        state.isReady = false
     }
-    state.guestPlayer = {
-      id: -1,
-      username: null,
-      name: null
-    }
-    state.isReady = false
-  }
 }
 
 export default {
-  namespaced: true,
-  state,
-  actions,
-  getters,
-  mutations
+    namespaced: true,
+    state,
+    actions,
+    getters,
+    mutations
 }

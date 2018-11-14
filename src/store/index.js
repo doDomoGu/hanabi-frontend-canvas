@@ -11,12 +11,12 @@ import myGame from './modules/myGame'
 Vue.use(Vuex)
 
 export default new Vuex.Store({
-  modules: {
+    modules: {
     // common,
-    user,
-    room,
-    myRoom,
-    myGame
-  }
+        user,
+        room,
+        myRoom,
+        myGame
+    }
 })
 

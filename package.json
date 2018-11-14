@@ -35,7 +35,10 @@
     "rules": {
       "no-console": "off",
       "no-empty-pattern": "off",
-      "no-unused-vars":0
+      "no-unused-vars":0,
+      "indent": [2,4,{"SwitchCase": 1}],
+      "default-case": 2,
+      "no-spaced-func": 2 
     },
     "parserOptions": {
       "parser": "babel-eslint"
