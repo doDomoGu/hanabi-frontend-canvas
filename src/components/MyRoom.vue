@@ -235,15 +235,35 @@
 //                return false
 
 
-                function isExitBtnPath(pos){
+                function isPath(pos, areaName){
 
-                    const btn = MRCParam.exitBtn
+                    let area
 
-                    return pos.x >= btn.x && pos.x <= btn.x + btn.w && pos.y >= btn.y && pos.y <= btn.y + btn.h
+                    switch(areaName){
+                        case 'exitBtn':
+                            area = MRCParam.exitBtn
+                            break
+                        case 'startBtn':
+                            area = MRCParam.host.button
+                            break
+                        case 'readyBtn':
+                            area = MRCParam.guest.button
+                            break
+                    }
+
+                    return pos.x >= area.x && pos.x <= area.x + area.w && pos.y >= area.y && pos.y <= area.y + area.h
                 }
 
-                if(isExitBtnPath(mousePos)){
+                if(isPath(mousePos, 'exitBtn')){
                     this.$store.dispatch('myRoom/Exit')
+                }else if(isPath(mousePos, 'readyBtn')) {
+                    if(!this.isHost){
+                        this.$store.dispatch('myRoom/DoReady')
+                    }
+                }else if(isPath(mousePos, 'startBtn')){
+                    if(this.isHost && this.isReady){
+                        this.$store.dispatch('myGame/Start')
+                    }
                 }
 
 //                this.drawTest(this.ctx, mousePos, itemIndex)
