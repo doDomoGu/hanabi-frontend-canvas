@@ -1,5 +1,5 @@
 <template>
-    <canvas id="canvas_my_room" ></canvas>
+    <canvas id="canvas_my_room" @click="eventListener"></canvas>
 </template>
 <script>
     import moment   from 'moment'
@@ -68,6 +68,8 @@
 
             this.clearCanvas(this.canvas)
 
+            this.drawExitBtn(this.ctx)
+
             this.getPlayerInfo().then(()=>{
                 this.intervalId = setInterval(()=>{
                     this.getPlayerInfo()
@@ -91,6 +93,18 @@
             clearCanvas(canvas) {
                 canvas.width = window.innerWidth
                 canvas.height = window.innerHeight
+            },
+            drawExitBtn(ctx) {
+                const btn = MRCParam.exitBtn
+
+                ctx.fillStyle = btn.bgcolor
+                ctx.fillRect(btn.x, btn.y, btn.w, btn.h)
+
+                ctx.font = MyCanvas.px2Rem(16) + 'px Microsoft JhengHei'
+                ctx.fillStyle = btn.txtcolor
+                ctx.textAlign = 'center'
+                ctx.textBaseline = 'middle'
+                ctx.fillText('退出', btn.x + btn.w / 2, btn.y + btn.h  / 2)
             },
             drawPlayer(ctx, isHost, info){
 
@@ -138,10 +152,11 @@
                 ctx.fillStyle = '#fefefe'
                 ctx.fillRect(area.x, area.y, area.w, area.h)
 
-                ctx.fillStyle = '#fee9d6'
-                ctx.fillRect(infoArea.x, infoArea.y, infoArea.w, infoArea.h)
-
                 if(info.id > -1){
+                    ctx.fillStyle = '#fee9d6'
+                    ctx.fillRect(infoArea.x, infoArea.y, infoArea.w, infoArea.h)
+
+
                     ctx.font = MyCanvas.px2Rem(24) + 'px Microsoft JhengHei'
                     ctx.fillStyle = '#4b4b4b'
                     ctx.textAlign = 'left'
@@ -186,7 +201,7 @@
                     ctx.fillText(button.txt, button.x + button.w / 2, button.y + button.h  / 2)
 
                 }else{
-                    if(!isHost){ //当前玩家是主机 渲染客机玩家状态
+                    if(!isHost && info.id > -1){ //当前玩家是主机 渲染客机玩家状态
                         let readyTxt
                         if(this.isReady){
                             readyTxt = '已准备'
@@ -208,6 +223,30 @@
                     }
                 }
                 
+            },
+            eventListener(evt){
+                /* 点击事件 */
+//                console.log(evt); return true;
+//                evt = evt.changedTouches[0]; //touchend
+//                evt = evt.touches[0];   //touchstart
+                const mousePos = MyCanvas.getMousePos(this.canvas, evt, 1)
+
+//                console.log("鼠标指针坐标：" + mousePos.x + "," + mousePos.y);
+//                return false
+
+
+                function isExitBtnPath(pos){
+
+                    const btn = MRCParam.exitBtn
+
+                    return pos.x >= btn.x && pos.x <= btn.x + btn.w && pos.y >= btn.y && pos.y <= btn.y + btn.h
+                }
+
+                if(isExitBtnPath(mousePos)){
+                    this.$store.dispatch('myRoom/Exit')
+                }
+
+//                this.drawTest(this.ctx, mousePos, itemIndex)
             }
         },
         destroyed(){
