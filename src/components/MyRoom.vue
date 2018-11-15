@@ -70,26 +70,14 @@ export default {
 
         this.drawExitBtn(this.ctx)
 
-        this.getPlayerInfo().then(()=>{
-            this.intervalId = setInterval(()=>{
-                this.getPlayerInfo()
-            },1000)
-        })
+        this.$store.dispatch('myRoom/GetInfo',{force:true})
+        
+        this.intervalId = setInterval(()=>{
+            this.$store.dispatch('myRoom/GetInfo',{force:true})
+        },1000)
 
     },
     methods: {
-        getPlayerInfo(){
-            return new Promise((resolve, reject) => {
-                this.$store.dispatch('myRoom/GetInfo',{force:true}).then(()=>{
-
-                    console.log(' ')
-                    console.log(moment().format("YYYY-MM-DD HH:mm:ss SSS"))
-                    console.log('get info in my room')
-
-                    resolve()
-                })
-            })
-        },
         clearCanvas(canvas) {
             canvas.width = window.innerWidth
             canvas.height = window.innerHeight

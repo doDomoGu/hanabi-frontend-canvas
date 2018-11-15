@@ -18,9 +18,9 @@ export default {
         
     },
     mounted() {
-        // console.log(' ')
-        // console.log(moment().format("YYYY-MM-DD HH:mm:ss SSS"))
-        // console.log('loading page mounted')
+        console.log(' ')
+        console.log(moment().format("YYYY-MM-DD HH:mm:ss SSS"))
+        console.log('loading page mounted') 
 
         let canvas  = document.querySelector('#c_loading')
         let ctx     = canvas.getContext('2d')
@@ -28,7 +28,8 @@ export default {
         canvas.width = window.innerWidth
         canvas.height = window.innerHeight
 
-        ctx.fillStyle = '#999999' 
+        // ctx.fillStyle = '#999999' 
+        ctx.fillStyle =  'rgba(50, 50, 50, 0.1)' 
         ctx.fillRect(0, 0, canvas.width, canvas.height )
 
         ctx.font = MyCanvas.px2Rem(16) + 'px Microsoft JhengHei'

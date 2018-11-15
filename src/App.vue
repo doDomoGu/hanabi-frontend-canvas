@@ -70,13 +70,19 @@ export default {
         //this.ratio = window.devicePixelRatio //MyCanvas.getPixelRatio(this.ctx)
 
         this.drawBottom('#d9f1f8')
+        
+        this.checkToken()/* .then(() => {
+            this.init()
+        }) */
 
-        this.checkToken().then(()=>{
+        
+
+        /* this.checkToken().then(()=>{
             //this.init()
         }
         ).catch(()=>{
             //
-        })
+        }) */
     },
     methods: {
         init(){
@@ -113,41 +119,25 @@ export default {
             this.ctx_bottom.fillStyle = bgColor // 屏幕背景色
             this.ctx_bottom.fillRect(0, 0, this.c_bottom.width, this.c_bottom.height )
         },
-        checkToken() {
+        async checkToken(){
             this.$store.commit('common/setIsLoading', true)
+            
+            const token = localStorage.getItem('__HANABI_AUTH_TOKEN__') || null
+            
+            if(token!== null){
+                await this.$store.dispatch('user/CheckToken', token)
+            }
 
-            return new Promise((resolve, reject) => {
+            if(this.isLogin){
+                await this.$store.dispatch('myRoom/GetInfo',{mode:'simple',force:true})
+            }
 
-                let token = localStorage.getItem('__HANABI_AUTH_TOKEN__') || null
-
-                if(token!== null ){
-
-                    this.$store.dispatch('user/CheckToken', token).then(()=>{
-
-                        this.$store.dispatch('myRoom/GetInfo',{mode:'simple',force:true}).then(()=>{
-                            
-                            if(this.$store.getters['myRoom/roomId'] > 0) {
-                                
-                                this.$store.dispatch('myGame/GetInfo',{mode:'simple',force:true}).then(()=>{
-
-                                    this.$store.commit('common/setIsLoading', false)
-                                    resolve()
-                                })
-                            }else{
-
-                                this.$store.commit('common/setIsLoading', false)
-                                resolve()
-
-                            }
-
-                        })
-
-                    })
-                } else {
-                    this.$store.commit('common/setIsLoading', false)
-                    reject()
-                }
-            })
+            if(this.isInRoom) {
+                await this.$store.dispatch('myGame/GetInfo',{mode:'simple',force:true})
+            }
+            
+            this.$store.commit('common/setIsLoading', false)
+            
         },
         logout(){
             this.$store.dispatch('user/Logout')

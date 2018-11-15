@@ -6,28 +6,20 @@ const state = {
 }
 
 const actions = {
-    GetList ({ commit }) {
-        return new Promise((resolve, reject) => {
-            axios.get(
-                '/room',
-                {
-                    params: {
-                        accessToken: this.getters['user/token']
-                    }
+    async GetList ({ commit }) {
+        const res = await axios.get(
+            '/room',
+            {
+                params: {
+                    accessToken: this.getters['user/token']
                 }
-            )
-                .then((res) => {
-                    if (res.data) {
-                        commit('SetList', res.data)
-                    } else {
-                        commit('ClearList')
-                    }
-                    resolve()
-                })
-                .catch(error => {
-                    reject(error)
-                })
-        })
+            }
+        )
+        if (res.data) {
+            commit('SetList', res.data)
+        } else {
+            commit('ClearList')
+        }
     }
 }
 

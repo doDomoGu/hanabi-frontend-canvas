@@ -40,29 +40,19 @@ export default {
     mounted() {
         console.log(' ')
         console.log(moment().format("YYYY-MM-DD HH:mm:ss SSS"))
-        console.log('mounted')
+        console.log('room list mounted')
 
         this.canvas = document.querySelector('#canvas_room_list')
         this.ctx = this.canvas.getContext('2d')
 
-        this.getList().then(()=>{
-            this.intervalId = setInterval(()=>{
-                this.getList()
-            },1000)
-        })
+
+        this.$store.dispatch('room/GetList')
+
+        this.intervalId = setInterval(()=>{
+            this.$store.dispatch('room/GetList')
+        },1000)
     },
     methods: {
-        getList(){
-            return new Promise((resolve, reject) => {
-                if(this.$store.getters['user/isLogin']){
-                    this.$store.dispatch('room/GetList').then(()=>{
-                        resolve()
-                    })
-                }else{
-                    resolve()
-                }
-            })
-        },
         //设置canvas宽高 并清空内容
         clearCanvas(canvas) {
             //                console.log(' ')
@@ -177,7 +167,7 @@ export default {
     destroyed(){
         console.log(' ')
         console.log(moment().format("YYYY-MM-DD HH:mm:ss SSS"))
-        console.log('destroyed')
+        console.log('room list destroyed')
 
         clearInterval(this.intervalId)
     }

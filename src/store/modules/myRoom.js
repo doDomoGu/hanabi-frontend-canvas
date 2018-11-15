@@ -17,39 +17,18 @@ const state = {
 }
 
 const actions = {
-    Enter ( {} ,roomId) {
-        return new Promise((resolve, reject) => {
-            axios.post(
-                '/my-room/enter' + '?accessToken=' + this.getters['user/token'],
-                {
-                    roomId: roomId
-                }
-            )
-                .then((res) => {
-                    /* if(res.data.success){
-          commit('SetRoomId',roomId);
-        }*/
-                    resolve(res.data)
-                })
-                .catch(error => {
-                    reject(error)
-                })
-        })
+    async Enter ({} ,roomId) {
+        await axios.post(
+            '/my-room/enter' + '?accessToken=' + this.getters['user/token'],
+            {
+                roomId: roomId
+            }
+        )
     },
-    Exit () {
-        return new Promise((resolve, reject) => {
-            axios.post(
-                '/my-room/exit' + '?accessToken=' + this.getters['user/token']
-            )
-                .then((res) => {
-                    /* if(res.data.success){
-        }*/
-                    resolve(res.data)
-                })
-                .catch(error => {
-                    reject(error)
-                })
-        })
+    async Exit () {
+        await axios.post(
+            '/my-room/exit' + '?accessToken=' + this.getters['user/token']
+        )
     },
     /*
     获取玩家的房间信息
@@ -57,55 +36,31 @@ const actions = {
                       simple : 只有isInRoom数据
     force(boolean): 是否强制更新数据
    */
-    GetInfo ({ commit }, param = {}) {
+    async GetInfo ({ commit }, param = {}) {
         if (!param.hasOwnProperty('mode')) { param.mode = 'all' }
-
-        return new Promise((resolve, reject) => {
-            axios.post(
-                '/my-room/get-info' + '?accessToken=' + this.getters['user/token'],
-                param
-            )
-                .then((res) => {
-                    const _res = res.data
-                    if (_res.success) {
-                        if (!_res.data.noUpdate) {
-                            commit('SetRoomId', _res.data.roomId)
-                            if (param.mode === 'all') {
-                                commit('SetIsHost', _res.data.isHost)
-                                commit('SetRoomPlayer', _res.data)
-                            }
-                        }
-                    } else {
-                        commit('ClearRoomId')
-                        commit('ClearIsHost')
-                        commit('ClearRoomPlayer')
-                    }
-                    resolve()
-                    resolve(res.data)
-                })
-                .catch(error => {
-                    reject(error)
-                })
-        })
+        const res = await axios.post(
+            '/my-room/get-info' + '?accessToken=' + this.getters['user/token'],
+            param
+        )
+        const _res = res.data
+        if (_res.success) {
+            if (!_res.data.noUpdate) {
+                commit('SetRoomId', _res.data.roomId)
+                if (param.mode === 'all') {
+                    commit('SetIsHost', _res.data.isHost)
+                    commit('SetRoomPlayer', _res.data)
+                }
+            }
+        } else {
+            commit('ClearRoomId')
+            commit('ClearIsHost')
+            commit('ClearRoomPlayer')
+        }
     },
-    DoReady () {
-        return new Promise((resolve, reject) => {
-            axios.post(
-                '/my-room/do-ready' + '?accessToken=' + this.getters['user/token']
-            )
-                .then((res) => {
-                    if (res.data.success) {
-                        // commit('SetRoomUser',res.data.data);
-                    } else {
-                        // commit('ClearRoomUser');
-                    }
-
-                    resolve(res.data)
-                })
-                .catch(error => {
-                    reject(error)
-                })
-        })
+    async DoReady () {
+        await axios.post(
+            '/my-room/do-ready' + '?accessToken=' + this.getters['user/token']
+        )
     }
 }
 

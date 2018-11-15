@@ -26,25 +26,22 @@ export default {
         }
     },
     methods: {
-        login(){
+        async login(){
+
             this.$store.commit('common/setIsLoading', true)
-
-            this.$store.dispatch('user/Login',{username:this.form.username,password:this.form.password}).then(()=>{
-
-                this.$store.dispatch('myRoom/GetInfo',{mode:'simple',force:true}).then(()=>{
-
-                    if(this.$store.getters['myRoom/roomId'] > 0) {
-
-                        this.$store.dispatch('myGame/GetInfo',{mode:'simple',force:true}).then(()=>{
-                            this.$store.commit('common/setIsLoading', false)
-                        })
-
-                    }else{
-                        this.$store.commit('common/setIsLoading', false)
-                    }
-
-                })
-            })
+            
+            await this.$store.dispatch('user/Login',{username:this.form.username,password:this.form.password})
+            
+            if(this.$store.getters['user/isLogin']){
+                await this.$store.dispatch('myRoom/GetInfo',{mode:'simple',force:true})
+            }
+            
+            if(this.$store.getters['myRoom/roomId'] > 0){
+                await this.$store.dispatch('myGame/GetInfo',{mode:'simple',force:true})
+            }
+            
+            this.$store.commit('common/setIsLoading', false)
+            
         }
     }
 }
