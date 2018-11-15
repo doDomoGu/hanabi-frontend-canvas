@@ -1,39 +1,43 @@
 <template>
     <div>
         <canvas id="c_bottom"></canvas>
-        <!--<canvas id="c_middle"></canvas>-->
-        <room-list v-if="!isLoginLoading && isLogin && !isInRoom"></room-list>
+        <loading-mask v-if="isLoading"></loading-mask>
+        <template v-else>
+            <template v-if="isLogin">
+                <room-list v-if="isLogin && !isInRoom"></room-list>
 
-        <my-room v-if="!isLoginLoading && isLogin && isInRoom && !isInGame"></my-room>
-        <my-game v-if="!isLoginLoading && isLogin && isInRoom && isInGame"></my-game>
+                <my-room v-if="isLogin && isInRoom && !isInGame"></my-room>
+                <my-game v-if="isLogin && isInRoom && isInGame"></my-game>
 
-        <!--<canvas id="c_game_list"></canvas>-->
-        <!--<canvas id="c_my_room"></canvas>
-        <canvas id="c_my_game"></canvas>-->
-
+                <button style="position:absolute;bottom:0;right:0;" @click="logout">退出</button>
+            </template>
+            <Login v-else></Login>
+        </template>
         <!--<canvas id="c_top"></canvas>-->
-        <Login v-if="!isLoginLoading && !isLogin"></Login>
-        <button v-if="!isLoginLoading && isLogin" style="position:absolute;bottom:0;right:0;" @click="logout">退出</button>
     </div>
 </template>
 
 <script>
 import moment       from 'moment'
-//    import MyCanvas     from './assets/js/MyCanvas'
+import MyCanvas     from './assets/js/MyCanvas'
+
 import Login        from './components/Login.vue'
 import RoomList     from './components/RoomList.vue'
 import MyRoom       from './components/MyRoom.vue'
 import MyGame       from './components/MyGame.vue'
+import LoadingMask  from './components/LoadingMask.vue'
 
 export default {
     name: 'app',
-    components: { Login, RoomList, MyRoom, MyGame },
+    components: { Login, RoomList, MyRoom, MyGame, LoadingMask },
     data() {
         return {
-            isLoginLoading : false
         }
     },
     computed: {
+        isLoading(){
+            return Boolean(this.$store.getters['common/isLoading'])
+        },
         isLogin(){
             return Boolean(this.$store.getters['user/isLogin'])
         },
@@ -48,7 +52,7 @@ export default {
         isLogin(newVal) {
             if(newVal){
                 //登录后，非刷新页面，进入初始化流程
-                if(!this.isLoginLoading){
+                if(!this.isLoading){
                     this.init()
                 }
             }else {
@@ -61,12 +65,14 @@ export default {
         this.c_bottom = document.querySelector('#c_bottom')
         this.ctx_bottom = this.c_bottom.getContext('2d')
 
+        
+
         //this.ratio = window.devicePixelRatio //MyCanvas.getPixelRatio(this.ctx)
 
         this.drawBottom('#d9f1f8')
 
         this.checkToken().then(()=>{
-            this.init()
+            //this.init()
         }
         ).catch(()=>{
             //
@@ -74,9 +80,9 @@ export default {
     },
     methods: {
         init(){
-            console.log(' ')
-            console.log(moment().format("YYYY-MM-DD HH:mm:ss SSS"))
-            console.log('app init')
+            // console.log(' ')
+            // console.log(moment().format("YYYY-MM-DD HH:mm:ss SSS"))
+            // console.log('app init')
 
             this.drawBottom('#d9f1f8')  //绘制背景图
 
@@ -108,7 +114,7 @@ export default {
             this.ctx_bottom.fillRect(0, 0, this.c_bottom.width, this.c_bottom.height )
         },
         checkToken() {
-            this.isLoginLoading = true
+            this.$store.commit('common/setIsLoading', true)
 
             return new Promise((resolve, reject) => {
 
@@ -119,17 +125,17 @@ export default {
                     this.$store.dispatch('user/CheckToken', token).then(()=>{
 
                         this.$store.dispatch('myRoom/GetInfo',{mode:'simple',force:true}).then(()=>{
-
+                            
                             if(this.$store.getters['myRoom/roomId'] > 0) {
-
+                                
                                 this.$store.dispatch('myGame/GetInfo',{mode:'simple',force:true}).then(()=>{
 
-                                    this.isLoginLoading = false
+                                    this.$store.commit('common/setIsLoading', false)
                                     resolve()
                                 })
                             }else{
 
-                                this.isLoginLoading = false
+                                this.$store.commit('common/setIsLoading', false)
                                 resolve()
 
                             }
@@ -138,7 +144,7 @@ export default {
 
                     })
                 } else {
-                    this.isLoginLoading = false
+                    this.$store.commit('common/setIsLoading', false)
                     reject()
                 }
             })
@@ -157,8 +163,6 @@ export default {
         line-height:0;
     }
     #c_bottom,
-    #c_middle,
-    /*#c_room_list,*/
     #c_top {
         position: absolute;
     }

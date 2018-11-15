@@ -16,7 +16,7 @@ const actions = {
             )
                 .then((res) => {
                     if (res.data && res.data.success) {
-                        commit('setToken', res.data.token)
+                        commit('setTokenForced', res.data.token)
                         commit('setLoginState')
                         commit('setId', res.data.userId)
                         commit('setInfo', res.data.userInfo)

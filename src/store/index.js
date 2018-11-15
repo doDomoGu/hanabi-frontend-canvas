@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-// import common from './common'
+import common from './modules/common'
 
 import user   from './modules/user'
 import room   from './modules/room'
@@ -12,7 +12,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     modules: {
-    // common,
+        common,
         user,
         room,
         myRoom,

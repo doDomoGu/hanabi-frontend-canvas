@@ -35,9 +35,9 @@ export default {
         this.getPlayerInfo().then(()=>{
             return this.getGameInfo()
         }).then(()=>{
-            this.intervalId = setInterval(()=>{
+            /* this.intervalId = setInterval(()=>{
                 this.getGameInfo()
-            },1000)
+            },1000) */
         })
     },
     methods: {
