@@ -32,39 +32,16 @@ export default {
         console.log(moment().format("YYYY-MM-DD HH:mm:ss SSS"))
         console.log('my-game mounted')
 
-        this.getPlayerInfo().then(()=>{
-            return this.getGameInfo()
-        }).then(()=>{
-            /* this.intervalId = setInterval(()=>{
-                this.getGameInfo()
-            },1000) */
-        })
+
+        this.$store.dispatch('myRoom/GetInfo',{force:true})
+
+        this.$store.dispatch('myGame/GetInfo',{force:true})
+
+        this.intervalId = setInterval(()=>{
+            this.$store.dispatch('myGame/GetInfo',{force:true})
+        },1000)
     },
     methods: {
-        getPlayerInfo(){
-            return new Promise((resolve, reject) => {
-                this.$store.dispatch('myRoom/GetInfo',{force:true}).then(()=>{
-
-                    console.log(' ')
-                    console.log(moment().format("YYYY-MM-DD HH:mm:ss SSS"))
-                    console.log('get player info in my game')
-
-                    resolve()
-                })
-            })
-        },
-        getGameInfo(){
-            return new Promise((resolve, reject) => {
-                this.$store.dispatch('myGame/GetInfo',{force:true}).then(()=>{
-
-                    console.log(' ')
-                    console.log(moment().format("YYYY-MM-DD HH:mm:ss SSS"))
-                    console.log('get game info in my game')
-
-                    resolve()
-                })
-            })
-        }
     },
     destroyed(){
         console.log(' ')
