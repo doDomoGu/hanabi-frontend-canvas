@@ -20,7 +20,7 @@ const actions = {
     async Logout({ dispatch, commit }) {
         //dispatch('myRoom/Exit', null, { root: true }).then(() => {
         const res = await axios.delete('/auth')
-        
+
         if (res.data && res.data.success) {
             commit('clearLoginState')
         }
@@ -57,7 +57,7 @@ const mutations = {
     },
     setTokenForced: (state, token) => {
         state.token = token
-        localStorage.setItem('__HANABI_AUTH_TOKEN__', token)
+        window.sessionStorage.setItem('__HANABI_AUTH_TOKEN__', token)
     },
     setLoginState: state => {
         state.isLogin = true
@@ -73,7 +73,7 @@ const mutations = {
         state.userId = 0
         state.userInfo = {}
         state.token = null
-        localStorage.removeItem('__HANABI_AUTH_TOKEN__')
+        window.sessionStorage.removeItem('__HANABI_AUTH_TOKEN__')
     },
 }
 
