@@ -19,7 +19,7 @@ const state = {
 const actions = {
     async Enter ({} ,roomId) {
         await axios.post(
-            '/my-room/enter' + '?accessToken=' + this.getters['user/token'],
+            '/my-room/enter',
             {
                 roomId: roomId
             }
@@ -27,7 +27,7 @@ const actions = {
     },
     async Exit () {
         await axios.post(
-            '/my-room/exit' + '?accessToken=' + this.getters['user/token']
+            '/my-room/exit'
         )
     },
     /*
@@ -39,7 +39,7 @@ const actions = {
     async GetInfo ({ commit }, param = {}) {
         if (!param.hasOwnProperty('mode')) { param.mode = 'all' }
         const res = await axios.post(
-            '/my-room/get-info' + '?accessToken=' + this.getters['user/token'],
+            '/my-room/get-info',
             param
         )
         const _res = res.data
@@ -59,7 +59,7 @@ const actions = {
     },
     async DoReady () {
         await axios.post(
-            '/my-room/do-ready' + '?accessToken=' + this.getters['user/token']
+            '/my-room/do-ready'
         )
     }
 }

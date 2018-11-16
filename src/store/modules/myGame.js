@@ -23,16 +23,12 @@ const state = {
 const actions = {
     async Start({ commit }) {
         await axios.post(
-            '/my-game/start' + 
-                    '?accessToken=' +
-                    this.getters['user/token'],
+            '/my-game/start'
         )   
     },
     async End({ commit }) {
         await axios.post(
-            '/my-game/end' +
-                '?accessToken=' +
-              this.getters['user/token']
+            '/my-game/end'
         )
     },
     async GetInfo({ commit }, param = {}) {
@@ -40,9 +36,7 @@ const actions = {
             param.mode = 'all'
         }
         const res = await axios.post(
-            '/my-game/get-info' + 
-                        '?accessToken=' + 
-                        this.getters['user/token'],
+            '/my-game/get-info',
             param,
         )
         const _res = res.data
@@ -61,9 +55,7 @@ const actions = {
     },
     async DoDiscard({ commit }, cardSelectOrd) {
         await axios.post(
-            '/my-game/do-discard' +
-                        '?accessToken=' +
-                        this.getters['user/token'],
+            '/my-game/do-discard',
             {
                 cardSelectOrd: cardSelectOrd,
             },
@@ -71,9 +63,7 @@ const actions = {
     },
     async DoPlay({ commit }, cardSelectOrd) {
         await axios.post(
-            '/my-game/do-play' +
-                        '?accessToken=' +
-                        this.getters['user/token'],
+            '/my-game/do-play',
             {
                 cardSelectOrd: cardSelectOrd,
             },
@@ -81,9 +71,7 @@ const actions = {
     },
     async DoCue({ commit }, [cardSelectOrd, cueType]) {
         await axios.post(
-            '/my-game/do-cue' +
-                        '?accessToken=' +
-                        this.getters['user/token'],
+            '/my-game/do-cue',
             {
                 cardSelectOrd: cardSelectOrd,
                 cueType: cueType,
@@ -92,9 +80,7 @@ const actions = {
     },
     async AutoPlay({ commit }, cardSelectOrd) {
         await axios.post(
-            '/my-game/auto-play' +
-                        '?accessToken=' +
-                        this.getters['user/token'],
+            '/my-game/auto-play'
         )
     },
 }

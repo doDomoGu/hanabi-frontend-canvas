@@ -8,12 +8,7 @@ const state = {
 const actions = {
     async GetList ({ commit }) {
         const res = await axios.get(
-            '/room',
-            {
-                params: {
-                    accessToken: this.getters['user/token']
-                }
-            }
+            '/room'
         )
         if (res.data) {
             commit('SetList', res.data)

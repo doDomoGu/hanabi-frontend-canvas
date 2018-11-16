@@ -19,12 +19,8 @@ const actions = {
     },
     async Logout({ dispatch, commit }) {
         //dispatch('myRoom/Exit', null, { root: true }).then(() => {
-        const res = await axios.delete(
-            '/auth', {
-                params: {
-                    accessToken: this.getters['user/token'],
-                },
-            })
+        const res = await axios.delete('/auth')
+        
         if (res.data && res.data.success) {
             commit('clearLoginState')
         }

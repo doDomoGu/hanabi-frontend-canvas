@@ -11,6 +11,11 @@ axios.defaults.baseURL = 'http://10.21.1.230:8889/v1'
 
 // POST传参序列化
 axios.interceptors.request.use((config) => {
+    const token = window.sessionStorage.getItem('__HANABI_AUTH_TOKEN__');
+    if (token != null) {
+        config.headers['X-Token'] = token;
+    }
+
     if (config.method === 'post') {
         config.data = qs.stringify(config.data)
     }
