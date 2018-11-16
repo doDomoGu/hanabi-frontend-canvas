@@ -1,11 +1,11 @@
-import axios from '../axios';
+import axios from '../axios'
 
 const state = {
     id: 0,
     info: {},
     isLogin: false,
     token: null,
-};
+}
 
 const actions = {
     async Login({ commit }, param) {
@@ -26,7 +26,7 @@ const actions = {
                 },
             })
         if (res.data && res.data.success) {
-            commit('clearLoginState');
+            commit('clearLoginState')
         }
     },
     async CheckToken({ commit }, token) {
@@ -37,49 +37,49 @@ const actions = {
                 },
             })
         if (res.data && res.data.success) {
-            commit('setToken', res.data.token);
-            commit('setLoginState');
-            commit('setId', res.data.userId);
-            commit('setInfo', res.data.userInfo);
+            commit('setToken', res.data.token)
+            commit('setLoginState')
+            commit('setId', res.data.userId)
+            commit('setInfo', res.data.userInfo)
         } else {
             // 提交的token 错误
-            commit('clearLoginState');
+            commit('clearLoginState')
         }
     },
-};
+}
 
 const getters = {
     id: state => state.id,
     info: state => state.info,
     isLogin: state => state.isLogin,
     token: state => state.token,
-};
+}
 
 const mutations = {
     setToken: (state, token) => {
-        state.token = token;
+        state.token = token
     },
     setTokenForced: (state, token) => {
-        state.token = token;
-        localStorage.setItem('__HANABI_AUTH_TOKEN__', token);
+        state.token = token
+        localStorage.setItem('__HANABI_AUTH_TOKEN__', token)
     },
     setLoginState: state => {
-        state.isLogin = true;
+        state.isLogin = true
     },
     setId: (state, id) => {
-        state.id = id;
+        state.id = id
     },
     setInfo: (state, info) => {
-        state.info = info;
+        state.info = info
     },
     clearLoginState: state => {
-        state.isLogin = false;
-        state.userId = 0;
-        state.userInfo = {};
-        state.token = null;
-        localStorage.removeItem('__HANABI_AUTH_TOKEN__');
+        state.isLogin = false
+        state.userId = 0
+        state.userInfo = {}
+        state.token = null
+        localStorage.removeItem('__HANABI_AUTH_TOKEN__')
     },
-};
+}
 
 export default {
     namespaced: true,
@@ -87,4 +87,4 @@ export default {
     actions,
     getters,
     mutations,
-};
+}

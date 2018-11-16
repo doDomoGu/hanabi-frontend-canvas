@@ -1,20 +1,20 @@
-import axios from '../axios';
+import axios from '../axios'
 
 const state = {
     isLoading: true,
-};
+}
 
-const actions = {};
+const actions = {}
 
 const getters = {
     isLoading: state => state.isLoading,
-};
+}
 
 const mutations = {
     setIsLoading: (state, data) => {
-        state.isLoading = data;
+        state.isLoading = data
     },
-};
+}
 
 export default {
     namespaced: true,
@@ -22,4 +22,4 @@ export default {
     actions,
     getters,
     mutations,
-};
+}

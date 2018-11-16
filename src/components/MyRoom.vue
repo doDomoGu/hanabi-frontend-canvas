@@ -214,12 +214,12 @@ export default {
         },
         eventListener(evt){
             /* 点击事件 */
-            // console.log(evt); return true;
-            // evt = evt.changedTouches[0]; //touchend
-            // evt = evt.touches[0];   //touchstart
+            // console.log(evt) return true
+            // evt = evt.changedTouches[0] //touchend
+            // evt = evt.touches[0]   //touchstart
             const mousePos = MyCanvas.getMousePos(this.canvas, evt, 1)
 
-            // console.log("鼠标指针坐标：" + mousePos.x + "," + mousePos.y);
+            // console.log("鼠标指针坐标：" + mousePos.x + "," + mousePos.y)
             // eturn false
 
 

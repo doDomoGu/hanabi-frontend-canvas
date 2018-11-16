@@ -38,7 +38,7 @@ exports.drawRoundedRect = function (rect, r, ctx) {
     ctx.arcTo(ptD.x, ptD.y, ptE.x, ptE.y, r)
     ctx.arcTo(ptE.x, ptE.y, ptA.x, ptA.y, r)
 
-    // ctx.stroke();  //边框绘制 根据笔触样式(strokeStyle)
+    // ctx.stroke()  //边框绘制 根据笔触样式(strokeStyle)
     ctx.fill()
 }
 

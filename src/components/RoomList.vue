@@ -188,15 +188,15 @@ export default {
             let _evt
 
             if(evt.type=='touchstart'){
-                _evt = evt.touches[0];   //touchstart
+                _evt = evt.touches[0]   //touchstart
             }else if (evt.type == 'touchend'){
-                _evt = evt.changedTouches[0]; //touchend
+                _evt = evt.changedTouches[0] //touchend
             }else if (evt.type == 'click') {
                 _evt = evt
             }               
             
             const mousePos = MyCanvas.getMousePos(this.canvas, _evt, 1)
-            //console.log("鼠标指针坐标：" + mousePos.x + "," + mousePos.y);
+            //console.log("鼠标指针坐标：" + mousePos.x + "," + mousePos.y)
 
             function getListItemIndex(pos, listCount){
                 let index = 0
