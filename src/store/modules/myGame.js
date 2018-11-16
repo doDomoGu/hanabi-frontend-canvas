@@ -3,17 +3,21 @@ import axios from '../axios'
 const state = {
     isPlaying: null,
     logList: [],
-    hostHands: [],
-    guestHands: [],
-    roundNum: -1,
-    roundPlayerIsHost: -1,
-    libraryCardsNum: -1,
-    discardCardsNum: -1,
-    lastUpdated: null,
-    cueNum: -1,
-    chanceNum: -1,
-    score: -1,
-    successCards: [],
+    gameInfo: {
+        roundNum: -1,
+        roundPlayerIsHost: -1,
+        lastUpdated: null,
+    },
+    cardInfo: {
+        hostHands: [],
+        guestHands: [],
+        libraryCardsNum: -1,
+        discardCardsNum: -1,
+        cueNum: -1,
+        chanceNum: -1,
+        score: -1,
+        successCards: []
+    }
 }
 
 const actions = {
@@ -105,17 +109,8 @@ const getters = {
         }
         return tmp
     },
-    hostHands: state => state.hostHands,
-    guestHands: state => state.guestHands,
-    roundNum: state => state.roundNum,
-    roundPlayerIsHost: state => state.roundPlayerIsHost,
-    libraryCardsNum: state => state.libraryCardsNum,
-    discardCardsNum: state => state.discardCardsNum,
-    lastUpdated: state => state.lastUpdated,
-    cueNum: state => state.cueNum,
-    chanceNum: state => state.chanceNum,
-    score: state => state.score,
-    successCards: state => state.successCards,
+    gameInfo: state => state.gameInfo,
+    cardInfo: state => state.cardInfo
 }
 
 const mutations = {
@@ -126,35 +121,30 @@ const mutations = {
         state.logList = data
     },
     SetCardInfo(state, data) {
-        state.hostHands = data.hostHands
-        state.guestHands = data.guestHands
-        state.libraryCardsNum = data.libraryCardsNum
-        state.discardCardsNum = data.discardCardsNum
-        state.cueNum = data.cueNum
-        state.chanceNum = data.chanceNum
-        state.score = data.score
-        state.successCards = data.successCards
+        state.cardInfo = data
     },
     SetGameInfo(state, data) {
-        state.roundNum = data.roundNum
-        state.roundPlayerIsHost = data.roundPlayerIsHost
-        state.lastUpdated = data.lastUpdated
+        state.gameInfo = data
     },
     ClearInfo(state) {
         state.isPlaying = null
         state.logList = []
-        state.hostHands = []
-        state.guestHands = []
-        state.roundNum = -1
-        state.roundPlayerIsHost = -1
-        state.libraryCardsNum = -1
-        state.discardCardsNum = -1
-        state.lastUpdated = null
-        state.cueNum = -1
-        state.chanceNum = -1
-        state.score = -1
-        state.successCards = []
-    },
+        state.gameInfo = {
+            roundNum: -1,
+            roundPlayerIsHost: -1,
+            lastUpdated: null,
+        }
+        state.cardInfo = {
+            hostHands: [],
+            guestHands: [],
+            libraryCardsNum: -1,
+            discardCardsNum: -1,
+            cueNum: -1,
+            chanceNum: -1,
+            score: -1,
+            successCards: []
+        }
+    }
 }
 
 export default {
