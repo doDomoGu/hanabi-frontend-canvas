@@ -104,9 +104,9 @@ export default {
 
         this.$store.dispatch('myGame/GetInfo',{force:true})
 
-        /* this.intervalId = setInterval(()=>{
+        this.intervalId = setInterval(()=>{
             this.$store.dispatch('myGame/GetInfo',{force:true})
-        },1000) */
+        },1000)
 
 
 
