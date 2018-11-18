@@ -3,7 +3,7 @@
 </template>
 <script>
 import moment   from 'moment'
-import MyCanvas from '../assets/js/MyCanvas.js'
+import MyCanvas,{ drawRoundedRect } from '../assets/js/MyCanvas.js'
 import MGCParam from '../assets/js/MyCanvasParam/myGame.js'
 
 export default {
@@ -84,6 +84,21 @@ export default {
 
         this.clearCanvas(this.canvas)
 
+        const drawEndBtn = (ctx) => {
+            const btn = MGCParam.endBtn
+
+            ctx.fillStyle = btn.bgcolor
+            ctx.fillRect(btn.x, btn.y, btn.w, btn.h)
+
+            ctx.font = MyCanvas.px2Rem(16) + 'px Microsoft JhengHei'
+            ctx.fillStyle = btn.txtcolor
+            ctx.textAlign = 'center'
+            ctx.textBaseline = 'middle'
+            ctx.fillText('退出', btn.x + btn.w / 2, btn.y + btn.h  / 2)
+        }
+
+        drawEndBtn(this.ctx)
+
 
         this.$store.dispatch('myRoom/GetInfo',{force:true})
 
@@ -92,6 +107,14 @@ export default {
         /* this.intervalId = setInterval(()=>{
             this.$store.dispatch('myGame/GetInfo',{force:true})
         },1000) */
+
+
+
+        
+        this.canvas.addEventListener('click',this.eventListener,false)
+        // this.canvas.addEventListener('touchstart',this.eventListener,false)
+        // this.canvas.addEventListener('touchend',this.eventListener,false)
+
     },
     methods: {
         clearCanvas(canvas) {
@@ -146,6 +169,39 @@ export default {
                 ctx.fillText(str, infoArea.x + 10, infoArea.y + infoArea.h  / 2)
             }
 
+        },
+        eventListener(evt){
+            let _evt
+
+            if(evt.type=='touchstart'){
+                _evt = evt.touches[0]   //touchstart
+            }else if (evt.type == 'touchend'){
+                _evt = evt.changedTouches[0] //touchend
+            }else if (evt.type == 'click') {
+                _evt = evt
+            }               
+            
+            const mousePos = MyCanvas.getMousePos(this.canvas, _evt, 1)
+            // console.log("鼠标指针坐标：" + mousePos.x + "," + mousePos.y)
+            function isPath(pos, areaName){
+                let area
+                switch(areaName){
+                    case 'endBtn':
+                        area = MGCParam.endBtn
+                        break
+                    default:
+                        area = {x:0,y:0,w:0,h:0}
+                }
+                // console.log(pos.x)
+                // console.log(pos.y)
+                // console.log(area)
+
+                return pos.x >= area.x && pos.x <= area.x + area.w && pos.y >= area.y && pos.y <= area.y + area.h
+            }
+
+            if(isPath(mousePos, 'endBtn')){
+                this.$store.dispatch('myGame/End')
+            }
         }
     },
     destroyed(){

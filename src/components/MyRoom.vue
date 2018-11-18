@@ -37,7 +37,7 @@ export default {
 
                 console.log(' ')
                 console.log(moment().format("YYYY-MM-DD HH:mm:ss SSS"))
-                console.log('hostPlayer watch')
+                console.log('hostPlayer watch in my room')
 
                 this.drawPlayer(this.ctx, true, newVal)
 
@@ -51,7 +51,7 @@ export default {
 
                 console.log(' ')
                 console.log(moment().format("YYYY-MM-DD HH:mm:ss SSS"))
-                console.log('guestPlayer watch')
+                console.log('guestPlayer watch in my room')
 
                 this.drawPlayer(this.ctx, false, newVal)
 
@@ -75,6 +75,10 @@ export default {
         this.intervalId = setInterval(()=>{
             this.$store.dispatch('myRoom/GetInfo',{force:true})
         },1000)
+        
+        this.canvas.addEventListener('click',this.eventListener,false)
+        // this.canvas.addEventListener('touchstart',this.eventListener,false)
+        // this.canvas.addEventListener('touchend',this.eventListener,false)
 
     },
     methods: {
@@ -213,11 +217,17 @@ export default {
             
         },
         eventListener(evt){
-            /* 点击事件 */
-            // console.log(evt) return true
-            // evt = evt.changedTouches[0] //touchend
-            // evt = evt.touches[0]   //touchstart
-            const mousePos = MyCanvas.getMousePos(this.canvas, evt, 1)
+            let _evt
+
+            if(evt.type=='touchstart'){
+                _evt = evt.touches[0]   //touchstart
+            }else if (evt.type == 'touchend'){
+                _evt = evt.changedTouches[0] //touchend
+            }else if (evt.type == 'click') {
+                _evt = evt
+            }               
+            
+            const mousePos = MyCanvas.getMousePos(this.canvas, _evt, 1)
 
             // console.log("鼠标指针坐标：" + mousePos.x + "," + mousePos.y)
             // eturn false

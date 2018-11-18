@@ -92,13 +92,13 @@ _.guest.info.area.w = _.player.info.area.w
 _.guest.info.area.h = _.player.info.area.h
 
 
-/* 退出按钮 */
-_.exitBtn = {}
-_.exitBtn.w = width
-_.exitBtn.h = 30
-_.exitBtn.x = 0
-_.exitBtn.y = height - _.exitBtn.h
-_.exitBtn.bgcolor = '#e90200'
-_.exitBtn.txtcolor = '#ffffff'
+/* 结束按钮 */
+_.endBtn = {}
+_.endBtn.w = width
+_.endBtn.h = 30
+_.endBtn.x = 0
+_.endBtn.y = height - _.endBtn.h
+_.endBtn.bgcolor = '#e90200'
+_.endBtn.txtcolor = '#ffffff'
 
 export default _
