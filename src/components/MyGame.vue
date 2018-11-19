@@ -1,5 +1,8 @@
 <template>
-    <canvas id="canvas_my_game" ></canvas>
+    <div>
+        <canvas id="canvas_my_game_bottom" ></canvas>
+        <canvas id="canvas_my_game_middle" ></canvas>
+    </div>
 </template>
 <script>
 import moment   from 'moment'
@@ -29,12 +32,12 @@ export default {
             return this.$store.getters['myGame/isPlaying']
         },
         hostHands(){
-            return this.$store.getters['myGame/hostHands']
+            return this.$store.getters['myGame/cardInfo'].hostHands
         },
         guestHands(){
-            return this.$store.getters['myGame/guestHands']
+            return this.$store.getters['myGame/cardInfo'].guestHands
         },
-        roundNum(){
+        /* roundNum(){
             return this.$store.getters['myGame/roundNum']
         },
         roundPlayerIsHost(){
@@ -60,34 +63,45 @@ export default {
         },
         successCards(){
             return this.$store.getters['myGame/successCards']
-        },
+        }, */
     },
     watch: {
         hostPlayer(val){
             if(val){ 
-                console.log(1)
-                MyGameDraw.player(this.ctx, true, this.isHost, val)
+                MyGameDraw.player(this.ctx_b, true, this.isHost, val)
             }
         },
         guestPlayer(val){
             if(val){ 
-                console.log(2)
-                MyGameDraw.player(this.ctx, false, this.isHost, val)
+                MyGameDraw.player(this.ctx_b, false, this.isHost, val)
             }
-        }        
+        },
+        hostHands(val){
+            if(val){ 
+                MyGameDraw.hands(this.ctx_m, true, this.isHost, val)
+            }
+        },
+        guestHands(val){
+            if(val){ 
+                MyGameDraw.hands(this.ctx_m, false, this.isHost, val)
+            }
+        }         
     },
     mounted() {
         console.log(' ')
         console.log(moment().format("YYYY-MM-DD HH:mm:ss SSS"))
         console.log('my-game mounted')
 
-        this.canvas = document.querySelector('#canvas_my_game')
-        this.ctx = this.canvas.getContext('2d')
+        this.canvas_b = document.querySelector('#canvas_my_game_bottom')
+        this.ctx_b = this.canvas_b.getContext('2d')
 
-        CommonDraw.clear(this.canvas)
+        this.canvas_m = document.querySelector('#canvas_my_game_middle')
+        this.ctx_m = this.canvas_m.getContext('2d')
 
-        MyGameDraw.endBtn(this.ctx)
+        CommonDraw.clear(this.canvas_b)
+        CommonDraw.clear(this.canvas_m)
 
+        MyGameDraw.endBtn(this.ctx_m)
 
         this.$store.dispatch('myRoom/GetInfo',{force:true})
 
@@ -97,7 +111,7 @@ export default {
             this.$store.dispatch('myGame/GetInfo',{force:true})
         },1000)
 
-        this.canvas.addEventListener('click',this.eventListener,false)
+        this.canvas_m.addEventListener('click',this.eventListener,false)
         // this.canvas.addEventListener('touchstart',this.eventListener,false)
         // this.canvas.addEventListener('touchend',this.eventListener,false)
 
@@ -134,7 +148,8 @@ export default {
 }
 </script>
 <style scoped>
-    #canvas_my_game {
+    #canvas_my_game_bottom,
+    #canvas_my_game_middle {
         position: absolute;
     }
 </style>

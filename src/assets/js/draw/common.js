@@ -13,7 +13,7 @@ _.px2Rem = px => {
 }
 
 // 函数：绘制圆角矩形
-_.fillRoundedRect = (ctx, rect, radius) => {
+export function fillRoundedRect (ctx, rect, radius){
     const point = (x, y) => {
         return { x: x, y: y }
     }
@@ -35,5 +35,22 @@ _.fillRoundedRect = (ctx, rect, radius) => {
     // ctx.stroke()  //边框绘制 根据笔触样式(strokeStyle)
     ctx.fill()
 }
+
+export function fillText(ctx, config) {
+    const rect = config.rect
+    ctx.fillStyle = config.bgColor
+    ctx.fillRect(rect.x, rect.y, rect.w, rect.h)
+
+    ctx.font = config.font
+    ctx.fillStyle = config.textColor
+    ctx.textAlign = config.textAlign
+    ctx.textBaseline = 'middle'
+    if(config.textAlign == 'left'){
+        ctx.fillText(config.text, rect.x + 10, rect.y + rect.h / 2)
+    }else if(config.textAlign == 'center'){
+        ctx.fillText(config.text, rect.x + rect.w / 2, rect.y + rect.h / 2)
+    }
+}
+
 
 export default _

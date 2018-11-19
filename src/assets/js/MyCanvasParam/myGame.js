@@ -37,6 +37,15 @@ _.player.button.disabled = {}
 _.player.button.disabled.bgcolor = '#cccccc'
 _.player.button.disabled.txtcolor = '#ffffff' */
 
+_.card = {}
+_.card.w = 40
+_.card.h = 80
+
+_.player.hands = {}
+_.player.hands.w = _.card.w
+_.player.hands.h = _.card.h
+_.player.hands.margin = 10
+
 /* 主机玩家 */
 _.host = {}
 
@@ -53,6 +62,11 @@ _.host.info.area.y = _.host.area.y + _.player.area.padding
 _.host.info.area.w = _.player.info.area.w
 _.host.info.area.h = _.player.info.area.h
 
+_.host.hands = {}
+_.host.hands.x = _.host.area.x + _.player.area.padding
+_.host.hands.y = _.host.info.area.y + _.host.info.area.h + _.player.area.padding
+_.host.hands.w = _.player.hands.w
+_.host.hands.h = _.player.hands.h
 /* _.host.button = {}
 _.host.button.x = _.host.area.x + _.player.area.padding
 _.host.button.y = _.host.area.y + _.player.area.h - _.player.area.padding - _.player.button.h
@@ -80,7 +94,8 @@ _.guest = {}
 
 _.guest.area = {}
 _.guest.area.x = _.host.area.x
-_.guest.area.y = _.host.area.y + _.host.area.h + _.table.area.h + _.history.area.h
+_.guest.area.y =
+    _.host.area.y + _.host.area.h + _.table.area.h + _.history.area.h
 _.guest.area.w = _.player.area.w
 _.guest.area.h = _.player.area.h
 
@@ -91,6 +106,11 @@ _.guest.info.area.y = _.guest.area.y + _.player.area.padding
 _.guest.info.area.w = _.player.info.area.w
 _.guest.info.area.h = _.player.info.area.h
 
+_.guest.hands = {}
+_.guest.hands.x = _.guest.area.x + _.player.area.padding
+_.guest.hands.y = _.guest.info.area.y + _.guest.info.area.h + _.player.area.padding
+_.guest.hands.w = _.player.hands.w
+_.guest.hands.h = _.player.hands.h
 
 /* 结束按钮 */
 _.endBtn = {}

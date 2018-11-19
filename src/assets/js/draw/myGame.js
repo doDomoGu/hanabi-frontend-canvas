@@ -1,4 +1,4 @@
-//import common from './common'
+import { fillRoundedRect, fillText } from './common'
 import MGCParam from '../MyCanvasParam/myGame'
 import MyCanvas from '../MyCanvas'
 
@@ -18,53 +18,78 @@ _.endBtn = ctx => {
 }
 
 _.player = (ctx, isHost, isPlayerHost, info) => {
-
-    let area = {}
-
-    let infoArea = {}
-
+    let rect, infoRect
     if (isHost) {
-        area.x = MGCParam.host.area.x
-        area.y = MGCParam.host.area.y
-        area.w = MGCParam.host.area.w
-        area.h = MGCParam.host.area.h
-
-        infoArea.x = MGCParam.host.info.area.x
-        infoArea.y = MGCParam.host.info.area.y
-        infoArea.w = MGCParam.host.info.area.w
-        infoArea.h = MGCParam.host.info.area.h
-
+        rect = MGCParam.host.area
+        infoRect = MGCParam.host.info.area
     } else {
-        area.x = MGCParam.guest.area.x
-        area.y = MGCParam.guest.area.y
-        area.w = MGCParam.guest.area.w
-        area.h = MGCParam.guest.area.h
-
-        infoArea.x = MGCParam.guest.info.area.x
-        infoArea.y = MGCParam.guest.info.area.y
-        infoArea.w = MGCParam.guest.info.area.w
-        infoArea.h = MGCParam.guest.info.area.h
-
+        rect = MGCParam.guest.area
+        infoRect = MGCParam.guest.info.area
     }
 
-    ctx.clearRect(area.x, area.y, area.w, area.h)
+    //ctx.clearRect(rect.x, rect.y, rect.w, rect.h)
 
     ctx.fillStyle = '#fefefe'
-    ctx.fillRect(area.x, area.y, area.w, area.h)
+    ctx.fillRect(rect.x, rect.y, rect.w, rect.h)
 
     if (info.id > -1) {
-        ctx.fillStyle = '#fee9d6'
-        ctx.fillRect(infoArea.x, infoArea.y, infoArea.w, infoArea.h)
+        const config = {
+            rect: infoRect,
+            font: MyCanvas.px2Rem(24) + 'px Microsoft JhengHei',
+            bgColor: '#fee9d6',
+            textColor: '#4b4b4b',
+            text: info.name + (isHost === isPlayerHost ? '*' : ''),
+            textAlign: 'left',
+        }
+        fillText(ctx, config)
+    }
+}
+
+_.hands = (ctx, isHost, isPlayerHost, info) => {
+    console.log(isHost)
+    console.log(isPlayerHost)
+    console.log(info)
 
 
-        ctx.font = MyCanvas.px2Rem(24) + 'px Microsoft JhengHei'
-        ctx.fillStyle = '#4b4b4b'
-        ctx.textAlign = 'left'
-        ctx.textBaseline = 'middle'
-        let str = info.name + (isHost === isPlayerHost ? '*' : '')
-        ctx.fillText(str, infoArea.x + 10, infoArea.y + infoArea.h / 2)
+
+    let rect
+    if (isHost) {
+        rect = JSON.parse(JSON.stringify(MGCParam.host.hands))
+    } else {
+        rect = JSON.parse(JSON.stringify(MGCParam.guest.hands))
     }
 
+    const colors =  ['white', 'blue', 'yellow', 'red', 'green']
+    const numbers = [1, 1, 1, 2, 2, 3, 3, 4, 4, 5]
+
+    info.forEach(c => {
+        console.log(c)
+        if (isPlayerHost == isHost) {
+            //自身手牌显示牌背
+            ctx.fillStyle = '#444444'
+            fillRoundedRect(ctx, rect, 4)
+
+            // ctx.fillRect(rect.x, rect.y, rect.w, rect.h)
+        } else {
+            //对面手牌显示牌面
+            ctx.fillStyle = '#eeeeee'
+            fillRoundedRect(ctx, rect, 4)
+
+            ctx.font = MyCanvas.px2Rem(24) + 'px Microsoft JhengHei',
+            ctx.fillStyle = '#333333'
+            ctx.textAlign = 'center'
+            ctx.textBaseline = 'middle'
+            const text = colors[c.color] + numbers[c.num]
+            ctx.fillText(
+                text,
+                rect.x + rect.w / 2,
+                rect.y + rect.h / 2,
+            )
+            
+        }
+
+        rect.x += rect.w + MGCParam.player.area.padding
+    })
 }
 
 export default _
