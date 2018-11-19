@@ -185,17 +185,7 @@ export default {
             ctx.fillText(str, x + 10, y + h  / 2)
         },
         eventListener(evt){
-            let _evt
-
-            if(evt.type=='touchstart'){
-                _evt = evt.touches[0]   //touchstart
-            }else if (evt.type == 'touchend'){
-                _evt = evt.changedTouches[0] //touchend
-            }else if (evt.type == 'click') {
-                _evt = evt
-            }               
-            
-            const mousePos = MyCanvas.getMousePos(this.canvas, _evt, 1)
+            const mousePos = MyCanvas.getMousePos(this.canvas, evt, 1)
             //console.log("鼠标指针坐标：" + mousePos.x + "," + mousePos.y)
 
             function getListItemIndex(pos, listCount){

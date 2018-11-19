@@ -21,10 +21,19 @@ exports.getPixelRatio = function (context) {
 
 // 获得点击位置
 exports.getMousePos = function (canvas, evt, ratio) {
+    let _evt
+
+    if (evt.type == 'touchstart') {
+        _evt = evt.touches[0]   //touchstart
+    } else if (evt.type == 'touchend') {
+        _evt = evt.changedTouches[0] //touchend
+    } else if (evt.type == 'click') {
+        _evt = evt
+    }  
     const rect = canvas.getBoundingClientRect()
     return {
-        x: (Math.round(evt.clientX) - rect.left) * ratio,
-        y: (Math.round(evt.clientY) - rect.top) * ratio
+        x: (Math.round(_evt.clientX) - rect.left) * ratio,
+        y: (Math.round(_evt.clientY) - rect.top) * ratio
     }
 }
 
