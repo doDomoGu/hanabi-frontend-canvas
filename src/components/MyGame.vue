@@ -3,8 +3,10 @@
 </template>
 <script>
 import moment   from 'moment'
-import MyCanvas,{ drawRoundedRect } from '../assets/js/MyCanvas.js'
+import MyCanvas from '../assets/js/MyCanvas.js'
 import MGCParam from '../assets/js/MyCanvasParam/myGame.js'
+// import DrawCommon from '../assets/js/draw/common.js'
+import MyGameDraw from '../assets/js/draw/myGame.js'
 
 export default {
     name: 'my_game',
@@ -79,25 +81,15 @@ export default {
         console.log(moment().format("YYYY-MM-DD HH:mm:ss SSS"))
         console.log('my-game mounted')
 
+
         this.canvas = document.querySelector('#canvas_my_game')
         this.ctx = this.canvas.getContext('2d')
 
         this.clearCanvas(this.canvas)
 
-        const drawEndBtn = (ctx) => {
-            const btn = MGCParam.endBtn
+        
 
-            ctx.fillStyle = btn.bgcolor
-            ctx.fillRect(btn.x, btn.y, btn.w, btn.h)
-
-            ctx.font = MyCanvas.px2Rem(16) + 'px Microsoft JhengHei'
-            ctx.fillStyle = btn.txtcolor
-            ctx.textAlign = 'center'
-            ctx.textBaseline = 'middle'
-            ctx.fillText('退出', btn.x + btn.w / 2, btn.y + btn.h  / 2)
-        }
-
-        drawEndBtn(this.ctx)
+        MyGameDraw.drawEndBtn(this.ctx)
 
 
         this.$store.dispatch('myRoom/GetInfo',{force:true})
