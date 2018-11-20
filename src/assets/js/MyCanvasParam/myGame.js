@@ -5,7 +5,7 @@ const height = window.innerHeight
 
 /* 基础参数 */
 _.window = {}
-_.window.padding = 30 // 窗口留白
+_.window.padding = 10 // 窗口留白
 
 /* 玩家基础参数 */
 _.player = {}
@@ -15,7 +15,7 @@ _.player.area.x = 0
 _.player.area.y = 0
 _.player.area.w = width //玩家区域宽度
 _.player.area.h = 200 //玩家区域高度
-_.player.area.padding = 10 //玩家区域内留白
+_.player.area.padding = _.window.padding //玩家区域内留白
 
 _.player.info = {}
 _.player.info.area = {}
@@ -77,9 +77,30 @@ _.host.button.h = _.player.button.h */
 _.table = {}
 _.table.area = {}
 _.table.area.x = 0
-_.table.area.y = _.host.area.h
+_.table.area.y = _.host.area.y + _.host.area.h
 _.table.area.w = width
 _.table.area.h = 120
+
+_.table.libraryCards = {}
+_.table.libraryCards.bgColor = '#eeaacc'
+_.table.libraryCards.textColor = '#333333'
+_.table.libraryCards.title = '牌库'
+_.table.libraryCards.area = {}
+_.table.libraryCards.area.x = _.window.padding
+_.table.libraryCards.area.y = _.table.area.y + _.window.padding
+_.table.libraryCards.area.w = _.card.w
+_.table.libraryCards.area.h = _.card.h
+
+_.table.discardCards = {}
+_.table.discardCards.bgColor = '#ccaaee'
+_.table.discardCards.textColor = '#333333'
+_.table.discardCards.title = '弃牌堆'
+_.table.discardCards.area = {}
+_.table.discardCards.area.w = _.card.w
+_.table.discardCards.area.h = _.card.h
+_.table.discardCards.area.x =
+    width - _.window.padding - _.table.discardCards.area.w
+_.table.discardCards.area.y = _.table.area.y + _.window.padding
 
 /* 游戏记录区域 */
 _.history = {}
@@ -108,7 +129,8 @@ _.guest.info.area.h = _.player.info.area.h
 
 _.guest.hands = {}
 _.guest.hands.x = _.guest.area.x + _.player.area.padding
-_.guest.hands.y = _.guest.info.area.y + _.guest.info.area.h + _.player.area.padding
+_.guest.hands.y =
+    _.guest.info.area.y + _.guest.info.area.h + _.player.area.padding
 _.guest.hands.w = _.player.hands.w
 _.guest.hands.h = _.player.hands.h
 

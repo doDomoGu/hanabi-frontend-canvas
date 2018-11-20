@@ -31,16 +31,20 @@ export default {
         isPlaying(){
             return this.$store.getters['myGame/isPlaying']
         },
+        cardInfo(){
+            return this.$store.getters['myGame/cardInfo']
+        },
+        gameInfo(){
+            return this.$store.getters['myGame/gameInfo']
+        }
+        /* 
         hostHands(){
             return this.$store.getters['myGame/cardInfo'].hostHands
         },
         guestHands(){
             return this.$store.getters['myGame/cardInfo'].guestHands
-        },
-        /* roundNum(){
-            return this.$store.getters['myGame/roundNum']
-        },
-        roundPlayerIsHost(){
+        }, */
+        /* roundPlayerIsHost(){
             return this.$store.getters['myGame/roundPlayerIsHost']
         },
         libraryCardsNum(){
@@ -67,25 +71,21 @@ export default {
     },
     watch: {
         hostPlayer(val){
-            if(val){ 
-                MyGameDraw.player(this.ctx_b, true, this.isHost, val)
-            }
+            MyGameDraw.player(this.ctx_b, true, this.isHost, val)
         },
         guestPlayer(val){
-            if(val){ 
-                MyGameDraw.player(this.ctx_b, false, this.isHost, val)
-            }
+            MyGameDraw.player(this.ctx_b, false, this.isHost, val)
         },
-        hostHands(val){
-            if(val){ 
-                MyGameDraw.hands(this.ctx_m, true, this.isHost, val)
-            }
-        },
-        guestHands(val){
-            if(val){ 
-                MyGameDraw.hands(this.ctx_m, false, this.isHost, val)
-            }
-        }         
+        cardInfo(val){
+            //手牌
+            MyGameDraw.hands(this.ctx_m, true, this.isHost, val.hostHands)
+            MyGameDraw.hands(this.ctx_m, false, this.isHost, val.guestHands)
+            //牌库 弃牌堆
+            MyGameDraw.libraryCards(this.ctx_m, val.libraryCardsNum)
+            MyGameDraw.discardCards(this.ctx_m, val.discardCardsNum)
+
+
+        }   
     },
     mounted() {
         console.log(' ')
