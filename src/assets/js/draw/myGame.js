@@ -76,31 +76,51 @@ const player = (ctx, config) => {
     })
 }
 
-_.hands = (ctx, isHost, isPlayerHost, info) => {
-    const rect = isHost
-        ? JSON.parse(JSON.stringify(MGCParam.host.hands))
-        : JSON.parse(JSON.stringify(MGCParam.guest.hands))
+_.hostHands = (ctx, isPlayerHost, hands) => {
+    const rect = JSON.parse(JSON.stringify(MGCParam.host.hands))
+    if (isPlayerHost) {
+        backHands(ctx, rect, hands)
+    } else {
+        frontHands(ctx, rect, hands)
+    }
+}
 
+_.guestHands = (ctx, isPlayerHost, hands) => {
+    const rect = JSON.parse(JSON.stringify(MGCParam.guest.hands))
+    if (isPlayerHost) {
+        frontHands(ctx, rect, hands)
+    } else {
+        backHands(ctx, rect, hands)
+    }
+}
+
+//对手手牌 显示正面
+const frontHands = (ctx, rect, hands) => {
     const colors = ['white', 'blue', 'yellow', 'red', 'green']
     const numbers = [1, 1, 1, 2, 2, 3, 3, 4, 4, 5]
 
-    info.forEach(c => {
-        if (isPlayerHost == isHost) {
-            //自身手牌显示牌背
-            ctx.fillStyle = '#444444'
-            fillRoundedRect(ctx, rect, 4)
-        } else {
-            //对面手牌显示牌面
-            ctx.fillStyle = '#dddddd'
-            fillRoundedRect(ctx, rect, 4)
+    hands.forEach(c => {
+        let color = colors[c.color]
 
-            ctx.font = MyCanvas.px2Rem(14) + 'px Microsoft JhengHei'
-            ctx.fillStyle = '#333333'
-            ctx.textAlign = 'center'
-            ctx.textBaseline = 'middle'
-            const text = colors[c.color] + numbers[c.num]
-            ctx.fillText(text, rect.x + rect.w / 2, rect.y + rect.h / 2)
-        }
+        ctx.fillStyle = MGCParam.player.hands.front.bgColor[color]
+        fillRoundedRect(ctx, rect, 4)
+
+        ctx.font = MyCanvas.px2Rem(14) + 'px Microsoft JhengHei'
+        ctx.fillStyle = MGCParam.player.hands.front.textColor[color]
+        ctx.textAlign = 'center'
+        ctx.textBaseline = 'middle'
+        ctx.fillText(numbers[c.num], rect.x + rect.w / 2, rect.y + rect.h / 2)
+
+        rect.x += rect.w + MGCParam.player.area.padding
+    })
+}
+
+//自己手牌 显示背面
+const backHands = (ctx, rect, hands) => {
+    hands.forEach(() => {
+        ctx.fillStyle = MGCParam.player.hands.back.bgColor
+        fillRoundedRect(ctx, rect, 4)
+
         rect.x += rect.w + MGCParam.player.area.padding
     })
 }
@@ -110,7 +130,7 @@ const cardsNum = (ctx, config, num) => {
     ctx.fillStyle = config.bgColor
     fillRoundedRect(ctx, rect, 4)
 
-    ctx.font = MyCanvas.px2Rem(14) + 'px Microsoft JhengHei'
+    ctx.font = MyCanvas.px2Rem(12) + 'px Microsoft JhengHei'
     ctx.fillStyle = config.textColor
     ctx.textAlign = 'center'
     ctx.textBaseline = 'bottom'
@@ -127,37 +147,29 @@ _.discardCards = (ctx, num) => {
     cardsNum(ctx, MGCParam.table.discardCards, num)
 }
 
-_.cueNum = (ctx, num) => {
-    const rect = JSON.parse(JSON.stringify(MGCParam.table.num.area))
+const _num = (ctx, rect, text) => {
+    ctx.clearRect(rect.x, rect.y, rect.w, rect.h)
 
-    ctx.font = MyCanvas.px2Rem(16) + 'px Microsoft JhengHei'
+    ctx.font = MyCanvas.px2Rem(14) + 'px Microsoft JhengHei'
     ctx.fillStyle = MGCParam.table.num.textColor
     ctx.textAlign = 'center'
-    ctx.textBaseline = 'bottom'
-    ctx.fillText('提示数:' + num, rect.x + rect.w / 2, rect.y + rect.h / 2)
+    ctx.textBaseline = 'middle'
+    ctx.fillText(text, rect.x + rect.w / 2, rect.y + rect.h / 2)
+}
+
+_.cueNum = (ctx, num) => {
+    const rect = JSON.parse(JSON.stringify(MGCParam.table.num.area))
+    _num(ctx, rect, '提示数:' + num)
 }
 _.chanceNum = (ctx, num) => {
     const rect = JSON.parse(JSON.stringify(MGCParam.table.num.area))
-
     rect.y += MGCParam.table.num.area.h + MGCParam.window.padding
-
-    ctx.font = MyCanvas.px2Rem(16) + 'px Microsoft JhengHei'
-    ctx.fillStyle = MGCParam.table.num.textColor
-    ctx.textAlign = 'center'
-    ctx.textBaseline = 'bottom'
-    ctx.fillText('机会数:' + num, rect.x + rect.w / 2, rect.y + rect.h / 2)
+    _num(ctx, rect, '机会数:' + num)
 }
 _.score = (ctx, num) => {
     const rect = JSON.parse(JSON.stringify(MGCParam.table.num.area))
-
-    rect.y += MGCParam.table.num.area.h + MGCParam.window.padding
-    rect.y += MGCParam.table.num.area.h + MGCParam.window.padding
-
-    ctx.font = MyCanvas.px2Rem(16) + 'px Microsoft JhengHei'
-    ctx.fillStyle = MGCParam.table.num.textColor
-    ctx.textAlign = 'center'
-    ctx.textBaseline = 'bottom'
-    ctx.fillText('分数:' + num, rect.x + rect.w / 2, rect.y + rect.h / 2)
+    rect.y += (MGCParam.table.num.area.h + MGCParam.window.padding) * 2
+    _num(ctx, rect, '分数:' + num)
 }
 
 export default _

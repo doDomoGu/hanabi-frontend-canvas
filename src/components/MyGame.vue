@@ -78,8 +78,8 @@ export default {
         },
         cardInfo(val){
             //手牌
-            MyGameDraw.hands(this.ctx_m, true, this.isHost, val.hostHands)
-            MyGameDraw.hands(this.ctx_m, false, this.isHost, val.guestHands)
+            MyGameDraw.hostHands(this.ctx_m, this.isHost, val.hostHands)
+            MyGameDraw.guestHands(this.ctx_m, this.isHost, val.guestHands)
             //牌库 弃牌堆
             MyGameDraw.libraryCards(this.ctx_m, val.libraryCardsNum)
             MyGameDraw.discardCards(this.ctx_m, val.discardCardsNum)
