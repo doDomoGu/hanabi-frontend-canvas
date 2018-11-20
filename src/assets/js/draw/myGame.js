@@ -93,4 +93,10 @@ _.discardCards = (ctx, num) => {
     cardsNum(ctx, MGCParam.table.discardCards, num)
 }
 
+_.table = ctx => {
+    const rect = MGCParam.table.area
+    ctx.fillStyle = MGCParam.table.bgColor
+    ctx.fillRect(rect.x, rect.y, rect.w, rect.h)
+}
+
 export default _

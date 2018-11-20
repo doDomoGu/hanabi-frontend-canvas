@@ -75,6 +75,7 @@ _.host.button.h = _.player.button.h */
 
 /* 桌面区域 */
 _.table = {}
+_.table.bgColor = '#aaeecc'
 _.table.area = {}
 _.table.area.x = 0
 _.table.area.y = _.host.area.y + _.host.area.h

@@ -103,6 +103,8 @@ export default {
 
         MyGameDraw.endBtn(this.ctx_m)
 
+        MyGameDraw.table(this.ctx_b)
+
         this.$store.dispatch('myRoom/GetInfo',{force:true})
 
         this.$store.dispatch('myGame/GetInfo',{force:true})
