@@ -1,9 +1,41 @@
-import { fillRoundedRect, fillText } from './common'
+import { fillRoundedRect, fillText, fillRect } from './common'
 import MGCParam from '../MyCanvasParam/myGame'
 import MyCanvas from '../MyCanvas'
 
 let _ = {} //common
 
+//绘制桌面区域
+_.tableRect = ctx => {
+    fillRect(ctx, {
+        rect: MGCParam.table.area,
+        color: MGCParam.table.bgColor,
+    })
+}
+//绘制游戏记录区域
+_.historyRect = ctx => {
+    fillRect(ctx, {
+        rect: MGCParam.history.area,
+        color: MGCParam.history.bgColor,
+    })
+}
+
+//绘制主机玩家区域
+_.hostPlayerRect = ctx => {
+    fillRect(ctx, {
+        rect: MGCParam.host.area,
+        color: MGCParam.player.bgColor,
+    })
+}
+
+//绘制主机玩家区域
+_.guestPlayerRect = ctx => {
+    fillRect(ctx, {
+        rect: MGCParam.guest.area,
+        color: MGCParam.player.bgColor,
+    })
+}
+
+//绘制结束按钮
 _.endBtn = ctx => {
     const btn = MGCParam.endBtn
 
@@ -17,29 +49,31 @@ _.endBtn = ctx => {
     ctx.fillText('结束游戏', btn.x + btn.w / 2, btn.y + btn.h / 2)
 }
 
-_.player = (ctx, isHost, isPlayerHost, info) => {
-    let rect, infoRect
-    if (isHost) {
-        rect = MGCParam.host.area
-        infoRect = MGCParam.host.info.area
-    } else {
-        rect = MGCParam.guest.area
-        infoRect = MGCParam.guest.info.area
-    }
-    ctx.fillStyle = '#fefefe'
-    ctx.fillRect(rect.x, rect.y, rect.w, rect.h)
+//绘制主机玩家信息
+_.hostPlayer = (ctx, isPlayerHost, info) => {
+    player(ctx, {
+        rect: MGCParam.host.info.area,
+        text: info.name + (isPlayerHost ? '*' : ''),
+    })
+}
 
-    if (info.id > -1) {
-        const config = {
-            rect: infoRect,
-            font: MyCanvas.px2Rem(24) + 'px Microsoft JhengHei',
-            bgColor: '#fee9d6',
-            textColor: '#4b4b4b',
-            text: info.name + (isHost === isPlayerHost ? '*' : ''),
-            textAlign: 'left',
-        }
-        fillText(ctx, config)
-    }
+//绘制客机玩家信息
+_.guestPlayer = (ctx, isPlayerHost, info) => {
+    player(ctx, {
+        rect: MGCParam.guest.info.area,
+        text: info.name + (!isPlayerHost ? '*' : ''),
+    })
+}
+
+const player = (ctx, config) => {
+    fillText(ctx, {
+        rect: config.rect,
+        font: MyCanvas.px2Rem(24) + 'px Microsoft JhengHei',
+        bgColor: MGCParam.player.info.bgColor,
+        textColor: MGCParam.player.info.textColor,
+        text: config.text,
+        textAlign: 'left',
+    })
 }
 
 _.hands = (ctx, isHost, isPlayerHost, info) => {
@@ -57,7 +91,7 @@ _.hands = (ctx, isHost, isPlayerHost, info) => {
             fillRoundedRect(ctx, rect, 4)
         } else {
             //对面手牌显示牌面
-            ctx.fillStyle = '#eeeeee'
+            ctx.fillStyle = '#dddddd'
             fillRoundedRect(ctx, rect, 4)
 
             ctx.font = MyCanvas.px2Rem(14) + 'px Microsoft JhengHei'
@@ -91,12 +125,6 @@ _.libraryCards = (ctx, num) => {
 
 _.discardCards = (ctx, num) => {
     cardsNum(ctx, MGCParam.table.discardCards, num)
-}
-
-_.table = ctx => {
-    const rect = MGCParam.table.area
-    ctx.fillStyle = MGCParam.table.bgColor
-    ctx.fillRect(rect.x, rect.y, rect.w, rect.h)
 }
 
 export default _

@@ -9,7 +9,7 @@ _.window.padding = 10 // 窗口留白
 
 /* 玩家基础参数 */
 _.player = {}
-
+_.player.bgColor = '#ffffff'
 _.player.area = {}
 _.player.area.x = 0
 _.player.area.y = 0
@@ -18,6 +18,8 @@ _.player.area.h = 200 //玩家区域高度
 _.player.area.padding = _.window.padding //玩家区域内留白
 
 _.player.info = {}
+_.player.info.bgColor = '#fee9d6'
+_.player.info.textColor = '#4b4b4b'
 _.player.info.area = {}
 _.player.info.area.w = _.player.area.w - _.player.area.padding * 2
 _.player.info.area.h = 40
@@ -105,6 +107,7 @@ _.table.discardCards.area.y = _.table.area.y + _.window.padding
 
 /* 游戏记录区域 */
 _.history = {}
+_.history.bgColor = '#eeccaa'
 _.history.area = {}
 _.history.area.x = 0
 _.history.area.y = _.table.area.y + _.table.area.h

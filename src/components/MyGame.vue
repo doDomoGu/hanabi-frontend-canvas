@@ -71,10 +71,10 @@ export default {
     },
     watch: {
         hostPlayer(val){
-            MyGameDraw.player(this.ctx_b, true, this.isHost, val)
+            MyGameDraw.hostPlayer(this.ctx_m, this.isHost, val)
         },
         guestPlayer(val){
-            MyGameDraw.player(this.ctx_b, false, this.isHost, val)
+            MyGameDraw.guestPlayer(this.ctx_b, this.isHost, val)
         },
         cardInfo(val){
             //手牌
@@ -83,6 +83,10 @@ export default {
             //牌库 弃牌堆
             MyGameDraw.libraryCards(this.ctx_m, val.libraryCardsNum)
             MyGameDraw.discardCards(this.ctx_m, val.discardCardsNum)
+            //数字:提示数/机会数/分数  cueNum/chanceNum/score
+            // MyGameDraw.cueNum(this.ctx_m, val.cueNum)
+            // MyGameDraw.chanceNum(this.ctx_m, val.chanceNum)
+            // MyGameDraw.score(this.ctx_m, val.score)
 
 
         }   
@@ -103,7 +107,10 @@ export default {
 
         MyGameDraw.endBtn(this.ctx_m)
 
-        MyGameDraw.table(this.ctx_b)
+        MyGameDraw.hostPlayerRect(this.ctx_b)
+        MyGameDraw.guestPlayerRect(this.ctx_b)
+        MyGameDraw.tableRect(this.ctx_b)
+        MyGameDraw.historyRect(this.ctx_b)
 
         this.$store.dispatch('myRoom/GetInfo',{force:true})
 

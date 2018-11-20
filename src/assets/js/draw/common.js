@@ -36,6 +36,12 @@ export function fillRoundedRect (ctx, rect, radius){
     ctx.fill()
 }
 
+export function fillRect(ctx, config) {
+    const rect = config.rect
+    ctx.fillStyle = config.color
+    ctx.fillRect(rect.x, rect.y, rect.w, rect.h)
+}
+
 export function fillText(ctx, config) {
     const rect = config.rect
     ctx.fillStyle = config.bgColor
