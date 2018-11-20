@@ -127,4 +127,37 @@ _.discardCards = (ctx, num) => {
     cardsNum(ctx, MGCParam.table.discardCards, num)
 }
 
+_.cueNum = (ctx, num) => {
+    const rect = JSON.parse(JSON.stringify(MGCParam.table.num.area))
+
+    ctx.font = MyCanvas.px2Rem(16) + 'px Microsoft JhengHei'
+    ctx.fillStyle = MGCParam.table.num.textColor
+    ctx.textAlign = 'center'
+    ctx.textBaseline = 'bottom'
+    ctx.fillText('提示数:' + num, rect.x + rect.w / 2, rect.y + rect.h / 2)
+}
+_.chanceNum = (ctx, num) => {
+    const rect = JSON.parse(JSON.stringify(MGCParam.table.num.area))
+
+    rect.y += MGCParam.table.num.area.h + MGCParam.window.padding
+
+    ctx.font = MyCanvas.px2Rem(16) + 'px Microsoft JhengHei'
+    ctx.fillStyle = MGCParam.table.num.textColor
+    ctx.textAlign = 'center'
+    ctx.textBaseline = 'bottom'
+    ctx.fillText('机会数:' + num, rect.x + rect.w / 2, rect.y + rect.h / 2)
+}
+_.score = (ctx, num) => {
+    const rect = JSON.parse(JSON.stringify(MGCParam.table.num.area))
+
+    rect.y += MGCParam.table.num.area.h + MGCParam.window.padding
+    rect.y += MGCParam.table.num.area.h + MGCParam.window.padding
+
+    ctx.font = MyCanvas.px2Rem(16) + 'px Microsoft JhengHei'
+    ctx.fillStyle = MGCParam.table.num.textColor
+    ctx.textAlign = 'center'
+    ctx.textBaseline = 'bottom'
+    ctx.fillText('分数:' + num, rect.x + rect.w / 2, rect.y + rect.h / 2)
+}
+
 export default _

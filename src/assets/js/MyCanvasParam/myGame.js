@@ -101,9 +101,16 @@ _.table.discardCards.title = '弃牌堆'
 _.table.discardCards.area = {}
 _.table.discardCards.area.w = _.card.w
 _.table.discardCards.area.h = _.card.h
-_.table.discardCards.area.x =
-    width - _.window.padding - _.table.discardCards.area.w
+_.table.discardCards.area.x = width - _.window.padding - _.table.discardCards.area.w
 _.table.discardCards.area.y = _.table.area.y + _.window.padding
+
+_.table.num = {}
+_.table.num.textColor = '#333333'
+_.table.num.area = {}
+_.table.num.area.x = _.table.libraryCards.area.x + _.table.libraryCards.area.w + _.window.padding
+_.table.num.area.y = _.table.area.y + _.window.padding
+_.table.num.area.w = 60
+_.table.num.area.h = 24
 
 /* 游戏记录区域 */
 _.history = {}
@@ -119,8 +126,7 @@ _.guest = {}
 
 _.guest.area = {}
 _.guest.area.x = _.host.area.x
-_.guest.area.y =
-    _.host.area.y + _.host.area.h + _.table.area.h + _.history.area.h
+_.guest.area.y = _.host.area.y + _.host.area.h + _.table.area.h + _.history.area.h
 _.guest.area.w = _.player.area.w
 _.guest.area.h = _.player.area.h
 
@@ -133,8 +139,7 @@ _.guest.info.area.h = _.player.info.area.h
 
 _.guest.hands = {}
 _.guest.hands.x = _.guest.area.x + _.player.area.padding
-_.guest.hands.y =
-    _.guest.info.area.y + _.guest.info.area.h + _.player.area.padding
+_.guest.hands.y = _.guest.info.area.y + _.guest.info.area.h + _.player.area.padding
 _.guest.hands.w = _.player.hands.w
 _.guest.hands.h = _.player.hands.h
 

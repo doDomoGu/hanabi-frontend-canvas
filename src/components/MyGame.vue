@@ -84,9 +84,9 @@ export default {
             MyGameDraw.libraryCards(this.ctx_m, val.libraryCardsNum)
             MyGameDraw.discardCards(this.ctx_m, val.discardCardsNum)
             //数字:提示数/机会数/分数  cueNum/chanceNum/score
-            // MyGameDraw.cueNum(this.ctx_m, val.cueNum)
-            // MyGameDraw.chanceNum(this.ctx_m, val.chanceNum)
-            // MyGameDraw.score(this.ctx_m, val.score)
+            MyGameDraw.cueNum(this.ctx_m, val.cueNum)
+            MyGameDraw.chanceNum(this.ctx_m, val.chanceNum)
+            MyGameDraw.score(this.ctx_m, val.score)
 
 
         }   
