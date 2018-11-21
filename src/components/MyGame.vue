@@ -2,6 +2,7 @@
     <div>
         <canvas id="canvas_my_game_bottom" ></canvas>
         <canvas id="canvas_my_game_middle" ></canvas>
+        <canvas id="canvas_my_game_top" ></canvas>
     </div>
 </template>
 <script>
@@ -37,44 +38,13 @@ export default {
         gameInfo(){
             return this.$store.getters['myGame/gameInfo']
         }
-        /* 
-        hostHands(){
-            return this.$store.getters['myGame/cardInfo'].hostHands
-        },
-        guestHands(){
-            return this.$store.getters['myGame/cardInfo'].guestHands
-        }, */
-        /* roundPlayerIsHost(){
-            return this.$store.getters['myGame/roundPlayerIsHost']
-        },
-        libraryCardsNum(){
-            return this.$store.getters['myGame/libraryCardsNum']
-        },
-        discardCardsNum(){
-            return this.$store.getters['myGame/discardCardsNum']
-        },
-        lastUpdated(){
-            return this.$store.getters['myGame/lastUpdated']
-        },
-        cueNum(){
-            return this.$store.getters['myGame/cueNum']
-        },
-        chanceNum(){
-            return this.$store.getters['myGame/chanceNum']
-        },
-        score(){
-            return this.$store.getters['myGame/score']
-        },
-        successCards(){
-            return this.$store.getters['myGame/successCards']
-        }, */
     },
     watch: {
         hostPlayer(val){
             MyGameDraw.hostPlayer(this.ctx_m, this.isHost, val)
         },
         guestPlayer(val){
-            MyGameDraw.guestPlayer(this.ctx_b, this.isHost, val)
+            MyGameDraw.guestPlayer(this.ctx_m, this.isHost, val)
         },
         cardInfo(val){
             //手牌
@@ -89,9 +59,10 @@ export default {
             MyGameDraw.score(this.ctx_m, val.score)
             //成功打出的卡牌
             MyGameDraw.successCards(this.ctx_m, val.successCards)
-
-
-        }   
+        },
+        gameInfo(val){
+            MyGameDraw.nowPlaying(this.ctx_m, val.roundPlayerIsHost)
+        }
     },
     mounted() {
         console.log(' ')
@@ -107,12 +78,8 @@ export default {
         CommonDraw.clear(this.canvas_b)
         CommonDraw.clear(this.canvas_m)
 
-        MyGameDraw.endBtn(this.ctx_m)
-
-        MyGameDraw.hostPlayerRect(this.ctx_b)
-        MyGameDraw.guestPlayerRect(this.ctx_b)
-        MyGameDraw.tableRect(this.ctx_b)
-        MyGameDraw.historyRect(this.ctx_b)
+        MyGameDraw.bottomRect(this.ctx_b)
+        MyGameDraw.endBtn(this.ctx_b)
 
         this.$store.dispatch('myRoom/GetInfo',{force:true})
 
@@ -120,7 +87,7 @@ export default {
 
         this.intervalId = setInterval(()=>{
             this.$store.dispatch('myGame/GetInfo',{force:true})
-        },1000)
+        },3000)
 
         this.canvas_m.addEventListener('click',this.eventListener,false)
         // this.canvas.addEventListener('touchstart',this.eventListener,false)

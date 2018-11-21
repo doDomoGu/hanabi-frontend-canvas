@@ -7,46 +7,31 @@ const numbers = [1, 1, 1, 2, 2, 3, 3, 4, 4, 5]
 
 let _ = {} //common
 
-//绘制桌面区域
-_.tableRect = ctx => {
-    fillRect(ctx, {
-        rect: MGCParam.table.area,
-        color: MGCParam.table.bgColor,
-    })
-}
-//绘制游戏记录区域
-_.historyRect = ctx => {
-    fillRect(ctx, {
-        rect: MGCParam.history.area,
-        color: MGCParam.history.bgColor,
-    })
-}
-
-//绘制主机玩家区域
-_.hostPlayerRect = ctx => {
-    fillRect(ctx, {
-        rect: MGCParam.host.area,
-        color: MGCParam.player.bgColor,
-    })
-}
-
-//绘制主机玩家区域
-_.guestPlayerRect = ctx => {
-    fillRect(ctx, {
-        rect: MGCParam.guest.area,
-        color: MGCParam.player.bgColor,
-    })
+//绘制背景
+_.bottomRect = ctx => {
+    //主机玩家区域背景
+    fillRect(ctx, { rect: MGCParam.host.area, color: MGCParam.player.bgColor })
+    //主机玩家信息区域背景
+    fillRect(ctx, { rect: MGCParam.host.info.area, color: MGCParam.player.info.bgColor })
+    //客机玩家区域背景
+    fillRect(ctx, { rect: MGCParam.guest.area, color: MGCParam.player.bgColor })
+    //客机玩家信息区域背景
+    fillRect(ctx, { rect: MGCParam.guest.info.area, color: MGCParam.player.info.bgColor })
+    //桌面区域背景
+    fillRect(ctx, { rect: MGCParam.table.area, color: MGCParam.table.bgColor })
+    //游戏记录区域背景
+    fillRect(ctx, { rect: MGCParam.history.area, color: MGCParam.history.bgColor })
 }
 
 //绘制结束按钮
 _.endBtn = ctx => {
     const btn = MGCParam.endBtn
 
-    ctx.fillStyle = btn.bgcolor
+    ctx.fillStyle = btn.bgColor
     ctx.fillRect(btn.x, btn.y, btn.w, btn.h)
 
     ctx.font = MyCanvas.px2Rem(16) + 'px Microsoft JhengHei'
-    ctx.fillStyle = btn.txtcolor
+    ctx.fillStyle = btn.textColor
     ctx.textAlign = 'center'
     ctx.textBaseline = 'middle'
     ctx.fillText('结束游戏', btn.x + btn.w / 2, btn.y + btn.h / 2)
@@ -55,7 +40,7 @@ _.endBtn = ctx => {
 //绘制主机玩家信息
 _.hostPlayer = (ctx, isPlayerHost, info) => {
     player(ctx, {
-        rect: MGCParam.host.info.area,
+        rect: MGCParam.host.info.content.area,
         text: info.name + (isPlayerHost ? '*' : ''),
     })
 }
@@ -63,7 +48,7 @@ _.hostPlayer = (ctx, isPlayerHost, info) => {
 //绘制客机玩家信息
 _.guestPlayer = (ctx, isPlayerHost, info) => {
     player(ctx, {
-        rect: MGCParam.guest.info.area,
+        rect: MGCParam.guest.info.content.area,
         text: info.name + (!isPlayerHost ? '*' : ''),
     })
 }
@@ -73,7 +58,6 @@ const player = (ctx, config) => {
     fillText(ctx, {
         rect: config.rect,
         font: MyCanvas.px2Rem(24) + 'px Microsoft JhengHei',
-        bgColor: MGCParam.player.info.bgColor,
         textColor: MGCParam.player.info.textColor,
         text: config.text,
         textAlign: 'left',
@@ -198,6 +182,24 @@ _.successCards = (ctx, successCards) => {
         ctx.fillText(successCards[i], rect.x + rect.w / 2, rect.y + rect.h / 2)
 
         rect.x += rect.w + MGCParam.table.successCards.margin
+    })
+}
+
+_.nowPlaying = (ctx, isHost) => {
+    const rectHost = MGCParam.host.info.nowPlaying.area
+    const rectGuest = MGCParam.guest.info.nowPlaying.area
+
+    ctx.clearRect(rectHost.x, rectHost.y, rectHost.w, rectHost.h)
+    ctx.clearRect(rectGuest.x, rectGuest.y, rectGuest.w, rectGuest.h)
+
+    const rect = isHost ? rectHost : rectGuest
+
+    fillText(ctx, {
+        rect: rect,
+        font: MyCanvas.px2Rem(16) + 'px Microsoft JhengHei',
+        textColor: '#333333',
+        text: '当前回合',
+        textAlign: 'left',
     })
 }
 

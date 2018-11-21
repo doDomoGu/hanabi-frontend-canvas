@@ -24,20 +24,20 @@ _.player.info.area = {}
 _.player.info.area.w = _.player.area.w - _.player.area.padding * 2
 _.player.info.area.h = 40
 
-/* _.player.button = {}
-_.player.button.w = 100
-_.player.button.h = 30
+_.player.info.nowPlaying = {}
+_.player.info.nowPlaying.area = {}
+_.player.info.nowPlaying.area.w = 100
+_.player.info.nowPlaying.area.h = _.player.info.area.h
 
-_.player.button.enabled = {}
-_.player.button.enabled.ok = {}
-_.player.button.enabled.ok.bgcolor = '#ff4400'
-_.player.button.enabled.ok.txtcolor = '#ffffff'
-_.player.button.enabled.cancel = {}
-_.player.button.enabled.cancel.bgcolor = '#0044ff'
-_.player.button.enabled.cancel.txtcolor = '#ffffff'
-_.player.button.disabled = {}
-_.player.button.disabled.bgcolor = '#cccccc'
-_.player.button.disabled.txtcolor = '#ffffff' */
+_.player.info.content = {}
+_.player.info.content.area = {}
+_.player.info.content.area.w = _.player.info.area.w - _.player.info.nowPlaying.area.w
+_.player.info.content.area.h = _.player.info.area.h
+
+_.player.info.nowPlaying = {}
+_.player.info.nowPlaying.area = {}
+_.player.info.nowPlaying.area.w = 80
+_.player.info.nowPlaying.area.h = _.player.info.area.h
 
 _.card = {}
 _.card.w = 40
@@ -84,6 +84,20 @@ _.host.info.area.x = _.host.area.x + _.player.area.padding
 _.host.info.area.y = _.host.area.y + _.player.area.padding
 _.host.info.area.w = _.player.info.area.w
 _.host.info.area.h = _.player.info.area.h
+
+_.host.info.content = {}
+_.host.info.content.area = {}
+_.host.info.content.area.w = _.player.info.content.area.w
+_.host.info.content.area.h = _.player.info.content.area.h
+_.host.info.content.area.x = _.host.info.area.x
+_.host.info.content.area.y = _.host.info.area.y
+
+_.host.info.nowPlaying = {}
+_.host.info.nowPlaying.area = {}
+_.host.info.nowPlaying.area.w = _.player.info.nowPlaying.area.w
+_.host.info.nowPlaying.area.h = _.player.info.nowPlaying.area.h
+_.host.info.nowPlaying.area.x = _.host.info.area.x + _.host.info.content.area.w
+_.host.info.nowPlaying.area.y = _.host.info.area.y
 
 _.host.hands = {}
 _.host.hands.x = _.host.area.x + _.player.area.padding
@@ -165,6 +179,20 @@ _.guest.info.area.y = _.guest.area.y + _.player.area.padding
 _.guest.info.area.w = _.player.info.area.w
 _.guest.info.area.h = _.player.info.area.h
 
+_.guest.info.content = {}
+_.guest.info.content.area = {}
+_.guest.info.content.area.w = _.player.info.content.area.w
+_.guest.info.content.area.h = _.player.info.content.area.h
+_.guest.info.content.area.x = _.guest.info.area.x
+_.guest.info.content.area.y = _.guest.info.area.y
+
+_.guest.info.nowPlaying = {}
+_.guest.info.nowPlaying.area = {}
+_.guest.info.nowPlaying.area.w = _.player.info.nowPlaying.area.w
+_.guest.info.nowPlaying.area.h = _.player.info.nowPlaying.area.h
+_.guest.info.nowPlaying.area.x = _.guest.info.area.x + _.guest.info.content.area.w
+_.guest.info.nowPlaying.area.y = _.guest.info.area.y
+
 _.guest.hands = {}
 _.guest.hands.x = _.guest.area.x + _.player.area.padding
 _.guest.hands.y = _.guest.info.area.y + _.guest.info.area.h + _.player.area.padding
@@ -177,7 +205,7 @@ _.endBtn.w = width
 _.endBtn.h = 30
 _.endBtn.x = 0
 _.endBtn.y = height - _.endBtn.h
-_.endBtn.bgcolor = '#e90200'
-_.endBtn.txtcolor = '#ffffff'
+_.endBtn.bgColor = '#e90200'
+_.endBtn.textColor = '#ffffff'
 
 export default _
