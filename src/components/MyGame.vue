@@ -2,7 +2,7 @@
     <div>
         <canvas id="canvas_my_game_bottom" ></canvas>
         <canvas id="canvas_my_game_middle" ></canvas>
-        <canvas id="canvas_my_game_top" ></canvas>
+        <canvas id="canvas_my_game_top" v-show="topOperation"></canvas>
     </div>
 </template>
 <script>
@@ -16,7 +16,10 @@ export default {
     name: 'my_game',
     data() {
         return {
-            intervalId : 0
+            intervalId : 0,
+            topOperation : false,
+            selectCardIsHost: false,
+            selectCardIndex: -1
         }
     },
     computed:{
@@ -75,11 +78,16 @@ export default {
         this.canvas_m = document.querySelector('#canvas_my_game_middle')
         this.ctx_m = this.canvas_m.getContext('2d')
 
+        this.canvas_t = document.querySelector('#canvas_my_game_top')
+        this.ctx_t = this.canvas_t.getContext('2d')
+
         CommonDraw.clear(this.canvas_b)
         CommonDraw.clear(this.canvas_m)
+        CommonDraw.clear(this.canvas_t)
 
         MyGameDraw.bottomRect(this.ctx_b)
         MyGameDraw.endBtn(this.ctx_b)
+        MyGameDraw.topRect(this.ctx_t)
 
         this.$store.dispatch('myRoom/GetInfo',{force:true})
 
@@ -90,15 +98,16 @@ export default {
         },3000)
 
         this.canvas_m.addEventListener('click',this.eventListener,false)
+        this.canvas_t.addEventListener('click',this.eventListenerTop,false)
         // this.canvas.addEventListener('touchstart',this.eventListener,false)
         // this.canvas.addEventListener('touchend',this.eventListener,false)
 
     },
     methods: {
         eventListener(evt){
-            const mousePos = MyCanvas.getMousePos(this.canvas, evt, 1)
+            const mousePos = MyCanvas.getMousePos(this.canvas_m, evt, 1)
             // console.log("鼠标指针坐标：" + mousePos.x + "," + mousePos.y)
-            function isPath(pos, areaName){
+            const isPath = (pos, areaName)=>{
                 let area
                 switch(areaName){
                     case 'endBtn':
@@ -107,12 +116,93 @@ export default {
                     default:
                         area = {x:0,y:0,w:0,h:0}
                 }
-
                 return pos.x >= area.x && pos.x <= area.x + area.w && pos.y >= area.y && pos.y <= area.y + area.h
             }
 
-            if(isPath(mousePos, 'endBtn')){
-                this.$store.dispatch('myGame/End')
+            const getHandsIndex = (rects, pos) => {
+                let index = -1
+                rects.forEach((rect,i)=>{
+                    if(pos.x >= rect.x && pos.x <= rect.x + rect.w && pos.y >= rect.y && pos.y <= rect.y + rect.h){
+                        index = i
+                    }
+                })
+                return index
+            }
+            const getHostHandsIndex = pos => {
+                const rects = MGCParam.host.hands.areas
+                return getHandsIndex(rects, pos)
+            }
+
+            const getGuestHandsIndex = pos => {
+                const rects = MGCParam.guest.hands.areas
+                return getHandsIndex(rects, pos)
+            }
+
+            const hostHandsIndex    = getHostHandsIndex(mousePos)
+            const guestHandsIndex   = getGuestHandsIndex(mousePos)
+            if(this.gameInfo.roundPlayerIsHost == this.isHost && hostHandsIndex > -1){
+                this.topOperation = true
+                this.selectCardIndex = hostHandsIndex
+                this.selectCardIsHost = true
+                if(this.isHost){
+                    MyGameDraw.topConfirmPlay(this.ctx_t)
+                }else{
+                    MyGameDraw.topConfirmCue(this.ctx_t)
+                }
+            }else if(this.gameInfo.roundPlayerIsHost == this.isHost && guestHandsIndex > -1){
+                this.topOperation = true
+                this.selectCardIndex = guestHandsIndex
+                this.selectCardIsHost = false
+                if(this.isHost){
+                    MyGameDraw.topConfirmCue(this.ctx_t)
+                }else{
+                    MyGameDraw.topConfirmPlay(this.ctx_t)
+                }
+            }else if(isPath(mousePos, 'endBtn')){
+                console.log("退出")
+                // this.$store.dispatch('myGame/End')
+            }
+        },
+        eventListenerTop(evt){
+            const mousePos = MyCanvas.getMousePos(this.canvas_m, evt, 1)
+            // console.log("鼠标指针坐标：" + mousePos.x + "," + mousePos.y)
+            const isPath = (pos, areaName)=>{
+                let area
+                switch(areaName){
+                    case 'playOkBtn':
+                        area = {
+                            x: window.innerWidth / 2 - 100,
+                            y: window.innerHeight / 2 + 20,
+                            w: MGCParam.btn.area.w,
+                            h: MGCParam.btn.area.h
+                        }
+                        break
+                    case 'playCancelBtn':
+                        area = {
+                            x: window.innerWidth / 2 ,
+                            y: window.innerHeight / 2 + 20,
+                            w: MGCParam.btn.area.w,
+                            h: MGCParam.btn.area.h
+                        }
+                        break
+                    default:
+                        area = {x:0,y:0,w:0,h:0}
+                }
+                return pos.x >= area.x && pos.x <= area.x + area.w && pos.y >= area.y && pos.y <= area.y + area.h
+            }
+
+            if(this.isHost == this.selectCardIsHost) {
+                //play
+                if(isPath(mousePos, 'playOkBtn')){
+                    this.$store.dispatch('myGame/DoPlay',this.selectCardIndex)
+                    this.topOperation = false
+                }else if(isPath(mousePos, 'playCancelBtn')){
+                    this.topOperation = false
+                }
+
+            } else {
+                //cue
+                console.log('is adsadads')
             }
         }
     },
@@ -127,7 +217,8 @@ export default {
 </script>
 <style scoped>
     #canvas_my_game_bottom,
-    #canvas_my_game_middle {
+    #canvas_my_game_middle,
+    #canvas_my_game_top {
         position: absolute;
     }
 </style>

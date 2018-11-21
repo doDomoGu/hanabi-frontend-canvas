@@ -23,6 +23,12 @@ _.bottomRect = ctx => {
     fillRect(ctx, { rect: MGCParam.history.area, color: MGCParam.history.bgColor })
 }
 
+//canvas_top 遮罩背景
+_.topRect = ctx => {
+    ctx.fillStyle = 'rgba(222,222,222,0.9)'
+    ctx.fillRect(0, 0, window.innerWidth, window.innerHeight)
+}
+
 //绘制结束按钮
 _.endBtn = ctx => {
     const btn = MGCParam.endBtn
@@ -67,7 +73,7 @@ const player = (ctx, config) => {
 //绘制主机玩家手牌
 _.hostHands = (ctx, isPlayerHost, hands) => {
     const rects = JSON.parse(JSON.stringify(MGCParam.host.hands.areas))
-    
+
     if (isPlayerHost) {
         backHands(ctx, rects, hands)
     } else {
@@ -102,7 +108,7 @@ const frontHands = (ctx, rects, hands) => {
 
 //自己手牌 显示背面
 const backHands = (ctx, rects, hands) => {
-    hands.forEach((c,i) => {
+    hands.forEach((c, i) => {
         let rect = rects[i]
         ctx.fillStyle = MGCParam.player.hands.back.bgColor
         fillRoundedRect(ctx, rect, 4)
@@ -199,6 +205,52 @@ _.nowPlaying = (ctx, isHost) => {
         text: '当前回合',
         textAlign: 'left',
     })
+}
+
+_.topConfirmPlay = ctx => {
+    ctx.font = MyCanvas.px2Rem(24) + 'px Microsoft JhengHei'
+    ctx.fillStyle = '#333'
+    ctx.textAlign = 'center'
+    ctx.textBaseline = 'bottom'
+    ctx.fillText('确定要打出这张牌么', window.innerWidth / 2, window.innerHeight / 2)
+
+    const rectOk = {
+        x: window.innerWidth / 2 - 100,
+        y: window.innerHeight / 2 + 20,
+        w: MGCParam.btn.area.w,
+        h: MGCParam.btn.area.h,
+    }
+    ctx.fillStyle = MGCParam.btn.ok.bgColor
+    fillRoundedRect(ctx, rectOk, 4)
+
+    ctx.font = MyCanvas.px2Rem(12) + 'px Microsoft JhengHei'
+    ctx.fillStyle = MGCParam.btn.ok.textColor
+    ctx.textAlign = 'center'
+    ctx.textBaseline = 'middle'
+    ctx.fillText('确定', rectOk.x + rectOk.w / 2, rectOk.y + rectOk.h / 2)
+
+    const rectCancel = {
+        x: window.innerWidth / 2 ,
+        y: window.innerHeight / 2 + 20,
+        w: MGCParam.btn.area.w,
+        h: MGCParam.btn.area.h,
+    }
+    ctx.fillStyle = MGCParam.btn.cancel.bgColor
+    fillRoundedRect(ctx, rectCancel, 4)
+
+    ctx.font = MyCanvas.px2Rem(12) + 'px Microsoft JhengHei'
+    ctx.fillStyle = MGCParam.btn.cancel.textColor
+    ctx.textAlign = 'center'
+    ctx.textBaseline = 'middle'
+    ctx.fillText('取消', rectCancel.x + rectCancel.w / 2, rectCancel.y + rectCancel.h / 2)
+}
+
+_.topConfirmCue = ctx => {
+    ctx.font = MyCanvas.px2Rem(24) + 'px Microsoft JhengHei'
+    ctx.fillStyle = '#333'
+    ctx.textAlign = 'center'
+    ctx.textBaseline = 'middle'
+    ctx.fillText('确定要提示这张牌么', window.innerWidth / 2, window.innerHeight / 2)
 }
 
 export default _

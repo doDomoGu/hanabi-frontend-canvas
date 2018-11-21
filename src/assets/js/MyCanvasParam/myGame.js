@@ -218,4 +218,22 @@ _.endBtn.y = height - _.endBtn.h
 _.endBtn.bgColor = '#e90200'
 _.endBtn.textColor = '#ffffff'
 
+/* 按钮 */
+_.btn = {}
+_.btn.area = {}
+_.btn.area.w = 50
+_.btn.area.h = 20
+_.btn.ok = {}
+_.btn.ok.bgColor = '#44ff44'
+_.btn.ok.textColor = '#ff44ff'
+_.btn.cancel = {}
+_.btn.cancel.bgColor = '#ff4444'
+_.btn.cancel.textColor = '#44ffff'
+_.btn.cueNum = {}
+_.btn.cueNum.bgColor = '#ffff44'
+_.btn.cueNum.textColor = '#4444ff'
+_.btn.cueColor = {}
+_.btn.cueColor.bgColor = '#44ffff'
+_.btn.cueColor.textColor = '#ff4444'
+
 export default _
