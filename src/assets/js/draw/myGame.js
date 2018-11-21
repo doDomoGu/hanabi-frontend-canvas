@@ -66,28 +66,29 @@ const player = (ctx, config) => {
 
 //绘制主机玩家手牌
 _.hostHands = (ctx, isPlayerHost, hands) => {
-    const rect = JSON.parse(JSON.stringify(MGCParam.host.hands))
+    const rects = JSON.parse(JSON.stringify(MGCParam.host.hands.areas))
+    
     if (isPlayerHost) {
-        backHands(ctx, rect, hands)
+        backHands(ctx, rects, hands)
     } else {
-        frontHands(ctx, rect, hands)
+        frontHands(ctx, rects, hands)
     }
 }
 //绘制客机玩家手牌
 _.guestHands = (ctx, isPlayerHost, hands) => {
-    const rect = JSON.parse(JSON.stringify(MGCParam.guest.hands))
+    const rects = JSON.parse(JSON.stringify(MGCParam.guest.hands.areas))
     if (isPlayerHost) {
-        frontHands(ctx, rect, hands)
+        frontHands(ctx, rects, hands)
     } else {
-        backHands(ctx, rect, hands)
+        backHands(ctx, rects, hands)
     }
 }
 
 //对手手牌 显示正面
-const frontHands = (ctx, rect, hands) => {
-    hands.forEach(c => {
+const frontHands = (ctx, rects, hands) => {
+    hands.forEach((c, i) => {
         let color = colors[c.color]
-
+        let rect = rects[i]
         ctx.fillStyle = MGCParam.player.hands.front.bgColor[color]
         fillRoundedRect(ctx, rect, 4)
 
@@ -96,18 +97,15 @@ const frontHands = (ctx, rect, hands) => {
         ctx.textAlign = 'center'
         ctx.textBaseline = 'middle'
         ctx.fillText(numbers[c.num], rect.x + rect.w / 2, rect.y + rect.h / 2)
-
-        rect.x += rect.w + MGCParam.player.area.padding
     })
 }
 
 //自己手牌 显示背面
-const backHands = (ctx, rect, hands) => {
-    hands.forEach(() => {
+const backHands = (ctx, rects, hands) => {
+    hands.forEach((c,i) => {
+        let rect = rects[i]
         ctx.fillStyle = MGCParam.player.hands.back.bgColor
         fillRoundedRect(ctx, rect, 4)
-
-        rect.x += rect.w + MGCParam.player.area.padding
     })
 }
 

@@ -100,10 +100,15 @@ _.host.info.nowPlaying.area.x = _.host.info.area.x + _.host.info.content.area.w
 _.host.info.nowPlaying.area.y = _.host.info.area.y
 
 _.host.hands = {}
-_.host.hands.x = _.host.area.x + _.player.area.padding
-_.host.hands.y = _.host.info.area.y + _.host.info.area.h + _.player.area.padding
-_.host.hands.w = _.player.hands.w
-_.host.hands.h = _.player.hands.h
+_.host.hands.areas = []
+for (let i = 0; i < 5; i++) {
+    let handsArea = {}
+    handsArea.x = _.host.area.x + _.player.area.padding + ( _.player.hands.w + _.player.area.padding ) * i
+    handsArea.y = _.host.info.area.y + _.host.info.area.h + _.player.area.padding
+    handsArea.w = _.player.hands.w
+    handsArea.h = _.player.hands.h
+    _.host.hands.areas.push(handsArea)
+}
 /* _.host.button = {}
 _.host.button.x = _.host.area.x + _.player.area.padding
 _.host.button.y = _.host.area.y + _.player.area.h - _.player.area.padding - _.player.button.h
@@ -194,10 +199,15 @@ _.guest.info.nowPlaying.area.x = _.guest.info.area.x + _.guest.info.content.area
 _.guest.info.nowPlaying.area.y = _.guest.info.area.y
 
 _.guest.hands = {}
-_.guest.hands.x = _.guest.area.x + _.player.area.padding
-_.guest.hands.y = _.guest.info.area.y + _.guest.info.area.h + _.player.area.padding
-_.guest.hands.w = _.player.hands.w
-_.guest.hands.h = _.player.hands.h
+_.guest.hands.areas = []
+for (let i = 0; i < 5; i++) {
+    let handsArea = {}
+    handsArea.x = _.guest.area.x + _.player.area.padding + (_.player.hands.w + _.player.area.padding) * i
+    handsArea.y = _.guest.info.area.y + _.guest.info.area.h + _.player.area.padding
+    handsArea.w = _.player.hands.w
+    handsArea.h = _.player.hands.h
+    _.guest.hands.areas.push(handsArea)
+}
 
 /* 结束按钮 */
 _.endBtn = {}
