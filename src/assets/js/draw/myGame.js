@@ -2,6 +2,9 @@ import { fillRoundedRect, fillText, fillRect } from './common'
 import MGCParam from '../MyCanvasParam/myGame'
 import MyCanvas from '../MyCanvas'
 
+const colors = ['white', 'blue', 'yellow', 'red', 'green']
+const numbers = [1, 1, 1, 2, 2, 3, 3, 4, 4, 5]
+
 let _ = {} //common
 
 //绘制桌面区域
@@ -65,6 +68,7 @@ _.guestPlayer = (ctx, isPlayerHost, info) => {
     })
 }
 
+//绘制单个玩家信息
 const player = (ctx, config) => {
     fillText(ctx, {
         rect: config.rect,
@@ -76,6 +80,7 @@ const player = (ctx, config) => {
     })
 }
 
+//绘制主机玩家手牌
 _.hostHands = (ctx, isPlayerHost, hands) => {
     const rect = JSON.parse(JSON.stringify(MGCParam.host.hands))
     if (isPlayerHost) {
@@ -84,7 +89,7 @@ _.hostHands = (ctx, isPlayerHost, hands) => {
         frontHands(ctx, rect, hands)
     }
 }
-
+//绘制客机玩家手牌
 _.guestHands = (ctx, isPlayerHost, hands) => {
     const rect = JSON.parse(JSON.stringify(MGCParam.guest.hands))
     if (isPlayerHost) {
@@ -96,9 +101,6 @@ _.guestHands = (ctx, isPlayerHost, hands) => {
 
 //对手手牌 显示正面
 const frontHands = (ctx, rect, hands) => {
-    const colors = ['white', 'blue', 'yellow', 'red', 'green']
-    const numbers = [1, 1, 1, 2, 2, 3, 3, 4, 4, 5]
-
     hands.forEach(c => {
         let color = colors[c.color]
 
@@ -125,6 +127,7 @@ const backHands = (ctx, rect, hands) => {
     })
 }
 
+//绘制卡牌带数字
 const cardsNum = (ctx, config, num) => {
     const rect = config.area
     ctx.fillStyle = config.bgColor
@@ -139,37 +142,63 @@ const cardsNum = (ctx, config, num) => {
     ctx.fillText(num + '张', rect.x + rect.w / 2, rect.y + rect.h / 2)
 }
 
+//绘制牌库
 _.libraryCards = (ctx, num) => {
     cardsNum(ctx, MGCParam.table.libraryCards, num)
 }
-
+//绘制弃牌堆
 _.discardCards = (ctx, num) => {
     cardsNum(ctx, MGCParam.table.discardCards, num)
 }
 
+//绘制数字
 const _num = (ctx, rect, text) => {
     ctx.clearRect(rect.x, rect.y, rect.w, rect.h)
 
-    ctx.font = MyCanvas.px2Rem(14) + 'px Microsoft JhengHei'
+    ctx.font = MyCanvas.px2Rem(12) + 'px Microsoft JhengHei'
     ctx.fillStyle = MGCParam.table.num.textColor
     ctx.textAlign = 'center'
     ctx.textBaseline = 'middle'
     ctx.fillText(text, rect.x + rect.w / 2, rect.y + rect.h / 2)
 }
 
+//剩余提示数
 _.cueNum = (ctx, num) => {
     const rect = JSON.parse(JSON.stringify(MGCParam.table.num.area))
     _num(ctx, rect, '提示数:' + num)
 }
+//剩余机会数
 _.chanceNum = (ctx, num) => {
     const rect = JSON.parse(JSON.stringify(MGCParam.table.num.area))
     rect.y += MGCParam.table.num.area.h + MGCParam.window.padding
     _num(ctx, rect, '机会数:' + num)
 }
+//分数
 _.score = (ctx, num) => {
     const rect = JSON.parse(JSON.stringify(MGCParam.table.num.area))
     rect.y += (MGCParam.table.num.area.h + MGCParam.window.padding) * 2
     _num(ctx, rect, '分数:' + num)
+}
+
+//绘制成功打出的卡牌
+_.successCards = (ctx, successCards) => {
+    //TODO
+    const rect = JSON.parse(JSON.stringify(MGCParam.table.successCards.area))
+
+    ctx.clearRect(rect.x, rect.y, (rect.w + MGCParam.table.successCards.margin) * 5, rect.h)
+
+    colors.forEach((c, i) => {
+        ctx.fillStyle = MGCParam.card.front.bgColor[c]
+        fillRoundedRect(ctx, rect, 4)
+
+        ctx.font = MyCanvas.px2Rem(8) + 'px Microsoft JhengHei'
+        ctx.fillStyle = MGCParam.card.front.textColor[c]
+        ctx.textAlign = 'center'
+        ctx.textBaseline = 'middle'
+        ctx.fillText(successCards[i], rect.x + rect.w / 2, rect.y + rect.h / 2)
+
+        rect.x += rect.w + MGCParam.table.successCards.margin
+    })
 }
 
 export default _

@@ -9,12 +9,12 @@ _.window.padding = 10 // 窗口留白
 
 /* 玩家基础参数 */
 _.player = {}
-_.player.bgColor = '#ffffff'
+_.player.bgColor = '#cccccc'
 _.player.area = {}
 _.player.area.x = 0
 _.player.area.y = 0
 _.player.area.w = width //玩家区域宽度
-_.player.area.h = 200 //玩家区域高度
+_.player.area.h = 150 //玩家区域高度
 _.player.area.padding = _.window.padding //玩家区域内留白
 
 _.player.info = {}
@@ -43,23 +43,28 @@ _.card = {}
 _.card.w = 40
 _.card.h = 80
 
+_.card.front = {}
+_.card.front.bgColor = {}
+_.card.front.bgColor.white = '#ffffff'
+_.card.front.bgColor.blue = '#2222ff'
+_.card.front.bgColor.yellow = '#ffff22'
+_.card.front.bgColor.red = '#ff2222'
+_.card.front.bgColor.green = '#22ff22'
+
+_.card.front.textColor = {}
+_.card.front.textColor.white = '#333333'
+_.card.front.textColor.blue = '#eeeeee'
+_.card.front.textColor.yellow = '#333333'
+_.card.front.textColor.red = '#ffffff'
+_.card.front.textColor.green = '#333333'
+
+_.card.back = {}
+_.card.back.bgColor = '#999999'
+_.card.back.textColor = '#ffffff'
+
 _.player.hands = {}
-_.player.hands.front = {}
-_.player.hands.front.bgColor = {}
-_.player.hands.front.bgColor.white  = '#ffffff'
-_.player.hands.front.bgColor.blue   = '#2222ff'
-_.player.hands.front.bgColor.yellow = '#ffff22'
-_.player.hands.front.bgColor.red    = '#ff2222'
-_.player.hands.front.bgColor.green  = '#22ff22'
-_.player.hands.front.textColor = {}
-_.player.hands.front.textColor.white    = '#333333'
-_.player.hands.front.textColor.blue     = '#eeeeee'
-_.player.hands.front.textColor.yellow   = '#333333'
-_.player.hands.front.textColor.red      = '#ffffff'
-_.player.hands.front.textColor.green    = '#333333'
-_.player.hands.back = {}
-_.player.hands.back.bgColor = '#999999'
-_.player.hands.back.textColor = '#ffffff'
+_.player.hands.front = _.card.front
+_.player.hands.back = _.card.back
 _.player.hands.w = _.card.w
 _.player.hands.h = _.card.h
 _.player.hands.margin = 10
@@ -98,7 +103,7 @@ _.table.area = {}
 _.table.area.x = 0
 _.table.area.y = _.host.area.y + _.host.area.h
 _.table.area.w = width
-_.table.area.h = 120
+_.table.area.h = 100
 
 _.table.libraryCards = {}
 _.table.libraryCards.bgColor = '#eeaacc'
@@ -125,9 +130,16 @@ _.table.num.textColor = '#333333'
 _.table.num.area = {}
 _.table.num.area.x = _.table.libraryCards.area.x + _.table.libraryCards.area.w + _.window.padding
 _.table.num.area.y = _.table.area.y + _.window.padding
-_.table.num.area.w = 60
-_.table.num.area.h = 24
+_.table.num.area.w = 40
+_.table.num.area.h = 16
 
+_.table.successCards = {}
+_.table.successCards.area = {}
+_.table.successCards.area.x = _.table.num.area.x + _.table.num.area.w + _.window.padding
+_.table.successCards.area.y = _.table.area.y + _.window.padding
+_.table.successCards.area.w = _.card.w / 2
+_.table.successCards.area.h = _.card.h / 2
+_.table.successCards.margin = 10
 /* 游戏记录区域 */
 _.history = {}
 _.history.bgColor = '#eeccaa'

@@ -87,6 +87,8 @@ export default {
             MyGameDraw.cueNum(this.ctx_m, val.cueNum)
             MyGameDraw.chanceNum(this.ctx_m, val.chanceNum)
             MyGameDraw.score(this.ctx_m, val.score)
+            //成功打出的卡牌
+            MyGameDraw.successCards(this.ctx_m, val.successCards)
 
 
         }   
