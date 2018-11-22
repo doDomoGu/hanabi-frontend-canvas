@@ -122,7 +122,7 @@ export default {
         async checkToken(){
             this.$store.commit('common/setIsLoading', true)
             
-            const token = window.sessionStorage.getItem('__HANABI_AUTH_TOKEN__') || null
+            const token = window.localStorage.getItem('__HANABI_AUTH_TOKEN__') || null
             
             if(token!== null){
                 await this.$store.dispatch('user/CheckToken', token)

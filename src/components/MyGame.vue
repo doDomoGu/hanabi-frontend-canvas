@@ -86,7 +86,7 @@ export default {
         CommonDraw.clear(this.canvas_t)
 
         MyGameDraw.bottomRect(this.ctx_b)
-        MyGameDraw.endBtn(this.ctx_b)
+        MyGameDraw.endBtn(this.ctx_m)
         MyGameDraw.topRect(this.ctx_t)
 
         this.$store.dispatch('myRoom/GetInfo',{force:true})
@@ -159,8 +159,7 @@ export default {
                     MyGameDraw.topConfirmPlay(this.ctx_t)
                 }
             }else if(isPath(mousePos, 'endBtn')){
-                console.log("退出")
-                // this.$store.dispatch('myGame/End')
+                this.$store.dispatch('myGame/End')
             }
         },
         eventListenerTop(evt){
@@ -185,6 +184,30 @@ export default {
                             h: MGCParam.btn.area.h
                         }
                         break
+                    case 'cueNumBtn':
+                        area = {
+                            x: window.innerWidth / 2 - 80,
+                            y: window.innerHeight / 2 + 20,
+                            w: MGCParam.btn.area.w,
+                            h: MGCParam.btn.area.h
+                        }
+                        break
+                    case 'cueColorBtn':
+                        area = {
+                            x: window.innerWidth / 2,
+                            y: window.innerHeight / 2 + 20,
+                            w: MGCParam.btn.area.w,
+                            h: MGCParam.btn.area.h
+                        }
+                        break
+                    case 'cueCancelBtn':
+                        area = {
+                            x: window.innerWidth / 2 + 80,
+                            y: window.innerHeight / 2 + 20,
+                            w: MGCParam.btn.area.w,
+                            h: MGCParam.btn.area.h
+                        }
+                        break
                     default:
                         area = {x:0,y:0,w:0,h:0}
                 }
@@ -202,7 +225,15 @@ export default {
 
             } else {
                 //cue
-                console.log('is adsadads')
+                if(isPath(mousePos, 'cueNumBtn')){
+                    this.$store.dispatch('myGame/DoCue',[this.selectCardIndex,'num'])
+                    this.topOperation = false
+                }else if(isPath(mousePos, 'cueColorBtn')){
+                    this.$store.dispatch('myGame/DoCue',[this.selectCardIndex,'color'])
+                    this.topOperation = false
+                }else if(isPath(mousePos, 'cueCancelBtn')){
+                    this.topOperation = false
+                }
             }
         }
     },

@@ -11,7 +11,7 @@ axios.defaults.baseURL = 'http://192.168.31.176:8889/v1'
 
 // POST传参序列化
 axios.interceptors.request.use((config) => {
-    const token = window.sessionStorage.getItem('__HANABI_AUTH_TOKEN__');
+    const token = window.localStorage.getItem('__HANABI_AUTH_TOKEN__');
     if (token != null) {
         config.headers['X-Token'] = token;
     }

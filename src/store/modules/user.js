@@ -57,7 +57,7 @@ const mutations = {
     },
     setTokenForced: (state, token) => {
         state.token = token
-        window.sessionStorage.setItem('__HANABI_AUTH_TOKEN__', token)
+        window.localStorage.setItem('__HANABI_AUTH_TOKEN__', token)
     },
     setLoginState: state => {
         state.isLogin = true
@@ -73,7 +73,7 @@ const mutations = {
         state.userId = 0
         state.userInfo = {}
         state.token = null
-        window.sessionStorage.removeItem('__HANABI_AUTH_TOKEN__')
+        window.localStorage.removeItem('__HANABI_AUTH_TOKEN__')
     },
 }
 
