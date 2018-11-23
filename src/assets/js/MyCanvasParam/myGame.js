@@ -149,8 +149,8 @@ _.table.num.textColor = '#333333'
 _.table.num.area = {}
 _.table.num.area.x = _.table.libraryCards.area.x + _.table.libraryCards.area.w + _.window.padding
 _.table.num.area.y = _.table.area.y + _.window.padding
-_.table.num.area.w = 40
-_.table.num.area.h = 16
+_.table.num.area.w = 60
+_.table.num.area.h = 20
 
 _.table.successCards = {}
 _.table.successCards.area = {}

@@ -3,6 +3,11 @@
         <canvas id="canvas_my_game_bottom" ></canvas>
         <canvas id="canvas_my_game_middle" ></canvas>
         <canvas id="canvas_my_game_top" v-show="topOperation"></canvas>
+        <ul id="log" :style="'left:'+logRect.x+'px;top:'+logRect.y+'px;width:'+logRect.w+'px;height:'+logRect.h+'px;overflow-y:scroll;'" >
+            <li v-for="l in logList" :key="l">
+                {{l}}
+            </li>
+        </ul>
     </div>
 </template>
 <script>
@@ -19,7 +24,8 @@ export default {
             intervalId : 0,
             topOperation : false,
             selectCardIsHost: false,
-            selectCardIndex: -1
+            selectCardIndex: -1,
+            logRect: MGCParam.history.area
         }
     },
     computed:{
@@ -40,6 +46,9 @@ export default {
         },
         gameInfo(){
             return this.$store.getters['myGame/gameInfo']
+        },
+        logList(){
+            return this.$store.getters['myGame/logList2']
         }
     },
     watch: {
@@ -249,7 +258,20 @@ export default {
 <style scoped>
     #canvas_my_game_bottom,
     #canvas_my_game_middle,
-    #canvas_my_game_top {
+    #canvas_my_game_top,
+    #log {
         position: absolute;
+    }
+    #log {
+        font-size: 16px;
+        line-height: 20px;
+        z-index: 2;
+        list-style: none;
+        padding-left: 4px;
+        margin: 0;
+        overflow-y:scroll;
+    }
+    #canvas_my_game_top {
+        z-index:100;
     }
 </style>
