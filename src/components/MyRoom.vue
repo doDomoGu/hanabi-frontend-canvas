@@ -269,5 +269,7 @@ export default {
 <style scoped>
     #canvas_my_room {
         position: absolute;
+        width:100%;
+        height:100%;
     }
 </style>

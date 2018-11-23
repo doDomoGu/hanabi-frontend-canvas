@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <canvas id="c_bottom"></canvas>
+    <div :style="'width:'+width+'px;height:'+height+'px;'">
+        <canvas id="c_bottom" ></canvas>
         <loading-mask v-if="isLoading"></loading-mask>
         <template v-else>
             <template v-if="isLogin">
@@ -27,11 +27,15 @@ import MyRoom       from './components/MyRoom.vue'
 import MyGame       from './components/MyGame.vue'
 import LoadingMask  from './components/LoadingMask.vue'
 
+import CommonDraw   from './assets/js/draw/common.js'
+
 export default {
     name: 'app',
     components: { Login, RoomList, MyRoom, MyGame, LoadingMask },
     data() {
         return {
+            width : window.innerWidth,
+            height : window.innerHeight
         }
     },
     computed: {
@@ -109,12 +113,8 @@ export default {
                 console.log('not login')
             }
         },
-        clearCanvas(ctx){
-            ctx.canvas.width = window.innerWidth
-            ctx.canvas.height = window.innerHeight
-        },
         drawBottom(bgColor) {
-            this.clearCanvas(this.ctx_bottom)
+            CommonDraw.clear(this.ctx_bottom.canvas)
 
             this.ctx_bottom.fillStyle = bgColor // 屏幕背景色
             this.ctx_bottom.fillRect(0, 0, this.c_bottom.width, this.c_bottom.height )
@@ -155,6 +155,8 @@ export default {
     #c_bottom,
     #c_top {
         position: absolute;
+        width:100%;
+        height:100%;
     }
 
 

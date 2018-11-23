@@ -1,8 +1,12 @@
+import MyCanvas from '../MyCanvas'
+
+const dpr = MyCanvas.getDevicePixelRatio()
+
 let _ = {}
 
 _.clear = canvas => {
-    canvas.width = window.innerWidth
-    canvas.height = window.innerHeight
+    canvas.width = window.innerWidth * dpr
+    canvas.height = window.innerHeight * dpr
 }
 
 //font-size

@@ -258,11 +258,18 @@ export default {
 <style scoped>
     #canvas_my_game_bottom,
     #canvas_my_game_middle,
-    #canvas_my_game_top,
+    #canvas_my_game_top {
+        
+        width:100%;
+        height:100%;
+    }
+
+    #canvas_my_game_top {
+        z-index:100;
+    }
+
     #log {
         position: absolute;
-    }
-    #log {
         font-size: 16px;
         line-height: 20px;
         z-index: 2;
@@ -270,8 +277,5 @@ export default {
         padding-left: 4px;
         margin: 0;
         overflow-y:scroll;
-    }
-    #canvas_my_game_top {
-        z-index:100;
     }
 </style>

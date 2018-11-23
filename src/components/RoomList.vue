@@ -1,11 +1,12 @@
 <template>
-    <canvas id="canvas_room_list" ></canvas>
+    <canvas id="canvas_room_list"></canvas>
 </template>
 <script>
 import MyCanvas from '../assets/js/MyCanvas.js'
 import RLCParam from '../assets/js/MyCanvasParam/roomList.js'
 import CommonDraw from '../assets/js/draw/common.js'
 import RoomListDraw from '../assets/js/draw/roomList.js'
+import { Readable } from 'stream';
 
 
 export default {
@@ -42,19 +43,20 @@ export default {
         this.canvas.addEventListener('touchend',this.eventListener,false)
     },
     methods: {
-        
         eventListener(evt){
             const mousePos = MyCanvas.getMousePos(this.canvas, evt, 1)
+
             function getListItemIndex(pos, listCount){
                 let index = 0
-                let x1 = RLCParam.listX
-                let x2 = RLCParam.listItemW + RLCParam.listX
-                if(pos.x >= x1 && pos.x <= x2){
+
+                const rect = JSON.parse(JSON.stringify(RLCParam.item.rect))
+                
+                if(pos.x >= rect.x && pos.x <= rect.x + rect.w){
                     let y1, y2
 
                     for(let i = 1 ; i <= listCount ; i++ ){
-                        y1 = RLCParam.listY + parseInt(RLCParam.listItemH + RLCParam.listItemPad) * ( i - 1)
-                        y2 = y1 + RLCParam.listItemH    
+                        y1 = rect.y  + parseInt(rect.h + RLCParam.item.margin) * ( i - 1)
+                        y2 = y1 + rect.h   
                         if( pos.y >= y1 && pos.y <= y2){
                             index = i
                             break
@@ -64,14 +66,17 @@ export default {
                 return index
             }
 
-            const itemIndex = getListItemIndex(mousePos,this.count)
+            const itemIndex = getListItemIndex(mousePos,this.list.length)
+
+            
 
             if(evt.type == 'touchstart'){
                 this.itemIndex = itemIndex
 
-                this.drawItem(this.ctx, this.itemIndex, true)
+                //this.drawItem(this.ctx, this.itemIndex, true)
+
             }else if(evt.type == 'touchend'){
-                this.drawItem(this.ctx, this.itemIndex, false)
+                //this.drawItem(this.ctx, this.itemIndex, false)
 
                 if(itemIndex > 0 && itemIndex == this.itemIndex && itemIndex <= this.list.length) {
                     this.enter(itemIndex)
@@ -93,5 +98,7 @@ export default {
 <style scoped>
     #canvas_room_list {
         position: absolute;
+        width:100%;
+        height:100%;
     }
 </style>

@@ -4,7 +4,6 @@ import MyCanvas from '../MyCanvas'
 
 let _ = {}
 
-//绘制列表
 _.list = (ctx, list) => {
     CommonDraw.clear(ctx.canvas)
 
@@ -18,10 +17,7 @@ _.list = (ctx, list) => {
 //绘制单个
 const drawItem = (ctx, index, text, actived, transition = false) => {
     let rect = JSON.parse(JSON.stringify(RLCParam.item.rect))
-
-    const padding = RLCParam.padding
-
-    rect.y += parseInt(index - 1) * parseInt(rect.h + padding)
+    rect.y += parseInt(index - 1) * parseInt(rect.h + RLCParam.item.margin)
 
     let bgcolor, txtcolor
 
@@ -87,7 +83,8 @@ const drawItem = (ctx, index, text, actived, transition = false) => {
         ctx.fillStyle = bgcolor
         ctx.fillRect(rect.x, rect.y, rect.w, rect.h)
 
-        ctx.font = MyCanvas.px2Rem(24) + 'px Microsoft JhengHei'
+        ctx.font = RLCParam.item.fontSize + 'px PingFangSC-Regular'
+        // ctx.font = '50px Microsoft JhengHei'
         ctx.fillStyle = txtcolor
         ctx.textAlign = 'left'
         ctx.textBaseline = 'middle'
