@@ -114,7 +114,7 @@ export default {
     },
     methods: {
         eventListener(evt){
-            const mousePos = MyCanvas.getMousePos(this.canvas_m, evt, 1)
+            const mousePos = MyCanvas.getMousePos(this.canvas_m, evt)
             // console.log("鼠标指针坐标：" + mousePos.x + "," + mousePos.y)
             const isPath = (pos, areaName)=>{
                 let area
@@ -172,7 +172,7 @@ export default {
             }
         },
         eventListenerTop(evt){
-            const mousePos = MyCanvas.getMousePos(this.canvas_m, evt, 1)
+            const mousePos = MyCanvas.getMousePos(this.canvas_m, evt)
             // console.log("鼠标指针坐标：" + mousePos.x + "," + mousePos.y)
             const isPath = (pos, areaName)=>{
                 let area

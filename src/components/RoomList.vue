@@ -6,7 +6,6 @@ import MyCanvas from '../assets/js/MyCanvas.js'
 import RLCParam from '../assets/js/MyCanvasParam/roomList.js'
 import CommonDraw from '../assets/js/draw/common.js'
 import RoomListDraw from '../assets/js/draw/roomList.js'
-import { Readable } from 'stream';
 
 
 export default {
@@ -44,7 +43,7 @@ export default {
     },
     methods: {
         eventListener(evt){
-            const mousePos = MyCanvas.getMousePos(this.canvas, evt, 1)
+            const mousePos = MyCanvas.getMousePos(this.canvas, evt)
 
             function getListItemIndex(pos, listCount){
                 let index = 0
