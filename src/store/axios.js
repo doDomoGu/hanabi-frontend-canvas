@@ -21,18 +21,18 @@ axios.interceptors.request.use((config) => {
     }
     return config
 }, (error) => {
-    console.log('错误的传参')
+    // console.log('错误的传参')
     return Promise.reject(error)
 })
 // code状态码200判断
 axios.interceptors.response.use((res) => {
     if (res.status !== 200) {
-        console.log(res.data.msg)
+        // console.log(res.data.msg)
         return Promise.reject(res)
     }
     return res
 }, (error) => {
-    console.log('网络异常')
+    // console.log('网络异常')
     return Promise.reject(error)
 })
 

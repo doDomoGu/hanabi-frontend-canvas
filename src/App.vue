@@ -38,7 +38,7 @@ export default {
     },
     computed: {
         isLoading(){
-            return Boolean(this.$store.getters['common/isLoading'])
+            return this.$store.getters['common/isLoading']
         },
         isLogin(){
             return Boolean(this.$store.getters['user/isLogin'])
@@ -86,28 +86,24 @@ export default {
     },
     methods: {
         init(){
-            // console.log(' ')
-            // console.log(moment().format("YYYY-MM-DD HH:mm:ss SSS"))
-            // console.log('app init')
-
             this.drawBottom('#d9f1f8')  //绘制背景图
 
-            if(this.isLogin){
-                if(this.isInRoom){
-                    if(this.isInGame){
-                        console.log('is in game')
-                        //this.$store.dispatch('room/List')
-                    }else{
-                        console.log('is in room')
-                        //this.$store.dispatch('room/List')
-                    }
-                }else{
-                    console.log('is not in room')
-                    //this.$store.dispatch('room/List')
-                }
-            }else{
-                console.log('not login')
-            }
+            // if(this.isLogin){
+            //     if(this.isInRoom){
+            //         if(this.isInGame){
+            //             console.log('is in game')
+            //             //this.$store.dispatch('room/List')
+            //         }else{
+            //             console.log('is in room')
+            //             //this.$store.dispatch('room/List')
+            //         }
+            //     }else{
+            //         console.log('is not in room')
+            //         //this.$store.dispatch('room/List')
+            //     }
+            // }else{
+            //     console.log('not login')
+            // }
         },
         drawBottom(bgColor) {
             CommonDraw.clear(this.ctx_bottom.canvas)

@@ -18,10 +18,6 @@ export default {
         
     },
     mounted() {
-        console.log(' ')
-        console.log(moment().format("YYYY-MM-DD HH:mm:ss SSS"))
-        console.log('loading page mounted') 
-
         let canvas  = document.querySelector('#c_loading')
         let ctx     = canvas.getContext('2d')
 

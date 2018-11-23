@@ -82,10 +82,6 @@ export default {
         }
     },
     mounted() {
-        console.log(' ')
-        console.log(moment().format("YYYY-MM-DD HH:mm:ss SSS"))
-        console.log('my-game mounted')
-
         this.canvas_b = document.querySelector('#canvas_my_game_bottom')
         this.ctx_b = this.canvas_b.getContext('2d')
 
@@ -109,7 +105,7 @@ export default {
 
         this.intervalId = setInterval(()=>{
             this.$store.dispatch('myGame/GetInfo',{force:true})
-        },3000)
+        },1000)
 
         this.canvas_m.addEventListener('click',this.eventListener,false)
         this.canvas_t.addEventListener('click',this.eventListenerTop,false)
@@ -227,10 +223,6 @@ export default {
         }
     },
     destroyed(){
-        console.log(' ')
-        console.log(moment().format("YYYY-MM-DD HH:mm:ss SSS"))
-        console.log('my-game destroyed')
-
         clearInterval(this.intervalId)
     }
 }
