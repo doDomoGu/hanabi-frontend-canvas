@@ -1,19 +1,17 @@
 <template>
-    <div :style="'width:'+width+'px;height:'+height+'px;'">
+    <!-- <div :style="'width:'+width+'px;height:'+height+'px;'"> -->
+    <div id="app">
         <canvas id="c_bottom" ></canvas>
         <loading-mask v-if="isLoading"></loading-mask>
         <template v-else>
             <template v-if="isLogin">
                 <room-list v-if="isLogin && !isInRoom"></room-list>
-
                 <my-room v-if="isLogin && isInRoom && !isInGame"></my-room>
                 <my-game v-if="isLogin && isInRoom && isInGame"></my-game>
-
                 <button style="position:absolute;bottom:0;right:0;" @click="logout">退出</button>
             </template>
             <Login v-else></Login>
         </template>
-        <!--<canvas id="c_top"></canvas>-->
     </div>
 </template>
 
@@ -68,8 +66,6 @@ export default {
     mounted() {
         this.c_bottom = document.querySelector('#c_bottom')
         this.ctx_bottom = this.c_bottom.getContext('2d')
-
-        
 
         //this.ratio = window.devicePixelRatio //MyCanvas.getPixelRatio(this.ctx)
 
@@ -151,6 +147,14 @@ export default {
         padding:0;
         font-size: 0;
         line-height:0;
+        width:100%;
+        height:100%;
+        overflow:hidden;
+    }
+    #app {
+        width:100%;
+        height:100%;
+        overflow:hidden;
     }
     #c_bottom,
     #c_top {

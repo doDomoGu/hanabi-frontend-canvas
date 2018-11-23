@@ -25,14 +25,13 @@ _.bottomRect = ctx => {
 
 //canvas_top 遮罩背景
 _.topRect = ctx => {
-    ctx.fillStyle = 'rgba(222,222,222,0.8)'
-    ctx.fillRect(0, 0, window.innerWidth, window.innerHeight)
+    fillRect(ctx, { rect: MGCParam.top.rect, color: MGCParam.top.bgColor })
 }
 
 //绘制结束按钮
 _.endBtn = ctx => {
     const btn = MGCParam.endBtn
- 
+
     ctx.fillStyle = btn.bgColor
     ctx.fillRect(btn.x, btn.y, btn.w, btn.h)
 
@@ -211,18 +210,15 @@ _.topConfirmPlay = ctx => {
     CommonDraw.clear(ctx.canvas)
     _.topRect(ctx)
 
+    const rectTip = MGCParam.top.tip.rect
+
     ctx.font = MyCanvas.px2Rem(24) + 'px Microsoft JhengHei'
     ctx.fillStyle = '#333'
     ctx.textAlign = 'center'
-    ctx.textBaseline = 'bottom'
-    ctx.fillText('确定要打出这张牌么', window.innerWidth / 2, window.innerHeight / 2)
+    ctx.textBaseline = 'middle'
+    ctx.fillText('确定要打出这张牌么', rectTip.x + rectTip.w / 2, rectTip.y + rectTip.h / 2)
 
-    const rectOk = {
-        x: window.innerWidth / 2 - 100,
-        y: window.innerHeight / 2 + 20,
-        w: MGCParam.btn.area.w,
-        h: MGCParam.btn.area.h,
-    }
+    const rectOk = MGCParam.top.play.ok.rect
     ctx.fillStyle = MGCParam.btn.ok.bgColor
     fillRoundedRect(ctx, rectOk, 4)
 
@@ -232,12 +228,7 @@ _.topConfirmPlay = ctx => {
     ctx.textBaseline = 'middle'
     ctx.fillText('确定', rectOk.x + rectOk.w / 2, rectOk.y + rectOk.h / 2)
 
-    const rectCancel = {
-        x: window.innerWidth / 2,
-        y: window.innerHeight / 2 + 20,
-        w: MGCParam.btn.area.w,
-        h: MGCParam.btn.area.h,
-    }
+    const rectCancel = MGCParam.top.play.cancel.rect
     ctx.fillStyle = MGCParam.btn.cancel.bgColor
     fillRoundedRect(ctx, rectCancel, 4)
 
@@ -250,21 +241,17 @@ _.topConfirmPlay = ctx => {
 
 _.topConfirmCue = ctx => {
     CommonDraw.clear(ctx.canvas)
-
     _.topRect(ctx)
+
+    const rectTip = MGCParam.top.tip.rect
 
     ctx.font = MyCanvas.px2Rem(24) + 'px Microsoft JhengHei'
     ctx.fillStyle = '#333'
     ctx.textAlign = 'center'
     ctx.textBaseline = 'middle'
-    ctx.fillText('确定要提示这张牌么', window.innerWidth / 2, window.innerHeight / 2)
+    ctx.fillText('确定要提示这张牌么', rectTip.x + rectTip.w / 2, rectTip.y + rectTip.h / 2)
 
-    const rectCueNum = {
-        x: window.innerWidth / 2 - 80,
-        y: window.innerHeight / 2 + 20,
-        w: MGCParam.btn.area.w,
-        h: MGCParam.btn.area.h,
-    }
+    const rectCueNum = MGCParam.top.cue.num.rect
     ctx.fillStyle = MGCParam.btn.cueNum.bgColor
     fillRoundedRect(ctx, rectCueNum, 4)
 
@@ -274,12 +261,7 @@ _.topConfirmCue = ctx => {
     ctx.textBaseline = 'middle'
     ctx.fillText('提示数字', rectCueNum.x + rectCueNum.w / 2, rectCueNum.y + rectCueNum.h / 2)
 
-    const rectCueColor = {
-        x: window.innerWidth / 2,
-        y: window.innerHeight / 2 + 20,
-        w: MGCParam.btn.area.w,
-        h: MGCParam.btn.area.h,
-    }
+    const rectCueColor = MGCParam.top.cue.color.rect
     ctx.fillStyle = MGCParam.btn.ok.bgColor
     fillRoundedRect(ctx, rectCueColor, 4)
 
@@ -289,12 +271,7 @@ _.topConfirmCue = ctx => {
     ctx.textBaseline = 'middle'
     ctx.fillText('提示颜色', rectCueColor.x + rectCueColor.w / 2, rectCueColor.y + rectCueColor.h / 2)
 
-    const rectCancel = {
-        x: window.innerWidth / 2 + 80,
-        y: window.innerHeight / 2 + 20,
-        w: MGCParam.btn.area.w,
-        h: MGCParam.btn.area.h,
-    }
+    const rectCancel = MGCParam.top.cue.cancel.rect
     ctx.fillStyle = MGCParam.btn.cancel.bgColor
     fillRoundedRect(ctx, rectCancel, 4)
 

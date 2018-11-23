@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div id="my_game">
         <canvas id="canvas_my_game_bottom" ></canvas>
         <canvas id="canvas_my_game_middle" ></canvas>
         <canvas id="canvas_my_game_top" v-show="topOperation"></canvas>
@@ -25,7 +25,12 @@ export default {
             topOperation : false,
             selectCardIsHost: false,
             selectCardIndex: -1,
-            logRect: MGCParam.history.area
+            logRect: {
+                "x" : MGCParam.history.area.x / MyCanvas.getDevicePixelRatio(),
+                "y" : MGCParam.history.area.y / MyCanvas.getDevicePixelRatio(),
+                "w" : MGCParam.history.area.w / MyCanvas.getDevicePixelRatio(),
+                "h" : MGCParam.history.area.h / MyCanvas.getDevicePixelRatio(),
+            }
         }
     },
     computed:{
@@ -160,7 +165,7 @@ export default {
                 }
             }else if(this.gameInfo.roundPlayerIsHost == this.isHost && guestHandsIndex > -1){
                 this.topOperation = true
-                this.selectCardIndex = guestHandsIndex
+                this.selectCardIndex = guestHandsIndex + 5
                 this.selectCardIsHost = false
                 if(this.isHost){
                     MyGameDraw.topConfirmCue(this.ctx_t)
@@ -178,44 +183,19 @@ export default {
                 let area
                 switch(areaName){
                     case 'playOkBtn':
-                        area = {
-                            x: window.innerWidth / 2 - 100,
-                            y: window.innerHeight / 2 + 20,
-                            w: MGCParam.btn.area.w,
-                            h: MGCParam.btn.area.h
-                        }
+                        area = MGCParam.top.play.ok.rect
                         break
                     case 'playCancelBtn':
-                        area = {
-                            x: window.innerWidth / 2 ,
-                            y: window.innerHeight / 2 + 20,
-                            w: MGCParam.btn.area.w,
-                            h: MGCParam.btn.area.h
-                        }
+                        area = MGCParam.top.play.cancel.rect
                         break
                     case 'cueNumBtn':
-                        area = {
-                            x: window.innerWidth / 2 - 80,
-                            y: window.innerHeight / 2 + 20,
-                            w: MGCParam.btn.area.w,
-                            h: MGCParam.btn.area.h
-                        }
+                        area = MGCParam.top.cue.num.rect
                         break
                     case 'cueColorBtn':
-                        area = {
-                            x: window.innerWidth / 2,
-                            y: window.innerHeight / 2 + 20,
-                            w: MGCParam.btn.area.w,
-                            h: MGCParam.btn.area.h
-                        }
+                        area = MGCParam.top.cue.color.rect
                         break
                     case 'cueCancelBtn':
-                        area = {
-                            x: window.innerWidth / 2 + 80,
-                            y: window.innerHeight / 2 + 20,
-                            w: MGCParam.btn.area.w,
-                            h: MGCParam.btn.area.h
-                        }
+                        area = MGCParam.top.cue.cancel.rect
                         break
                     default:
                         area = {x:0,y:0,w:0,h:0}
@@ -259,7 +239,7 @@ export default {
     #canvas_my_game_bottom,
     #canvas_my_game_middle,
     #canvas_my_game_top {
-        
+        position:absolute;
         width:100%;
         height:100%;
     }
@@ -277,5 +257,10 @@ export default {
         padding-left: 4px;
         margin: 0;
         overflow-y:scroll;
+    }
+    #my_game {
+        width:100%;
+        height:100%;
+        overflow:hidden;
     }
 </style>
