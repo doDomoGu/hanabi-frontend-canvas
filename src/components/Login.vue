@@ -48,18 +48,26 @@ export default {
 </script>
 <style scoped>
     #login-form {
-        margin:-100px;
-        width:200;
         position: absolute;
+        width:240px;
+        height:160px;
+        padding:20px;
+        margin-left:-120px;
+        margin-top:-80px;
+        box-sizing: border-box;
         left:50%;
-        top:400px;
-        font-size:12px;
+        top:50%;
+        font-size:20px;
         line-height:20px;
+        background:rgba(70, 70, 70, 0.856);
+        overflow:hidden;
+        border-radius: 10px;
+        color:#fff
     }
 
     #login-form > .form-item{
         width: 200px;
-        height:30px;
+        height:40px;
     }
 
     #login-form > .form-item > label {
@@ -73,12 +81,16 @@ export default {
         width:110px;
         display:block;
         float:left;
+        font-size:18px;
     }
     #login-form > .form-item > button {
-        width:60px;
-        height:20px;
+        width:110px;
+        height:30px;
         border:1px solid #333;
+        padding: 0 2px;
         display:block;
+        background:rgb(219, 219, 219);
         float:left;
+        box-sizing:content-box;
     }
 </style>
