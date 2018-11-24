@@ -32,7 +32,7 @@ export default {
         this.canvas = document.querySelector('#canvas_room_list')
         this.ctx = this.canvas.getContext('2d')
 
-        this.$store.dispatch('room/GetList')
+        this.$store.dispatch('room/GetList',{force:true})
 
         this.intervalId = setInterval(()=>{
             this.$store.dispatch('room/GetList')

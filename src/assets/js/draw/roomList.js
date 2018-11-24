@@ -10,12 +10,41 @@ _.list = (ctx, list) => {
     for (let index in list) {
         let _idx = parseInt(index) + 1
         //drawItem(ctx, _idx, list[index].title, this.itemIndex === _idx)
-
-        drawItem(ctx, _idx, _idx + '. ' + list[index].title, false)
+        drawItem(ctx, _idx, list[index], false)
     }
 }
+
+const drawItem = (ctx, index, item, actived) => {
+    let rect = JSON.parse(JSON.stringify(RLCParam.item.rect))
+
+    rect.y += parseInt(index - 1) * parseInt(rect.h + RLCParam.item.margin)
+
+    let bgColor, textColor
+    if (actived) {
+        bgColor = RLCParam.item.actived.bgColor
+        textColor = RLCParam.item.actived.textColor
+    } else {
+        bgColor = RLCParam.item.unactived.bgColor
+        textColor = RLCParam.item.unactived.textColor
+    }
+
+    ctx.fillStyle = bgColor
+    ctx.fillRect(rect.x, rect.y, rect.w, rect.h)
+
+    ctx.font = RLCParam.item.fontSize + 'px Arial'
+    ctx.fillStyle = textColor
+    ctx.textAlign = 'left'
+    ctx.textBaseline = 'middle'
+    const text = (index < 10 ? '00'+index : '0'+ index ) + '   ' + item.title
+    ctx.fillText(text, RLCParam.item.titleX, rect.y + rect.h / 2)
+
+    ctx.fillText((item.isLocked ? 'L' : ''), RLCParam.item.lockX, rect.y + rect.h / 2)
+
+    ctx.fillText(item.playerCount + '/2', RLCParam.item.playerCountX, rect.y + rect.h / 2)
+}
+
 //绘制单个
-const drawItem = (ctx, index, text, actived, transition = false) => {
+const drawItem2 = (ctx, index, text, actived, transition = false) => {
     let rect = JSON.parse(JSON.stringify(RLCParam.item.rect))
     rect.y += parseInt(index - 1) * parseInt(rect.h + RLCParam.item.margin)
 
