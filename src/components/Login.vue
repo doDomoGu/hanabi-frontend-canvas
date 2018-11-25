@@ -1,18 +1,20 @@
 <template>
-    <form id="login-form">
-        <div class="form-item username">
-            <label for="username">用户名：</label>
-            <input id="username" v-model="form.username">
-        </div>
-        <div class="form-item password">
-            <label for="password">密码：</label>
-            <input id="password" v-model="form.password" type="password">
-        </div>
-        <div class="form-item">
-            <label >&nbsp;</label>
-            <button type="button" @click="login">登录</button>
-        </div>
-    </form>
+    <div>
+        <div id="title">Hanabi</div>
+        <form id="login-form">
+            <div class="form-item username">
+                <label for="username">用户名：</label>
+                <input id="username" v-model="form.username">
+            </div>
+            <div class="form-item password">
+                <label for="password">密码：</label>
+                <input id="password" v-model="form.password" type="password">
+            </div>
+            <div class="form-item">
+                <button type="button" @click="login">登录</button>
+            </div>
+        </form>
+    </div>
 </template>
 <script>
 export default {
@@ -47,27 +49,45 @@ export default {
 }
 </script>
 <style scoped>
+    #title {
+        position: absolute;
+        width:200px;
+        height:40px;
+        margin-left:-100px;
+        margin-top:-140px;
+        box-sizing: border-box;
+        left:50%;
+        top:50%;
+        font-size:40px;
+        font-weight: bolder;
+        text-align: center;
+        overflow:hidden;
+        line-height:30px;
+    }
     #login-form {
         position: absolute;
-        width:240px;
+        width:280px;
         height:160px;
         padding:20px;
-        margin-left:-120px;
+        margin-left:-140px;
         margin-top:-80px;
         box-sizing: border-box;
         left:50%;
         top:50%;
-        font-size:20px;
-        line-height:20px;
         background:rgba(70, 70, 70, 0.856);
         overflow:hidden;
         border-radius: 10px;
-        color:#fff
+        color:#fff;
+        -webkit-box-shadow: 5px 5px 5px rgb(70, 70, 70);
+        -moz-box-shadow: 5px 5px 5px rgb(70, 70, 70);
+        box-shadow: 5px 5px 5px rgb(70, 70, 70);
     }
 
     #login-form > .form-item{
-        width: 200px;
-        height:40px;
+        width: 240px;
+        height: 44px;
+        overflow: hidden;
+        margin:0;
     }
 
     #login-form > .form-item > label {
@@ -75,22 +95,32 @@ export default {
         display:block;
         float:left;
         text-align:right;
+        margin:0;
+        padding:0;
+        font-size:18px;
+        line-height:30px;
     }
 
     #login-form > .form-item > input {
-        width:110px;
+        width:160px;
+        height:30px;
+        padding:4px 10px;
         display:block;
         float:left;
-        font-size:18px;
+        font-size:20px;
+
+        border:none;
+        border-radius: 4px;
+        box-sizing: border-box;
     }
     #login-form > .form-item > button {
-        width:110px;
+        width:240px;
         height:30px;
-        border:1px solid #333;
         padding: 0 2px;
         display:block;
-        background:rgb(219, 219, 219);
+        background:rgb(34, 149, 243);
+        color:#ffffff;
         float:left;
-        box-sizing:content-box;
+        border:none;
     }
 </style>
