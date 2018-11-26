@@ -9,7 +9,7 @@ const state = {
 
 const actions = {
     async Login({ commit }, param) {
-        const res = await axios.post('/auth', param)
+        const res = await axios.post('/login', param)
         if (res.data && res.data.success) {
             commit('setTokenForced', res.data.token)
             commit('setLoginState')
@@ -19,7 +19,7 @@ const actions = {
     },
     async Logout({ dispatch, commit }) {
         //dispatch('myRoom/Exit', null, { root: true }).then(() => {
-        const res = await axios.delete('/auth')
+        const res = await axios.delete('/logout')
 
         if (res.data && res.data.success) {
             commit('clearLoginState')

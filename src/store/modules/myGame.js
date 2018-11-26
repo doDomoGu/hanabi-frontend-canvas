@@ -35,10 +35,7 @@ const actions = {
         if (!param.hasOwnProperty('mode')) {
             param.mode = 'all'
         }
-        const res = await axios.post(
-            '/my-game/get-info',
-            param,
-        )
+        const res = await axios.get('/my-game/info', { params: param })
         const _res = res.data
         if (_res.success) {
             if (!_res.data.noUpdate) {

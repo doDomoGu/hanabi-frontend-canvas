@@ -38,10 +38,7 @@ const actions = {
    */
     async GetInfo ({ commit }, param = {}) {
         if (!param.hasOwnProperty('mode')) { param.mode = 'all' }
-        const res = await axios.post(
-            '/my-room/get-info',
-            param
-        )
+        const res = await axios.get('/my-room/info', { params: param })
         const _res = res.data
         if (_res.success) {
             if (!_res.data.noUpdate) {

@@ -7,7 +7,7 @@ const state = {
 
 const actions = {
     async GetList({ commit }, param = {}) {
-        const res = await axios.post('/room/list', param)
+        const res = await axios.get('/room/list', { params: param })
         const _res = res.data
         if (_res.success) {
             if (!_res.data.noUpdate) {
