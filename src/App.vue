@@ -69,7 +69,8 @@ export default {
 
         //this.ratio = window.devicePixelRatio //MyCanvas.getPixelRatio(this.ctx)
 
-        this.drawBottom('#d9f1f8')
+        this.init()
+        // this.drawBottom('#666699')
         
         this.checkToken()/* .then(() => {
             this.init()
@@ -86,7 +87,7 @@ export default {
     },
     methods: {
         init(){
-            this.drawBottom('#d9f1f8')  //绘制背景图
+            this.drawBottom('#336699')  //绘制背景图
 
             // if(this.isLogin){
             //     if(this.isInRoom){

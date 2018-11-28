@@ -16,8 +16,8 @@ _.item.actived.bgColor = '#eeeeee'
 _.item.actived.textColor = '#333333'
 
 _.item.unactived = {}
-_.item.unactived.bgColor = 'rgba(0, 50, 200, 0.8)'
-_.item.unactived.textColor = '#eeeeee'
+_.item.unactived.bgColor = '#6699cc'
+_.item.unactived.textColor = '#ffffff'
 
 _.item.rect = {}
 

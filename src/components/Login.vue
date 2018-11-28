@@ -50,6 +50,7 @@ export default {
 </script>
 <style scoped>
     #title {
+        font-family:'Courier New', Courier, monospace;
         position: absolute;
         width:200px;
         height:40px;
@@ -63,6 +64,7 @@ export default {
         text-align: center;
         overflow:hidden;
         line-height:30px;
+        color:#ffffff;
     }
     #login-form {
         position: absolute;
@@ -74,10 +76,10 @@ export default {
         box-sizing: border-box;
         left:50%;
         top:50%;
-        background:rgba(70, 70, 70, 0.856);
+        background:#CCCCCC;
         overflow:hidden;
         border-radius: 10px;
-        color:#fff;
+        color:#333333;
         -webkit-box-shadow: 5px 5px 5px rgb(70, 70, 70);
         -moz-box-shadow: 5px 5px 5px rgb(70, 70, 70);
         box-shadow: 5px 5px 5px rgb(70, 70, 70);
@@ -118,9 +120,11 @@ export default {
         height:30px;
         padding: 0 2px;
         display:block;
-        background:rgb(34, 149, 243);
+        background:#336699;
         color:#ffffff;
         float:left;
         border:none;
+        font-size:18px;
+        letter-spacing: 10px;
     }
 </style>
