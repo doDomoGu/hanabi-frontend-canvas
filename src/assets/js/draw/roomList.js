@@ -7,17 +7,16 @@ let _ = {}
 _.list = (ctx, list) => {
     CommonDraw.clear(ctx.canvas)
 
-    for (let index in list) {
-        let _idx = parseInt(index) + 1
+    for (let i in list) {
         //drawItem(ctx, _idx, list[index].title, this.itemIndex === _idx)
-        drawItem(ctx, _idx, list[index], false)
+        _.drawItem(ctx, i, list[i], false)
     }
 }
 
-const drawItem = (ctx, index, item, actived) => {
+_.drawItem = (ctx, index, item, actived) => {
     let rect = JSON.parse(JSON.stringify(RLCParam.item.rect))
 
-    rect.y += parseInt(index - 1) * parseInt(rect.h + RLCParam.item.margin)
+    rect.y += parseInt(index) * parseInt(rect.h + RLCParam.item.margin)
 
     let bgColor, textColor
     if (actived) {
@@ -35,7 +34,8 @@ const drawItem = (ctx, index, item, actived) => {
     ctx.fillStyle = textColor
     ctx.textAlign = 'left'
     ctx.textBaseline = 'middle'
-    const text = (index < 10 ? '00'+index : '0'+ index ) + '   ' + item.title
+    const _index = parseInt(index) + 1
+    const text = (_index < 10 ? '00' + _index : '0' + _index ) + '   ' + item.title
     ctx.fillText(text, RLCParam.item.titleX, rect.y + rect.h / 2)
 
     ctx.fillText((item.isLocked ? 'L' : ''), RLCParam.item.lockX, rect.y + rect.h / 2)

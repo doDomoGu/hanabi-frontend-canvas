@@ -13,7 +13,7 @@ export default {
     data() {
         return {
             intervalId : 0,
-            itemIndex : 0
+            itemIndex : -1
         }
     },
     computed:{
@@ -23,9 +23,10 @@ export default {
     },
     watch: {
         list(newVal, oldVal) {
-            if(newVal != oldVal){ 
+            /* if(newVal != oldVal){ 
                 RoomListDraw.list(this.ctx, newVal)
-            }
+            } */
+            RoomListDraw.list(this.ctx, newVal)
         }
     },
     mounted() {
@@ -46,15 +47,15 @@ export default {
             const mousePos = MyCanvas.getMousePos(this.canvas, evt)
 
             function getListItemIndex(pos, listCount){
-                let index = 0
+                let index = -1 // [0-9]
 
                 const rect = JSON.parse(JSON.stringify(RLCParam.item.rect))
                 
                 if(pos.x >= rect.x && pos.x <= rect.x + rect.w){
                     let y1, y2
 
-                    for(let i = 1 ; i <= listCount ; i++ ){
-                        y1 = rect.y  + parseInt(rect.h + RLCParam.item.margin) * ( i - 1)
+                    for(let i = 0 ; i < listCount ; i++ ){
+                        y1 = rect.y  + parseInt(rect.h + RLCParam.item.margin) * i
                         y2 = y1 + rect.h   
                         if( pos.y >= y1 && pos.y <= y2){
                             index = i
@@ -62,24 +63,28 @@ export default {
                         }
                     }
                 }
+
                 return index
             }
 
             const itemIndex = getListItemIndex(mousePos,this.list.length)
-
             
-
             if(evt.type == 'touchstart'){
-                this.itemIndex = itemIndex
-
-                //this.drawItem(this.ctx, this.itemIndex, true)
-
+                if(itemIndex > -1){
+                    this.itemIndex = itemIndex
+                    RoomListDraw.drawItem(this.ctx, this.itemIndex, this.list[this.itemIndex], true)
+                }
             }else if(evt.type == 'touchend'){
-                //this.drawItem(this.ctx, this.itemIndex, false)
-
-                if(itemIndex > 0 && itemIndex == this.itemIndex && itemIndex <= this.list.length) {
-                    this.enter(itemIndex)
+                if(itemIndex > -1 && itemIndex == this.itemIndex && itemIndex < this.list.length) {
+                    if(this.list[itemIndex].isLocked){
+                        alert('这个房间锁上了')
+                        RoomListDraw.drawItem(this.ctx, this.itemIndex, this.list[this.itemIndex], false)
+                    }else{
+                        this.enter(itemIndex+1)
+                    }
                 }else{
+                    RoomListDraw.drawItem(this.ctx, this.itemIndex, this.list[this.itemIndex], false)
+
                     this.itemIndex = 0
                 }
             }
