@@ -12,12 +12,20 @@ _.padding = 30 * dpr
 _.item = {}
 
 _.item.actived = {}
+_.item.actived.bgColor = '#6699cc'
+_.item.actived.textColor = '#ffffff'
+
+_.item.unactived = {}
+_.item.unactived.bgColor = '#eeeeee'
+_.item.unactived.textColor = '#333333'
+
+/* _.item.actived = {}
 _.item.actived.bgColor = '#eeeeee'
 _.item.actived.textColor = '#333333'
 
 _.item.unactived = {}
 _.item.unactived.bgColor = '#6699cc'
-_.item.unactived.textColor = '#ffffff'
+_.item.unactived.textColor = '#ffffff' */
 
 _.item.rect = {}
 

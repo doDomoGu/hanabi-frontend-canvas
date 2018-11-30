@@ -37,7 +37,7 @@ export default {
 
         this.intervalId = setInterval(()=>{
             this.$store.dispatch('room/GetList')
-        },1000)
+        },3000)
 
         this.canvas.addEventListener('touchstart',this.eventListener,false)
         this.canvas.addEventListener('touchend',this.eventListener,false)
