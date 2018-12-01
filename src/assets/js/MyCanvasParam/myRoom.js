@@ -9,7 +9,7 @@ const height = window.innerHeight * dpr
 
 /* 基础参数 */
 _.window = {}
-_.window.padding = 30 * dpr // 窗口留白
+_.window.padding = 0 * dpr // 窗口留白
 
 /* 玩家基础参数 */
 _.player = {}
@@ -19,7 +19,7 @@ _.player.area.x = _.window.padding
 _.player.area.y = _.window.padding
 _.player.area.w = width - _.player.area.x * 2 //玩家区域宽度
 _.player.area.h = 200 * dpr //玩家区域高度
-_.player.area.margin = 40 * dpr //两个玩家区域间的间隔
+_.player.area.margin = 0 * dpr //两个玩家区域间的间隔
 _.player.area.padding = 10 * dpr //玩家区域内留白
 
 _.player.info = {}
