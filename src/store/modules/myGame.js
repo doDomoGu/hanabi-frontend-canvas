@@ -16,34 +16,34 @@ const state = {
         cueNum: -1,
         chanceNum: -1,
         score: -1,
-        successCards: []
-    }
+        successCards: [],
+    },
 }
 
 const actions = {
     async Start({ commit }) {
-        await axios.post(
-            '/my-game/start'
-        )   
+        await axios.post('/my-game/start')
     },
     async End({ commit }) {
-        await axios.post(
-            '/my-game/end'
-        )
+        await axios.post('/my-game/end')
     },
     async GetInfo({ commit }, param = {}) {
         if (!param.hasOwnProperty('mode')) {
             param.mode = 'all'
         }
         const res = await axios.get('/my-game/info', { params: param })
-        const _res = res.data
-        if (_res.success) {
-            if (!_res.data.noUpdate) {
-                commit('SetGameIsPlaying')
-                if (param.mode === 'all') {
-                    commit('SetGameInfo', _res.data.game)
-                    commit('SetCardInfo', _res.data.card)
-                    commit('SetLogInfo', _res.data.log)
+        if (res.data && res.data.code === 0) {
+            const _res = res.data.data
+            if (!_res.noUpdate) {
+                if (_res.isPlaying) {
+                    commit('SetGameIsPlaying')
+                    if (param.mode === 'all') {
+                        commit('SetGameInfo', _res.data.game)
+                        commit('SetCardInfo', _res.data.card)
+                        commit('SetLogInfo', _res.data.log)
+                    }
+                } else {
+                    commit('ClearInfo')
                 }
             }
         } else {
@@ -51,34 +51,23 @@ const actions = {
         }
     },
     async DoDiscard({ commit }, cardSelectOrd) {
-        await axios.post(
-            '/my-game/do-discard',
-            {
-                cardSelectOrd: cardSelectOrd,
-            },
-        )
+        await axios.post('/my-game/do-discard', {
+            cardSelectOrd: cardSelectOrd,
+        })
     },
     async DoPlay({ commit }, cardSelectOrd) {
-        await axios.post(
-            '/my-game/do-play',
-            {
-                cardSelectOrd: cardSelectOrd,
-            },
-        )
+        await axios.post('/my-game/do-play', {
+            cardSelectOrd: cardSelectOrd,
+        })
     },
     async DoCue({ commit }, [cardSelectOrd, cueType]) {
-        await axios.post(
-            '/my-game/do-cue',
-            {
-                cardSelectOrd: cardSelectOrd,
-                cueType: cueType,
-            },
-        )
+        await axios.post('/my-game/do-cue', {
+            cardSelectOrd: cardSelectOrd,
+            cueType: cueType,
+        })
     },
     async AutoPlay({ commit }, cardSelectOrd) {
-        await axios.post(
-            '/my-game/auto-play'
-        )
+        await axios.post('/my-game/auto-play')
     },
 }
 
@@ -93,7 +82,7 @@ const getters = {
         return tmp
     },
     gameInfo: state => state.gameInfo,
-    cardInfo: state => state.cardInfo
+    cardInfo: state => state.cardInfo,
 }
 
 const mutations = {
@@ -125,9 +114,9 @@ const mutations = {
             cueNum: -1,
             chanceNum: -1,
             score: -1,
-            successCards: []
+            successCards: [],
         }
-    }
+    },
 }
 
 export default {

@@ -8,10 +8,10 @@ const state = {
 const actions = {
     async GetList({ commit }, param = {}) {
         const res = await axios.get('/room/list', { params: param })
-        const _res = res.data
-        if (_res.success) {
-            if (!_res.data.noUpdate) {
-                commit('SetList', _res.data.list)
+        if (res.data && res.data.code === 0) {
+            const _data = res.data.data
+            if (!_data.noUpdate) {
+                commit('SetList', _data.list)
             }
         } else {
             commit('ClearList')

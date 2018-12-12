@@ -33,7 +33,9 @@ export default {
             MyRoomDraw.hostPlayer(this.ctx, this.isHost, this.isReady, newVal)
         },
         guestPlayer(newVal, oldVal) {
-            MyRoomDraw.guestPlayer(this.ctx, this.isHost, this.isReady, newVal)
+            if(newVal){
+                MyRoomDraw.guestPlayer(this.ctx, this.isHost, this.isReady, newVal)
+            }
         }
     },
     mounted() {

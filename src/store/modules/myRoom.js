@@ -39,13 +39,19 @@ const actions = {
     async GetInfo ({ commit }, param = {}) {
         if (!param.hasOwnProperty('mode')) { param.mode = 'all' }
         const res = await axios.get('/my-room/info', { params: param })
-        const _res = res.data
-        if (_res.success) {
-            if (!_res.data.noUpdate) {
-                commit('SetRoomId', _res.data.roomId)
-                if (param.mode === 'all') {
-                    commit('SetIsHost', _res.data.isHost)
-                    commit('SetRoomPlayer', _res.data)
+        if (res.data && res.data.code === 0) {
+            const _res = res.data.data
+            if (!_res.noUpdate) {
+                if(_res.roomId > -1){
+                    commit('SetRoomId', _res.roomId)
+                    if (param.mode === 'all') {
+                        commit('SetIsHost', _res.isHost)
+                        commit('SetRoomPlayer', _res)
+                    }
+                } else {
+                    commit('ClearRoomId')
+                    commit('ClearIsHost')
+                    commit('ClearRoomPlayer')
                 }
             }
         } else {
