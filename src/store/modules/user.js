@@ -10,11 +10,13 @@ const state = {
 const actions = {
     async Login({ commit }, param) {
         const res = await axios.post('/login', param)
-        if (res.data && res.data.success) {
-            commit('setTokenForced', res.data.token)
+        if (res.data && res.data.code === 0) {
+            const _data = res.data.data
+
+            commit('setTokenForced', _data.token)
             commit('setLoginState')
-            commit('setId', res.data.userId)
-            commit('setInfo', res.data.userInfo)
+            commit('setId', _data.userId)
+            commit('setInfo', _data.userInfo)
         }
     },
     async Logout({ dispatch, commit }) {
@@ -26,17 +28,18 @@ const actions = {
         }
     },
     async CheckToken({ commit }, token) {
-        const res = await axios.get(
-            '/auth', {
-                params: {
-                    accessToken: token,
-                },
-            })
-        if (res.data && res.data.success) {
-            commit('setToken', res.data.token)
+        const res = await axios.get('/auth', {
+            params: {
+                accessToken: token,
+            },
+        })
+
+        if (res.data && res.data.code === 0) {
+            const _data = res.data.data
+            commit('setToken', _data.token)
             commit('setLoginState')
-            commit('setId', res.data.userId)
-            commit('setInfo', res.data.userInfo)
+            commit('setId', _data.userId)
+            commit('setInfo', _data.userInfo)
         } else {
             // 提交的token 错误
             commit('clearLoginState')
