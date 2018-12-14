@@ -2,7 +2,7 @@ import axios from '../axios'
 
 const state = {
     list: [],
-    count: 0,
+    count: 0
 }
 
 const actions = {

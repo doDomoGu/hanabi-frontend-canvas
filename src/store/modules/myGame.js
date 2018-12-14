@@ -38,9 +38,9 @@ const actions = {
                 if (_res.isPlaying) {
                     commit('SetGameIsPlaying')
                     if (param.mode === 'all') {
-                        commit('SetGameInfo', _res.data.game)
-                        commit('SetCardInfo', _res.data.card)
-                        commit('SetLogInfo', _res.data.log)
+                        commit('SetGameInfo', _res.game)
+                        commit('SetCardInfo', _res.card)
+                        commit('SetLogInfo', _res.log)
                     }
                 } else {
                     commit('ClearInfo')
