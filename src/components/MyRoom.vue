@@ -49,8 +49,8 @@ export default {
         this.$store.dispatch('myRoom/GetInfo',{force:true})
         
         this.intervalId = setInterval(()=>{
-            this.$store.dispatch('myRoom/GetInfo',{force:true})
-            this.$store.dispatch('myGame/GetInfo',{force:true,mode:'simple'})
+            this.$store.dispatch('myRoom/GetInfo')
+            this.$store.dispatch('myGame/GetInfo',{mode:'simple'})
         },1000)
         
         this.canvas.addEventListener('click',this.eventListener,false)
